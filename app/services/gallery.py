@@ -48,7 +48,10 @@ class GalleryIndex:
     def rebuild(self, db: Session) -> None:
         self.entries = []
         for entry in db.query(FaceGallery).all():
-            self.add(entry.roll_no, unpack_embedding(entry.embedding))
+            vec = unpack_embedding(entry.embedding)
+            if self._index is not None and self._index.d != vec.shape[0]:
+                continue
+            self.add(entry.roll_no, vec)
 
     def add(self, roll_no: str, embedding: np.ndarray) -> None:
         vector = self._normalize(embedding)
@@ -61,9 +64,12 @@ class GalleryIndex:
     def search(self, embedding: np.ndarray) -> tuple[str | None, float]:
         if self._index is None or self._index.ntotal == 0:
             return None, 0.0
-        scores, ids = self._index.search(self._normalize(embedding), 1)
+        normalized = self._normalize(embedding)
+        if self._index.d != normalized.shape[1]:
+            return None, 0.0
+        scores, ids = self._index.search(normalized, 1)
         vector_id = int(ids[0][0])
-        return self._id_to_roll_no[vector_id], float(scores[0][0])
+        return self._id_to_roll_no.get(vector_id), float(scores[0][0])
 
 gallery_index = GalleryIndex()
 

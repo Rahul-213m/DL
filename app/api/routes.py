@@ -28,6 +28,28 @@ async def image_bytes(upload: UploadFile) -> bytes:
     except Exception: raise HTTPException(422, "Upload is not a valid image")
     return data
 
+def extract_enrollment_face(faces: list) -> tuple[bool, any, str]:
+    """Extract single or dominant face for enrollment."""
+    valid_faces = [
+        f for f in faces
+        if (f.bbox[2] - f.bbox[0]) >= settings.min_face_size_px
+        and (f.bbox[3] - f.bbox[1]) >= settings.min_face_size_px
+    ]
+    if not valid_faces:
+        return False, None, "no face detected above minimum size"
+    if len(valid_faces) == 1:
+        return True, valid_faces[0], ""
+    sorted_faces = sorted(
+        valid_faces,
+        key=lambda f: (f.bbox[2] - f.bbox[0]) * (f.bbox[3] - f.bbox[1]),
+        reverse=True
+    )
+    largest_area = (sorted_faces[0].bbox[2] - sorted_faces[0].bbox[0]) * (sorted_faces[0].bbox[3] - sorted_faces[0].bbox[1])
+    second_area = (sorted_faces[1].bbox[2] - sorted_faces[1].bbox[0]) * (sorted_faces[1].bbox[3] - sorted_faces[1].bbox[1])
+    if largest_area >= 2.5 * second_area:
+        return True, sorted_faces[0], ""
+    return False, None, f"multiple ambiguous faces detected ({len(valid_faces)})"
+
 @router.post("/students/enroll", status_code=status.HTTP_201_CREATED)
 async def enroll(roll_no: str = Form(...), name: str = Form(...), images: list[UploadFile] = File(...), db: Session = Depends(get_db)):
     if not 8 <= len(images) <= 15: raise HTTPException(422, "Enrollment requires 8–15 images")
@@ -38,8 +60,9 @@ async def enroll(roll_no: str = Form(...), name: str = Form(...), images: list[U
         image = np.asarray(Image.open(io.BytesIO(data)).convert("RGB"))
         try: faces = recognizer.detect(image)
         except Exception as exc: log.exception("enrollment inference failed"); raise HTTPException(503, "Face recognition model unavailable") from exc
-        if len(faces) != 1: raise HTTPException(422, f"Image {index}: expected exactly one face; detected {len(faces)}")
-        processed.append((data, faces[0].embedding))
+        ok, face, reason = extract_enrollment_face(faces)
+        if not ok: raise HTTPException(422, f"Image {index}: {reason}")
+        processed.append((data, face.embedding))
     student=Student(roll_no=roll_no, name=name); db.add(student); db.flush()
     for data, embedding in processed:
         path=storage.save(data, f"enrollment/{roll_no}"); append_gallery(db, roll_no, embedding, path, "enrollment")
@@ -61,25 +84,33 @@ def import_enrollment_folders(db: Session = Depends(get_db)):
         if db.get(Student, roll_no):
             skipped.append({"roll_no": roll_no, "reason": "student already exists"})
             continue
-        if not 8 <= len(image_paths) <= 15:
-            skipped.append({"roll_no": roll_no, "reason": "requires 8–15 supported images", "image_count": len(image_paths)})
+        if len(image_paths) < 8:
+            skipped.append({"roll_no": roll_no, "reason": "requires at least 8 supported images", "image_count": len(image_paths)})
             continue
 
         processed = []
-        try:
-            for index, image_path in enumerate(image_paths, 1):
+        for index, image_path in enumerate(image_paths, 1):
+            if len(processed) >= 15:
+                break
+            try:
                 data = image_path.read_bytes()
                 if not data or len(data) > settings.max_upload_bytes:
-                    raise ValueError(f"Image {index}: invalid or oversized image")
+                    continue
                 Image.open(io.BytesIO(data)).verify()
                 image = np.asarray(Image.open(io.BytesIO(data)).convert("RGB"))
                 faces = recognizer.detect(image)
-                if len(faces) != 1:
-                    raise ValueError(f"Image {index}: expected exactly one face; detected {len(faces)}")
-                processed.append((data, faces[0].embedding))
-        except Exception as exc:
-            log.exception("folder enrollment failed", extra={"roll_no": roll_no})
-            skipped.append({"roll_no": roll_no, "reason": str(exc)})
+                ok, face, _ = extract_enrollment_face(faces)
+                if ok:
+                    processed.append((data, face.embedding))
+            except Exception as exc:
+                log.debug("image skipped in folder enrollment", extra={"roll_no": roll_no, "image": image_path.name, "error": str(exc)})
+                continue
+
+        if len(processed) < 8:
+            skipped.append({
+                "roll_no": roll_no,
+                "reason": f"only {len(processed)} valid face images extracted (minimum 8 required from {len(image_paths)} files)"
+            })
             continue
 
         try:
@@ -150,30 +181,48 @@ def resolve(review_id: int, body: ResolveReview, db: Session = Depends(get_db)):
     db.commit()
     return {"review_id":review_id,"roll_no":body.roll_no,"status":"resolved"}
 
-@router.post("/review/{review_id}/reopen")
-def reopen_review(review_id: int, db: Session = Depends(get_db)):
-    """Undo a manual resolution and return the face to the pending review queue."""
+@router.post("/review/{review_id}/dismiss")
+def dismiss_review(review_id: int, db: Session = Depends(get_db)):
+    """Dismiss an unidentified/false-positive face without adding it to the student gallery."""
     queue = db.get(ReviewQueue, review_id)
     if not queue:
         raise HTTPException(404, "review item not found")
-    if queue.status != "resolved":
-        raise HTTPException(409, "review item is not resolved")
+    if queue.status != "pending":
+        raise HTTPException(409, "review item is already resolved or dismissed")
+    event = db.get(AttendanceEvent, queue.event_id)
+    queue.status = "dismissed"
+    queue.resolved_at = datetime.now(timezone.utc)
+    if event:
+        event.match_type = "dismissed"
+    db.commit()
+    return {"review_id": review_id, "status": "dismissed"}
+
+@router.post("/review/{review_id}/reopen")
+def reopen_review(review_id: int, db: Session = Depends(get_db)):
+    """Undo a manual resolution or dismissal and return the face to the pending review queue."""
+    queue = db.get(ReviewQueue, review_id)
+    if not queue:
+        raise HTTPException(404, "review item not found")
+    if queue.status not in {"resolved", "dismissed"}:
+        raise HTTPException(409, "review item is not resolved or dismissed")
 
     event = db.get(AttendanceEvent, queue.event_id)
-    resolved_roll_no = queue.resolved_roll_no
-    gallery_entry = db.query(FaceGallery).filter_by(
-        roll_no=resolved_roll_no,
-        source_image_path=event.face_crop_path,
-        added_via="manual_label",
-    ).order_by(FaceGallery.gallery_id.desc()).first()
-    if gallery_entry:
-        student = db.get(Student, resolved_roll_no)
-        db.delete(gallery_entry)
-        if student:
-            student.gallery_embedding_count = max(0, student.gallery_embedding_count - 1)
+    if queue.status == "resolved":
+        resolved_roll_no = queue.resolved_roll_no
+        gallery_entry = db.query(FaceGallery).filter_by(
+            roll_no=resolved_roll_no,
+            source_image_path=event.face_crop_path,
+            added_via="manual_label",
+        ).order_by(FaceGallery.gallery_id.desc()).first()
+        if gallery_entry:
+            student = db.get(Student, resolved_roll_no)
+            db.delete(gallery_entry)
+            if student:
+                student.gallery_embedding_count = max(0, student.gallery_embedding_count - 1)
 
-    event.roll_no = None
-    event.match_type = "low_conf_confirm"
+    if event:
+        event.roll_no = None
+        event.match_type = "review"
     queue.status = "pending"
     queue.resolved_roll_no = None
     queue.resolved_by = None

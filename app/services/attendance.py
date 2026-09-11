@@ -31,9 +31,9 @@ def _detect_faces(image: np.ndarray) -> list[DetectedFace]:
     height, width = image.shape[:2]
     if max(height, width) <= settings.tiling_threshold_px:
         return recognizer.detect(image)
+    candidates: list[DetectedFace] = list(recognizer.detect(image))
     half_h, half_w = (height + 1) // 2, (width + 1) // 2
     overlap_h, overlap_w = int(half_h * settings.tiling_overlap_ratio), int(half_w * settings.tiling_overlap_ratio)
-    candidates: list[DetectedFace] = []
     for y in (0, max(0, height-half_h)):
         for x in (0, max(0, width-half_w)):
             y_end, x_end = min(height, y+half_h+overlap_h), min(width, x+half_w+overlap_w)
@@ -67,9 +67,10 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
         log.info("face match decided", extra={"stage": "match_decision", "session_id": session_id, "roll_no": result.roll_no, "score": result.score, "route": result.route})
         if result.route in {"review", "confirm"} and _is_duplicate(db, session_id, face.embedding):
             continue
+        match_type = "auto" if result.route == "auto" else ("low_conf_confirm" if result.route == "confirm" else "review")
         event = AttendanceEvent(session_id=session_id, roll_no=result.roll_no if result.route == "auto" else None,
             face_crop_path=crop_path, full_frame_path=frame_path, embedding=pack_embedding(face.embedding), bbox=f"{x1},{y1},{x2},{y2}",
-            confidence_score=result.score, match_type="auto" if result.route == "auto" else "low_conf_confirm")
+            confidence_score=result.score, match_type=match_type)
         db.add(event); db.flush(); created += 1
         if result.route != "auto":
             queue = ReviewQueue(event_id=event.event_id, proposed_roll_no=guess if result.route == "confirm" else None)
@@ -80,6 +81,15 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
     return created
 
 def bbox_context(event: AttendanceEvent) -> str:
+    if not event.full_frame_path:
+        return ""
+    context_dir = settings.storage_root / "review-context"
+    cached_path = context_dir / f"event_{event.event_id}.jpg"
+    if cached_path.exists():
+        return str(cached_path)
+    context_dir.mkdir(parents=True, exist_ok=True)
     image = Image.open(event.full_frame_path).convert("RGB")
-    draw = ImageDraw.Draw(image); draw.rectangle(tuple(map(int, event.bbox.split(","))), outline="red", width=4)
-    return storage.save(_jpg(image), "review-context")
+    draw = ImageDraw.Draw(image)
+    draw.rectangle(tuple(map(int, event.bbox.split(","))), outline="red", width=4)
+    image.save(cached_path, "JPEG", quality=90)
+    return str(cached_path)

@@ -76,10 +76,17 @@ def _friendly(status: int, detail) -> str:
     return mapping.get(status, f"Error {status}: {detail}")
 
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+
 def img_b64(path: str) -> str | None:
     """Return base64 data-URI for a local image path, or None if missing."""
-    p = Path(path) if path else None
-    if p and p.exists():
+    if not path:
+        return None
+    p = Path(path)
+    if not p.is_absolute():
+        p = PROJECT_ROOT / p
+    if p.exists():
         mime = "image/jpeg" if p.suffix.lower() in {".jpg", ".jpeg"} else "image/png"
         return f"data:{mime};base64,{base64.b64encode(p.read_bytes()).decode()}"
     return None
@@ -161,7 +168,7 @@ with st.sidebar:
     for key, label, disabled in steps:
         done = key == "enroll" or (session_ready and key != "session")
         icon = "✅" if done else "⏳"
-        if st.button(f"{icon} {label}", disabled=disabled, use_container_width=True, key=f"nav_{key}"):
+        if st.button(f"{icon} {label}", disabled=disabled, width="stretch", key=f"nav_{key}"):
             st.session_state.step = key
             st.rerun()
 
@@ -169,10 +176,10 @@ with st.sidebar:
         st.caption(f"Active session: **{st.session_state.session_id}**")
 
     st.divider()
-    if st.button("🎚️ Threshold Playground", use_container_width=True):
+    if st.button("🎚️ Threshold Playground", width="stretch"):
         st.session_state.step = "threshold"
         st.rerun()
-    if st.button("📜 Session History", use_container_width=True):
+    if st.button("📜 Session History", width="stretch"):
         st.session_state.step = "history"
         st.rerun()
 
@@ -347,12 +354,12 @@ elif step == "review":
             with c_crop:
                 st.caption("Detected face")
                 uri = img_b64(review.get("face_crop_path", ""))
-                st.image(uri, use_container_width=True) if uri else st.info("Crop not available")
+                st.image(uri) if uri else st.info("Crop not available")
 
             with c_frame:
                 st.caption("Full frame context")
                 uri2 = img_b64(review.get("boxed_frame_path", ""))
-                st.image(uri2, use_container_width=True) if uri2 else st.info("Frame not available")
+                st.image(uri2) if uri2 else st.info("Frame not available")
 
             with c_action:
                 st.caption("Resolve")
@@ -382,13 +389,15 @@ elif step == "review":
                             st.error(data)
 
                 if skipped:
-                    ok, _ = api("post", f"/review/{rid}/resolve",
-                                json={"roll_no": f"UNKNOWN_{rid}", "resolved_by": operator})
+                    ok, _ = api("post", f"/review/{rid}/dismiss")
                     if ok:
+                        st.session_state.undo_stack.append(
+                            {"review_id": rid, "roll_no": "Dismissed (Unidentified)", "ts": time.time()}
+                        )
                         st.session_state.reviews = [
                             r for r in st.session_state.reviews if r["review_id"] != rid
                         ]
-                        st.info("Marked as unidentified.")
+                        st.info("Face dismissed as unidentified/false detection.")
                         st.rerun()
                     else:
                         st.error(_)
@@ -427,6 +436,43 @@ elif step == "results":
             st.subheader("❌ Absent")
             for r in sorted(absent_set):
                 st.write(r)
+
+    st.divider()
+    st.subheader("🔍 Visual Evidence Query")
+    st.caption("Verify student attendance with the actual face image captured during this session.")
+    q_col1, q_col2 = st.columns([3, 1])
+    with q_col1:
+        selected_roll = st.text_input("Enter Student Roll Number to Query", value=sorted(enrolled_set)[0] if (ok2 and enrolled_set) else "")
+    with q_col2:
+        st.write("")
+        st.write("")
+        check_evidence = st.button("Query Evidence", type="primary")
+
+    if selected_roll and check_evidence:
+        ok_q, res = api("get", f"/session/{sid}/query/{selected_roll.strip()}")
+        if ok_q:
+            if res.get("status") == "present":
+                ev = res.get("evidence", {})
+                st.success(f"Student **{selected_roll}** was marked **PRESENT** (Match: `{ev.get('match_type')}`, Confidence: `{ev.get('confidence_score', 0):.3f}`)")
+                ec1, ec2 = st.columns(2)
+                with ec1:
+                    st.caption("Actual Face Captured in Class")
+                    uri_face = img_b64(ev.get("face_crop_path"))
+                    if uri_face:
+                        st.image(uri_face, width=250)
+                    else:
+                        st.info("Face crop not available on disk")
+                with ec2:
+                    st.caption("Full Classroom Frame")
+                    uri_frame = img_b64(ev.get("full_frame_path"))
+                    if uri_frame:
+                        st.image(uri_frame)
+                    else:
+                        st.info("Full frame not available on disk")
+            else:
+                st.warning(f"Student **{selected_roll}** is marked **ABSENT** — no matching face detected in this session.")
+        else:
+            st.error(res)
 
     st.divider()
     col_end, col_snap = st.columns(2)
