@@ -1,0 +1,31 @@
+HOW TO RUN — AI Classroom Attendance System
+===========================================
+
+STEP 1 — Activate the virtual environment
+------------------------------------------
+cd ~/Documents/DL_PROJECT
+source .venv/bin/activate
+
+
+STEP 2 — Start the API server (Terminal 1)
+------------------------------------------
+uvicorn app.main:app --reload
+
+API is now running at:  http://127.0.0.1:8000
+Swagger docs at:        http://127.0.0.1:8000/docs
+
+
+STEP 3 — Start the Tester UI (Terminal 2, same folder + venv)
+--------------------------------------------------------------
+streamlit run ui/app.py
+
+Open in browser:  http://localhost:8501   ← THIS is the UI
+
+
+NOTES
+-----
+- Do NOT open http://localhost:8000 in the browser — that is the raw API
+  and will show {"detail":"Not Found"} at the root. Use port 8501.
+- API Key (for the UI sidebar): changeme-dev-key  (matches .env)
+- On first capture, InsightFace downloads the buffalo_l model (~300 MB). Wait for it.
+- Both terminals must stay open while using the system.

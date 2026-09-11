@@ -1,0 +1,22 @@
+alembic upgrade head
+uvicorn app.main:app --reload
+
+
+Set a real API_KEY in .env before using it outside local development.
+
+
+2. Open the API UI at http://localhost:8501.
+
+
+
+First time through the UI:
+
+1. Sidebar → API Key is already changeme-dev-key (matches .env) — click Test 
+connection to confirm ✓
+2. 1 · Enroll → put student photos in ENROLL_PHOTOS/<roll_no>/ (8–15 per folder),
+click Import enrollment folders
+3. 2 · Start Session → enter a class ID, click Start
+4. 3 · Capture → upload a group photo
+5. 4 · Review Queue → click Load pending reviews, resolve faces visually
+6. 5 · Results → see present/absent, end session
+

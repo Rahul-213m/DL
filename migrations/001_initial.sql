@@ -1,0 +1,2 @@
+-- Source of truth: migrations_alembic/versions/0001_initial_schema.py
+-- Apply schema changes with: alembic upgrade head

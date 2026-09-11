@@ -1,0 +1,12 @@
+[
+  {
+    "session_id": 3,
+    "ended_at": "2026-09-09T08:01:35.406705+00:00",
+    "high_threshold": "0.55",
+    "low_threshold": "0.35",
+    "enrolled": 1,
+    "present": 0,
+    "absent": 1,
+    "notes": ""
+  }
+]
