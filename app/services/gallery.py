@@ -1,7 +1,9 @@
+import logging
 import numpy as np
 import faiss
 from sqlalchemy.orm import Session
 from app.models.database import FaceGallery, Student
+log = logging.getLogger(__name__)
 
 def pack_embedding(embedding: np.ndarray) -> bytes:
     return np.asarray(embedding, dtype=np.float32).tobytes()
@@ -74,9 +76,24 @@ class GalleryIndex:
 gallery_index = GalleryIndex()
 
 def append_gallery(db: Session, roll_no: str, embedding: np.ndarray, source: str, via: str) -> FaceGallery:
+    """Persist an embedding to the DB (source of truth) and mirror it into FAISS.
+
+    The DB row is written first and is authoritative; the in-memory FAISS add is
+    best-effort. If the FAISS update fails (e.g. a dimension mismatch against an
+    existing index) we log it and rebuild the index from the DB instead of
+    discarding the durable row, so a correction can never be silently lost.
+    """
     student = db.get(Student, roll_no)
     if student is None: raise ValueError("student must exist before adding gallery entry")
     entry = FaceGallery(roll_no=roll_no, embedding=pack_embedding(embedding), source_image_path=source, added_via=via)
     db.add(entry); student.gallery_embedding_count += 1
-    db.flush(); gallery_index.add(roll_no, embedding)
+    db.flush()
+    try:
+        gallery_index.add(roll_no, embedding)
+    except Exception:
+        log.exception("FAISS incremental add failed; rebuilding index from DB", extra={"roll_no": roll_no, "via": via})
+        try:
+            gallery_index.rebuild(db)
+        except Exception:
+            log.exception("FAISS rebuild from DB failed; index will be rebuilt on next startup", extra={"roll_no": roll_no, "via": via})
     return entry

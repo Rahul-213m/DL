@@ -1,6 +1,6 @@
 # AI Classroom Attendance System
 
-A FastAPI + InsightFace system that marks attendance from group photos.  
+A FastAPI + InsightFace system that marks attendance from group photos.
 The face-recognition model is **never retrained** — you only add labeled photos and tune two number thresholds.
 
 ---
@@ -73,11 +73,16 @@ For every face that landed in the review queue, the UI shows you:
 - The full frame with a red bounding box showing where the face was
 - The confidence score and the system's best guess
 
-You type the correct roll number (or click "Not a match") and submit.  
+You type the correct roll number (or click "Not a match") and submit.
 When you resolve a face:
 - The embedding is **added to that student's gallery** — the system learns from your correction immediately
+- If the roll number is **not already enrolled**, a new `students` record is created on the spot (mid-semester enrollment via the review queue)
 - An **audit event** is written to the database permanently (cannot be deleted)
 - The FAISS index is updated in memory so the next capture benefits right away
+Resolutions are persisted in the **database** (`face_gallery`), which is the source of truth; FAISS is
+rebuilt from that table on startup. Resolution does **not** write a copy into `ENROLL_PHOTOS/<roll_no>/`
+— that folder is only an input for the one-time bulk `import-folders` step. A correction therefore
+survives a server restart even though nothing is added to `ENROLL_PHOTOS`.
 
 ### 4. Threshold Playground
 
