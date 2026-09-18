@@ -167,19 +167,37 @@ def resolve(review_id: int, body: ResolveReview, db: Session = Depends(get_db)):
     if not queue: raise HTTPException(404, "review item not found")
     if queue.status != "pending": raise HTTPException(409, "review item is already resolved")
     event=db.get(AttendanceEvent, queue.event_id)
+    if not event: raise HTTPException(404, "review item has no attendance event to resolve")
+    # A review can be resolved for a roll number with no prior enrollment (new student
+    # mid-semester): create the student row so append_gallery's FK is satisfied.
     student=db.get(Student, body.roll_no)
     if not student:
         student=Student(roll_no=body.roll_no, name=body.name or body.roll_no); db.add(student); db.flush()
     embedding=unpack_embedding(event.embedding)
-    append_gallery(db, body.roll_no, embedding, event.face_crop_path, "manual_label")
+    try:
+        entry=append_gallery(db, body.roll_no, embedding, event.face_crop_path, "manual_label")
+    except Exception as exc:
+        db.rollback()
+        log.exception("review resolution failed to persist gallery entry", extra={"review_id": review_id, "roll_no": body.roll_no})
+        raise HTTPException(500, "could not persist the corrected gallery entry") from exc
     event.roll_no = body.roll_no
     event.match_type = "manual_label"
     queue.status = "resolved"
     queue.resolved_roll_no = body.roll_no
     queue.resolved_by = body.resolved_by
     queue.resolved_at = datetime.now(timezone.utc)
-    db.commit()
-    return {"review_id":review_id,"roll_no":body.roll_no,"status":"resolved"}
+    try:
+        db.commit()
+    except Exception as exc:
+        db.rollback()
+        log.exception("review resolution commit failed", extra={"review_id": review_id, "roll_no": body.roll_no})
+        raise HTTPException(500, "could not commit the review resolution") from exc
+    entry_id, gallery_count = entry.gallery_id, student.gallery_embedding_count
+    log.info("review resolved", extra={"review_id": review_id, "roll_no": body.roll_no,
+                                       "user": body.resolved_by, "gallery_id": entry_id,
+                                       "gallery_embedding_count": gallery_count})
+    return {"review_id":review_id,"roll_no":body.roll_no,"status":"resolved",
+            "gallery_id":entry_id,"gallery_embedding_count":gallery_count}
 
 @router.post("/review/{review_id}/dismiss")
 def dismiss_review(review_id: int, db: Session = Depends(get_db)):
