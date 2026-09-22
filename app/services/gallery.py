@@ -1,4 +1,5 @@
 import logging
+from threading import RLock
 import numpy as np
 import faiss
 from sqlalchemy.orm import Session
@@ -17,6 +18,12 @@ class GalleryIndex:
         self._id_to_roll_no: dict[int, str] = {}
         self._roll_no_to_ids: dict[str, set[int]] = {}
         self._next_id = 0
+        self._lock = RLock()
+
+    @property
+    def size(self) -> int:
+        "Number of vectors currently held in the in-memory FAISS index."
+        return int(self._index.ntotal) if self._index is not None else 0
 
     @property
     def entries(self) -> list[tuple[str, np.ndarray]]:
@@ -48,30 +55,33 @@ class GalleryIndex:
         return self._index
 
     def rebuild(self, db: Session) -> None:
-        self.entries = []
-        for entry in db.query(FaceGallery).all():
-            vec = unpack_embedding(entry.embedding)
-            if self._index is not None and self._index.d != vec.shape[0]:
-                continue
-            self.add(entry.roll_no, vec)
+        with self._lock:
+            self.entries = []
+            for entry in db.query(FaceGallery).all():
+                vec = unpack_embedding(entry.embedding)
+                if self._index is not None and self._index.d != vec.shape[0]:
+                    continue
+                self.add(entry.roll_no, vec)
 
     def add(self, roll_no: str, embedding: np.ndarray) -> None:
-        vector = self._normalize(embedding)
-        vector_id = self._next_id
-        self._next_id += 1
-        self._ensure_index(vector.shape[1]).add_with_ids(vector, np.array([vector_id], dtype=np.int64))
-        self._id_to_roll_no[vector_id] = roll_no
-        self._roll_no_to_ids.setdefault(roll_no, set()).add(vector_id)
+        with self._lock:
+            vector = self._normalize(embedding)
+            vector_id = self._next_id
+            self._next_id += 1
+            self._ensure_index(vector.shape[1]).add_with_ids(vector, np.array([vector_id], dtype=np.int64))
+            self._id_to_roll_no[vector_id] = roll_no
+            self._roll_no_to_ids.setdefault(roll_no, set()).add(vector_id)
 
     def search(self, embedding: np.ndarray) -> tuple[str | None, float]:
-        if self._index is None or self._index.ntotal == 0:
-            return None, 0.0
-        normalized = self._normalize(embedding)
-        if self._index.d != normalized.shape[1]:
-            return None, 0.0
-        scores, ids = self._index.search(normalized, 1)
-        vector_id = int(ids[0][0])
-        return self._id_to_roll_no.get(vector_id), float(scores[0][0])
+        with self._lock:
+            if self._index is None or self._index.ntotal == 0:
+                return None, 0.0
+            normalized = self._normalize(embedding)
+            if self._index.d != normalized.shape[1]:
+                return None, 0.0
+            scores, ids = self._index.search(normalized, 1)
+            vector_id = int(ids[0][0])
+            return self._id_to_roll_no.get(vector_id), float(scores[0][0])
 
 gallery_index = GalleryIndex()
 
@@ -85,11 +95,16 @@ def append_gallery(db: Session, roll_no: str, embedding: np.ndarray, source: str
     """
     student = db.get(Student, roll_no)
     if student is None: raise ValueError("student must exist before adding gallery entry")
-    entry = FaceGallery(roll_no=roll_no, embedding=pack_embedding(embedding), source_image_path=source, added_via=via)
+    vector = np.asarray(embedding, dtype=np.float32).reshape(-1)
+    if vector.size == 0 or not np.all(np.isfinite(vector)):
+        raise ValueError("refusing to add an empty or non-finite embedding to the gallery")
+    if not source or not str(source).strip():
+        raise ValueError("gallery entries must record a real source image path")
+    entry = FaceGallery(roll_no=roll_no, embedding=pack_embedding(vector), source_image_path=source, added_via=via)
     db.add(entry); student.gallery_embedding_count += 1
     db.flush()
     try:
-        gallery_index.add(roll_no, embedding)
+        gallery_index.add(roll_no, vector)
     except Exception:
         log.exception("FAISS incremental add failed; rebuilding index from DB", extra={"roll_no": roll_no, "via": via})
         try:

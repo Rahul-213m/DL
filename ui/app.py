@@ -193,12 +193,12 @@ step = st.session_state.step
 if step == "enroll":
     st.title("1 · Enroll Students")
 
-    tab_folder, tab_manual = st.tabs(["📁 Folder Import", "📷 Manual Enroll"])
+    tab_folder, tab_manual, tab_manage = st.tabs(["📁 Folder Import", "📷 Manual Enroll", "🛠️ Manage & Repair"])
 
     with tab_folder:
         st.markdown(
-            "Place **8–15 single-face images** per student in `ENROLL_PHOTOS/<roll_no>/`, "
-            "then click **Import**. Existing students are skipped safely."
+            "Place **at least 8 single-face images** per student in `ENROLL_PHOTOS/<roll_no>/`, "
+            "then click **Import**. New images are always added to the database; local folders are capped at 15 photos."
         )
         if st.button("▶ Import enrollment folders", type="primary"):
             with st.spinner("Importing…"):
@@ -207,16 +207,17 @@ if step == "enroll":
                 imported = data.get("imported", [])
                 skipped = data.get("skipped", [])
                 rows = [
-                    {"Roll No": r["roll_no"], "Embeddings": r["gallery_embedding_count"], "Status": "✅ Imported"}
+                    {"Roll No": r["roll_no"], "Embeddings": r["gallery_embedding_count"],
+                     "Status": "✅ Created" if r.get("status") == "created" else "✅ Updated"}
                     for r in imported
                 ] + [
                     {"Roll No": r["roll_no"], "Embeddings": "—", "Status": f"⏭ {r['reason']}"}
                     for r in skipped
                 ]
                 if imported:
-                    st.success(f"Imported {len(imported)} student(s).")
+                    st.success(f"Imported or updated {len(imported)} student(s).")
                 else:
-                    st.info("No new students imported.")
+                    st.info("No folders were imported or updated.")
                 if rows:
                     st.table(rows)
             else:
@@ -245,6 +246,63 @@ if step == "enroll":
                     st.success(f"Enrolled **{roll}** with {data['gallery_embedding_count']} embeddings.")
                 else:
                     st.error(data)
+
+    with tab_manage:
+        st.markdown(
+            "See the face gallery stored for each student and whether the **database and the "
+            "`ENROLL_PHOTOS/` folder agree**. No SQL knowledge required."
+        )
+        ok_st, students = api("get", "/students")
+        if ok_st and students:
+            st.dataframe(
+                [{"Roll No": s["roll_no"], "Name": s["name"],
+                  "Gallery embeddings": s["gallery_embedding_count"]} for s in students],
+                width="stretch",
+            )
+        elif ok_st:
+            st.info("No students enrolled yet.")
+        else:
+            st.error(students)
+
+        st.divider()
+        st.subheader("Consistency check")
+        st.caption("Verifies that every student's embeddings and their ENROLL_PHOTOS folder line up.")
+        if st.button("🔍 Run consistency check"):
+            ok_c, report = api("get", "/system/consistency")
+            if ok_c:
+                if report.get("consistent"):
+                    st.success("Database and enrollment folders are consistent.")
+                else:
+                    st.warning(f"{report['issue_count']} issue(s) found:")
+                    st.table([{"Roll No": i["roll_no"], "Type": i["type"], "Detail": i["detail"]}
+                              for i in report["issues"]])
+            else:
+                st.error(report)
+
+        st.subheader("Repair")
+        col_rep, col_reimp = st.columns(2)
+        with col_rep:
+            st.caption("Recompute every student's embedding count from the gallery and re-index FAISS.")
+            if st.button("🧹 Repair counts & re-index"):
+                ok_r, res = api("post", "/system/repair")
+                if ok_r:
+                    st.success(f"Repaired {res.get('repaired_count', 0)} student(s). Gallery index size: {res.get('gallery_size')}.")
+                else:
+                    st.error(res)
+        with col_reimp:
+            st.caption("Rebuild one student's gallery from the photos in ENROLL_PHOTOS/<roll_no>/.")
+            reimp_roll = st.text_input("Roll number to re-import", key="reimp_roll")
+            if st.button("♻️ Re-import this student"):
+                if not reimp_roll.strip():
+                    st.error("Enter a roll number.")
+                else:
+                    ok_i, res = api("post", f"/students/{reimp_roll.strip()}/reimport")
+                    if ok_i:
+                        st.success(f"Re-imported **{res['roll_no']}** with {res['gallery_embedding_count']} embeddings.")
+                        if res.get("rejected_images"):
+                            st.info(f"Skipped {len(res['rejected_images'])} image(s) with no usable face.")
+                    else:
+                        st.error(res)
 
 # ════════════════════════════════════════════════════════════════════════════════
 # STEP 2 — START SESSION
@@ -301,6 +359,7 @@ elif step == "capture":
 elif step == "review":
     sid = st.session_state.session_id
     st.title("4 · Review Queue")
+    st.caption("Pending identity decisions stay visible until an operator resolves or dismisses them.")
 
     # Expire undo items older than 10 s
     now = time.time()
@@ -308,16 +367,29 @@ elif step == "review":
 
     col_load, col_info = st.columns([1, 3])
     with col_load:
-        if st.button("🔄 Load pending reviews", type="primary"):
-            ok, data = api("get", f"/session/{sid}/review-queue")
-            if ok:
-                st.session_state.reviews = data
-            else:
-                st.error(data)
+        show_all_sessions = st.checkbox(
+            "Include earlier sessions",
+            value=True,
+            help="Shows unresolved reviews from all sessions, so no face is hidden after starting a new session.",
+        )
+        if st.button("🔄 Refresh reviews", type="primary"):
+            st.session_state.reviews = []
+
+    # Fetch on entry and every refresh/rerun rather than relying on a stale
+    # session-state list. A capture is processed asynchronously, so this makes
+    # newly-created review items appear as soon as the operator opens this step.
+    queue_path = "/review-queue" if show_all_sessions else f"/session/{sid}/review-queue"
+    ok, data = api("get", queue_path)
+    if ok:
+        st.session_state.reviews = data
+    else:
+        st.error(data)
     with col_info:
         n = len(st.session_state.reviews)
         if n:
             st.info(f"{n} face(s) awaiting review.")
+        else:
+            st.success("No pending reviews.")
 
     # Undo banners
     for undo_item in list(st.session_state.undo_stack):
@@ -344,9 +416,15 @@ elif step == "review":
         score = review.get("confidence_score", 0.0)
         best_guess = review.get("best_guess") or ""
         score_icon = "🟢" if score >= 0.55 else ("🟡" if score >= 0.35 else "🔴")
+        is_unknown = not best_guess
+        review_title = (
+            f"Could not identify this person — score {score:.3f}"
+            if is_unknown
+            else f"Is this {best_guess}? — score {score:.3f}"
+        )
 
         with st.expander(
-            f"{score_icon} Review #{rid} — score {score:.3f}  |  best guess: {best_guess or 'none'}",
+            f"{score_icon} Session {review.get('session_id', sid)} · Review #{rid} — {review_title}",
             expanded=True
         ):
             c_crop, c_frame, c_action = st.columns([1, 2, 2])
@@ -362,12 +440,26 @@ elif step == "review":
                 st.image(uri2) if uri2 else st.info("Frame not available")
 
             with c_action:
-                st.caption("Resolve")
+                if is_unknown:
+                    st.warning("I couldn't identify this person. Who is this person?")
+                else:
+                    st.info(
+                        f"The model's best guess is **{best_guess}** at {score:.3f}. "
+                        "Confirm it only if the face is actually that student; otherwise enter the correct person below."
+                    )
                 with st.form(f"resolve_{rid}"):
-                    roll_input = st.text_input("Roll number", value=best_guess, key=f"roll_{rid}")
+                    roll_input = st.text_input(
+                        "Who is this person? Enter their roll number",
+                        value=best_guess,
+                        key=f"roll_{rid}",
+                    )
+                    name_input = st.text_input(
+                        "Name (optional; used if this is a new student)",
+                        key=f"name_{rid}",
+                    )
                     operator = st.text_input("Your name / ID", value="operator", key=f"op_{rid}")
                     col_ok, col_skip = st.columns(2)
-                    confirmed = col_ok.form_submit_button("✅ Correct", type="primary")
+                    confirmed = col_ok.form_submit_button("✅ Save identity", type="primary")
                     skipped = col_skip.form_submit_button("❌ Not a match")
 
                 if confirmed:
@@ -375,7 +467,8 @@ elif step == "review":
                         st.error("Enter a roll number.")
                     else:
                         ok, data = api("post", f"/review/{rid}/resolve",
-                                       json={"roll_no": roll_input.strip(), "resolved_by": operator})
+                                       json={"roll_no": roll_input.strip(), "name": name_input.strip() or None,
+                                             "resolved_by": operator})
                         if ok:
                             st.session_state.undo_stack.append(
                                 {"review_id": rid, "roll_no": roll_input.strip(), "ts": time.time()}
@@ -469,6 +562,11 @@ elif step == "results":
                         st.image(uri_frame)
                     else:
                         st.info("Full frame not available on disk")
+            elif res.get("status") == "pending":
+                st.info(
+                    f"Student **{selected_roll}** has an **unconfirmed** match awaiting review — "
+                    "not yet counted as present. Resolve it in step 4."
+                )
             else:
                 st.warning(f"Student **{selected_roll}** is marked **ABSENT** — no matching face detected in this session.")
         else:
