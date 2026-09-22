@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: attendance
       POSTGRES_USER: attendance
-      POSTGRES_PASSWORD: attendance_dev_only
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the deployment environment}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U attendance"]
       interval: 5s
@@ -13,8 +13,10 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql+psycopg://attendance:attendance_dev_only@db:5432/attendance
+      DATABASE_URL: postgresql+psycopg://attendance:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the deployment environment}@db:5432/attendance
       STORAGE_ROOT: /app/data
+      ENVIRONMENT: production
+      API_KEY: ${API_KEY:?Set API_KEY to a long random secret in the deployment environment}
     ports: ["8000:8000"]
     volumes: ["./data:/app/data"]
     depends_on:

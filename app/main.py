@@ -5,6 +5,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 from app.api.routes import router
 from app.core.logging import configure_logging
 from app.models.database import SessionLocal, init_db
+from app.pipeline.recognizer import recognizer
 from app.services.gallery import gallery_index
 
 configure_logging()
@@ -18,6 +19,9 @@ async def lifespan(_: FastAPI):
         gallery_index.rebuild(db)
     finally:
         db.close()
+    # Fail at startup rather than accepting a capture and discovering a missing
+    # or incompatible face model only after an operator has uploaded a frame.
+    recognizer.warmup()
     yield
 
 
@@ -38,4 +42,4 @@ def custom_docs():
     )
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {"status": "ok", "gallery_size": gallery_index.size}

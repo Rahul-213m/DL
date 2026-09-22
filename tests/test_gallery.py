@@ -73,8 +73,11 @@ def test_review_resolution_for_new_roll_persists_across_restart(monkeypatch, tmp
         assert resolved.status_code == 200
         assert resolved.json()["gallery_embedding_count"] == 1
 
-        # R4 folder must NOT be created in ENROLL_PHOTOS (resolution is DB/FAISS only).
-        assert not (settings.enrollment_photos_root / "R4").exists()
+        # A resolution must also mirror the confirming image into ENROLL_PHOTOS/R4/
+        # so the on-disk enrollment folder stays in sync with the database.
+        r4_folder = settings.enrollment_photos_root / "R4"
+        assert r4_folder.is_dir()
+        assert len([p for p in r4_folder.iterdir() if p.is_file()]) >= 1
 
     db = SessionLocal()
     assert db.get(Student, "R4") is not None
@@ -91,4 +94,23 @@ def test_review_resolution_for_new_roll_persists_across_restart(monkeypatch, tmp
     gallery_index.rebuild(db)
     matched, _score = gallery_index.search(np.array([.5, .8660254], dtype=np.float32))
     assert matched == "R4"
+    db.close()
+def test_append_gallery_rejects_degenerate_embeddings_and_blank_source():
+    """Placeholder/NaN/blank-source entries must never poison the gallery or FAISS."""
+    import numpy as np
+    import pytest
+
+    Base.metadata.drop_all(engine); Base.metadata.create_all(engine)
+    db = SessionLocal(); db.add(Student(roll_no="R1", name="One")); db.commit()
+
+    with pytest.raises(ValueError):
+        append_gallery(db, "R1", np.array([], dtype=np.float32), "path.jpg", "enrollment")
+    with pytest.raises(ValueError):
+        append_gallery(db, "R1", np.full(512, np.nan, dtype=np.float32), "path.jpg", "enrollment")
+    with pytest.raises(ValueError):
+        append_gallery(db, "R1", np.ones(512, dtype=np.float32), "  ", "enrollment")
+
+    db.rollback()
+    assert db.query(FaceGallery).filter_by(roll_no="R1").count() == 0
+    assert db.get(Student, "R1").gallery_embedding_count == 0
     db.close()
