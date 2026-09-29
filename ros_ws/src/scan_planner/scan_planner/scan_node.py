@@ -166,7 +166,7 @@ class ScanPlannerNode(Node):
         """
         try:
             return self._execute_inner(goal_handle)
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:  # noqa: BLE001 - last line of defence; a blank abort is worse
             self.get_logger().error(f"sweep failed: {type(exc).__name__}: {exc}")
             result = RunScanSequence.Result()
             result.scan_id = self._scan_id

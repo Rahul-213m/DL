@@ -206,7 +206,7 @@ class ServoControllerNode(Node):
         self._cancelled.set()
         return CancelResponse.ACCEPT
 
-    def _execute_goto(self, goal_handle) -> None:
+    def _execute_goto(self, goal_handle) -> GoToAngle.Result:
         """Move to a commanded angle with ramping, limits and stall detection."""
         goal = goal_handle.request
         # rclpy's ServerGoalHandle has no .feedback and no .result: the
@@ -341,14 +341,19 @@ class ServoControllerNode(Node):
 
             time.sleep(dt)
 
-        # rclpy shut down mid-move.
+        # rclpy shut down mid-move. Returning `result` is not optional: an
+        # execute callback that falls off the end returns None, and the caller
+        # then has no result message at all. That is the "blank abort" this
+        # project keeps producing by accident, and RET503's blanket ignore was
+        # hiding it in plain sight.
         self._driver.stop()
         result.success = False
         result.error_message = "node shut down during the move"
         result.fault_code = FAULT_CANCELLED
         goal_handle.canceled()
+        return result
 
-    def _execute_home(self, goal_handle) -> None:
+    def _execute_home(self, goal_handle) -> Home.Result:
         """Establish the zero reference."""
         goal = goal_handle.request
         # rclpy's ServerGoalHandle has no .feedback and no .result: the
@@ -403,7 +408,7 @@ class ServoControllerNode(Node):
             )
         return result
 
-    def _execute_scan_refused(self, goal_handle) -> None:
+    def _execute_scan_refused(self, goal_handle) -> RunScanSequence.Result:
         """Refuse a scan goal with a real answer.
 
         The scan planner owns scan execution. Accepting the goal and doing

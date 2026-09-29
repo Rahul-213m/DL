@@ -417,3 +417,45 @@ Confirm which app (if any) the operator uses, and whether it exposes:
 If the app cannot lock exposure, the same student is captured at different
 brightness in different angles, which degrades embedding consistency. If
 nothing can be locked, that is a hardware finding, not a software problem.
+
+
+---
+
+## W5 review: real photographs were tracked, with GPS
+
+`dummy_test/IMG_*.jpg` were tracked in git since commit `bced5f1` (before this
+hardening work). They are real classroom captures from a **vivo T1 5G**,
+4608x3456, and their EXIF contains **GPS coordinates**.
+
+Why this matters beyond tidiness:
+
+- GPS in a photograph of a classroom is location data about a school, and
+  indirectly about the pupils in it. Under DPDP 2023 that is personal data of
+  a class of children.
+- Consent is the product's core control (see W9), and a photo committed before
+  any consent record existed cannot satisfy it.
+
+**Done in W5 review:** removed from the index with `git rm --cached`. The four
+files remain on disk, untouched. `.gitignore` now excludes `dummy_test/`, any
+`**/images/` directory, and `*.jpg`/`*.png`/`*.onnx`, so a repeat of this
+mistake shows up in `git status` instead of a commit.
+
+**Still needs a human** (destructive, therefore not done here):
+
+1. **Purge these paths from history** -- `git filter-repo --path dummy_test
+   --invert-paths` -- then force-push and have every clone re-cloned. The files
+   are still recoverable from commit `bced5f1` and its ancestors until this
+   is done. This is the same history-purge item as the `.env` history.
+2. **Decide what to do with the photos themselves.** Are they real students?
+   If yes: confirm consent, or delete them. If test subjects: say so, so the
+   distinction is not re-litigated later. This is the question W9 cannot
+   answer for us.
+3. **Rotate every credential** ever committed (see the `.env` item above).
+
+### One useful fact, recorded so it is not rediscovered
+
+The operator's phone is a **vivo T1 5G, still resolution 4608x3456**. That
+matches the `frame_width_px: 4608` default already in the edge config, so the
+pixels-per-face model is being computed for a real device's resolution. It is
+still a MODEL: nobody has measured a face at the back row of a real room. That
+measurement is what `docs/hardware/bringup.md` must produce.
