@@ -6,6 +6,9 @@ uint8 CONNECTING=1
 uint8 READY=2
 uint8 CAPTURING=3
 uint8 ERROR=4
+# Up and answering, but only after repeated failures. Distinct from CONNECTING
+# because an operator needs to see a warning BEFORE a scan fails outright.
+uint8 DEGRADED=5
 
 uint8 state
 string detail

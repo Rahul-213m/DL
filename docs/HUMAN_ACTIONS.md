@@ -376,3 +376,44 @@ I will keep labelling them UNVERIFIED rather than inventing them.
 6. **#7 real classroom data** — unblocks every accuracy claim.
 7. **#2 lawyer** — before commercial launch, not before pilot.
 8. **#8 product decisions** — needed by W6/W7, defaults will hold until then.
+
+
+---
+
+## Added during W5: the hardware decision this software forces
+
+### 5d. THE CAMERA NEEDS A MOTORISED OPTICAL TELEPHOTO
+
+Not a preference. At 70 deg FOV and 4608 px, a phone produces about 62 px of
+face at 8 m; recognition needs 80 px. The back of a lecture hall is below the
+floor at 1x, and **digital zoom does not fix it**.
+
+Confirm before ordering:
+
+- [ ] Does the candidate lens have a **motorised optical** telephoto
+      (roughly 3x or 4x), or only digital zoom? Digital is worth nothing here.
+- [ ] Is the main camera wide enough NOT to be the ultra-wide? A 120 deg FOV
+      gives 17 px at 12 m: undetectable.
+- [ ] What is the **exact horizontal FOV of the still**, not the equivalent
+      35 mm figure? The model needs the real number.
+- [ ] Can focus be **locked** after focusing? An AF search blurs the first
+      frames of every sweep.
+
+Then, on the real device, in the real room: seat one person at the back row,
+capture a still, measure face width in pixels, and compare against
+`docs/hardware/pixels_per_face.md`. **Replace the model's numbers with the
+measurement** in both that document and `SimulatedCamera`.
+
+### 5e. The camera's actual control interface
+
+`IpWebcamDriver` assumes the Android "IP Webcam" app and is **unverified**.
+Confirm which app (if any) the operator uses, and whether it exposes:
+
+- [ ] A full-resolution still endpoint (not just a video stream)
+- [ ] A zoom command, and whether it is optical or digital
+- [ ] A focus lock
+- [ ] An exposure lock
+
+If the app cannot lock exposure, the same student is captured at different
+brightness in different angles, which degrades embedding consistency. If
+nothing can be locked, that is a hardware finding, not a software problem.

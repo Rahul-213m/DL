@@ -209,8 +209,14 @@ class ServoControllerNode(Node):
     def _execute_goto(self, goal_handle) -> None:
         """Move to a commanded angle with ramping, limits and stall detection."""
         goal = goal_handle.request
-        feedback = goal_handle.feedback
-        result = goal_handle.result
+        # rclpy's ServerGoalHandle has no .feedback and no .result: the
+        # feedback message is constructed here and published with
+        # publish_feedback(), and the result is RETURNED after succeed().
+        # Using goal_handle.feedback raised AttributeError inside the action
+        # server, which aborted every move -- and the unit tests did not catch
+        # it because they exercised the driver, not the ROS action wiring.
+        feedback = GoToAngle.Feedback()
+        result = GoToAngle.Result()
 
         with self._lock:
             if self._estop:
@@ -218,13 +224,13 @@ class ServoControllerNode(Node):
                 result.error_message = "emergency stop is engaged; release it with /stand/clear_estop"
                 result.fault_code = FAULT_CANCELLED
                 goal_handle.succeed()
-                return
+                return result
             if goal.require_homed and not self._homed:
                 result.success = False
                 result.error_message = "not homed; call /stand/home first"
                 result.fault_code = FAULT_NOT_HOMED
                 goal_handle.succeed()
-                return
+                return result
 
             requested = float(goal.pan_angle_deg)
             target = self._pan_limits.clamp(requested)
@@ -275,7 +281,7 @@ class ServoControllerNode(Node):
                 result.clamped = clamped
                 result.duration_ms = (time.monotonic() - started) * 1000.0
                 goal_handle.succeed()
-                return
+                return result
 
             if phase is Phase.STALLED:
                 self.get_logger().error(
@@ -293,7 +299,7 @@ class ServoControllerNode(Node):
                 result.fault_code = FAULT_STALL
                 result.reached_pan_deg = reached
                 goal_handle.succeed()
-                return
+                return result
 
             if self._cancelled.is_set():
                 profile.cancel()
@@ -305,7 +311,7 @@ class ServoControllerNode(Node):
                 result.fault_code = FAULT_CANCELLED
                 result.reached_pan_deg = reached
                 goal_handle.canceled()
-                return
+                return result
 
             if time.monotonic() > deadline:
                 self._driver.stop()
@@ -317,7 +323,7 @@ class ServoControllerNode(Node):
                 result.fault_code = FAULT_TIMEOUT
                 result.reached_pan_deg = reached
                 goal_handle.succeed()
-                return
+                return result
 
             # Tell the driver where we want to be. On a no-feedback mechanism
             # this is the ONLY way it learns the target.
@@ -331,7 +337,7 @@ class ServoControllerNode(Node):
                 result.error_message = str(exc)
                 result.fault_code = FAULT_DRIVER
                 goal_handle.succeed()
-                return
+                return result
 
             time.sleep(dt)
 
@@ -345,8 +351,14 @@ class ServoControllerNode(Node):
     def _execute_home(self, goal_handle) -> None:
         """Establish the zero reference."""
         goal = goal_handle.request
-        feedback = goal_handle.feedback
-        result = goal_handle.result
+        # rclpy's ServerGoalHandle has no .feedback and no .result: the
+        # feedback message is constructed here and published with
+        # publish_feedback(), and the result is RETURNED after succeed().
+        # Using goal_handle.feedback raised AttributeError inside the action
+        # server, which aborted every move -- and the unit tests did not catch
+        # it because they exercised the driver, not the ROS action wiring.
+        feedback = GoToAngle.Feedback()
+        result = GoToAngle.Result()
         self._cancelled.clear()
 
         with self._lock:
@@ -371,7 +383,7 @@ class ServoControllerNode(Node):
             result.error_message = str(exc)
             result.fault_code = FAULT_DRIVER
             goal_handle.succeed()
-            return
+            return result
 
         with self._lock:
             self._homed = True
@@ -389,6 +401,7 @@ class ServoControllerNode(Node):
                 "home completed WITHOUT position feedback: this was a busy gesture at the "
                 "endstop, not a true home. The zero will drift with temperature."
             )
+        return result
 
     def _execute_scan_refused(self, goal_handle) -> None:
         """Refuse a scan goal with a real answer.
@@ -397,7 +410,7 @@ class ServoControllerNode(Node):
         nothing would leave an operator watching a progress bar that never
         moves, which is worse than a clear refusal.
         """
-        result = goal_handle.result
+        result = RunScanSequence.Result()
         result.success = False
         result.error_message = (
             "servo_controller does not run scans. Use the scan_planner's "
@@ -405,6 +418,7 @@ class ServoControllerNode(Node):
         )
         result.fault_code = "not_this_node"
         goal_handle.succeed()
+        return result
 
     # -- services --------------------------------------------------------
     def _on_set_calibration(self, request, response):

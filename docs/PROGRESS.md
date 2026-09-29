@@ -339,3 +339,85 @@ measurement on the sample images in `dummy_test/` and `ENROLL_PHOTOS/`.
 - **W4 auth needs the product decisions** (HUMAN_ACTIONS 8). Defaults will hold
   until answered: individual logins, multi-tenant cloud, no offline mandate.
 - **Nothing else is blocked.**
+
+---
+
+## W5 -- Edge ROS 2 workspace: PARTIALLY COMPLETE
+
+**Status: 6 of 8 packages complete and verified. A full end-to-end sweep does
+NOT yet run. Read "what is not done" before assuming it does.**
+
+### Verified working
+
+| Component | Evidence |
+|---|---|
+| 7 packages build | `./build.sh` -> "7 packages finished" |
+| 255 ROS tests pass | `colcon test` -> 255 tests, 0 failures, 0 skipped |
+| 330 cloud tests pass | unchanged from W4 |
+| Edge lint clean | separate `ros_ws/pyproject.toml` |
+| 4 nodes start together | `ros2 launch ... mode:=simulated` -> 0 crashes |
+| Live camera capture | real service round trip: 4608x3456, sha256 returned, sharpness measured |
+| Live servo move | real action round trip: -18.5 deg in 504 ms, `SUCCEEDED` |
+
+`ros_ws/src/attendance_mocks/` preserves the original package; its 57 tests
+still pass.
+
+### The hardware finding that drives the design
+
+At 70 deg FOV and 4608 px, a phone produces **62 px of face at 8 m** against an
+80 px identification floor. The back of a lecture hall cannot be identified at
+1x, and **digital zoom cannot fix it** -- interpolation adds no information and
+smooths exactly the detail a face embedding keys on. The camera needs a
+motorised **optical** telephoto. Reproduce with
+`ros2 run scan_planner show_face_sizes --room 12 9`.
+
+This is derived from a documented model, not measured on hardware. The inputs
+are plausible phone values. See `docs/hardware/pixels_per_face.md`.
+
+### What is NOT done
+
+1. **`scan_planner` cannot reach the servo action server.** `wait_for_server`
+   returns false inside the action execute callback even though the server is
+   up and answers the CLI. Suspected: rclpy graph-event delivery is not
+   processed while a callback group is saturated. Until this is fixed, a sweep
+   aborts with `servo_unavailable` before moving, so **no sweep has ever
+   completed end to end**.
+2. **No edge face detector.** `assess_frame` needs face boxes, so the edge
+   currently checks resolution and sharpness only, and the cloud remains the
+   authoritative quality and identity gate. Calling `assess_frame` with an
+   empty box list would reject every frame and report zero captures while the
+   sweep looked healthy, so that is deliberately not done.
+3. **No rosbag fixtures** for the sweep.
+4. **The uploader has never run against a real API.** Its logic is unit
+   tested; no server was available.
+5. `IpWebcamDriver` is **unverified against any phone app**. The operator has
+   not confirmed which app they use.
+
+### Bugs found by the tests and by the end-to-end run
+
+Unit tests (11): the FOV/zoom validation used linear zoom instead of
+`atan`; the frame-gap had a spurious factor of two; the tele pass generated
+798 steps for a 12x9 m room; angles too distant to detect were never queued
+for a tele retake, so a 20x18 m room could not be scanned at all; wide-pass
+gating on the identification floor discarded the frames that show *where* to
+point the tele lens; `pending_count()` was inverted; `QueueFull` was
+unreachable because the just-enqueued capture was its own eviction candidate,
+so a too-small budget was silently exceeded; `httpx` is not present in a
+stock ROS Jazzy install, so the real-hardware camera path would have failed in
+a classroom.
+
+End-to-end run (8), none of which unit tests could have caught: every ROS
+action callback used `goal_handle.feedback` and `goal_handle.result`, which
+`ServerGoalHandle` does not have -- so **every move aborted instantly**; the
+`GoToAngle` result had `success` and `error_message` commented out in the
+`.action` file; `CaptureStill` put `sha256`/`metadata` in the *request* and
+`captured_at` where the caller had to invent it, so a hash could never be
+returned at all; `CaptureStatus` had no `DEGRADED` constant, silently folding
+a warning state into `CONNECTING`; `scan_planner` called `/servo/go_to_angle`
+but the servo registers `/stand/goto_angle`; the `edge_uploader` crashed on
+`/var/lib/attendance` in any non-root run.
+
+The pattern is worth stating plainly: **the driver logic was well tested and
+the ROS wiring was untested, and the wiring was where every integration bug
+was.** The servo package shipped in W5 part 1 with 55 passing tests and could
+not move the mechanism once.

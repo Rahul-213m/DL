@@ -1,0 +1,90 @@
+# Canonical edge configuration.
+#
+# Simulation-safe by default: `driver: simulated` everywhere, and the data
+# root is a temp directory. A classroom installer changes the values marked
+# [INSTALL], and nothing else.
+#
+# The values NOT marked [INSTALL] are physics, not preferences. Changing them
+# changes what the product believes about a room.
+
+/**:
+  ros__parameters:
+    log_level: "info"
+
+# ---------------------------------------------------------------- servo ----
+servo_controller:
+  ros__parameters:
+    driver: simulated              # [INSTALL] simulated | serial
+    serial_port: "/dev/ttyACM0"    # [INSTALL]
+    baud_rate: 115200
+
+    # Mechanical envelope. UNVERIFIED: these are conservative defaults, not
+    # measurements of anyone's servo. See docs/hardware/servo_selection.md.
+    pan_min_deg: -90.0
+    pan_max_deg: 90.0
+    max_speed_deg_per_s: 45.0
+    max_accel_deg_per_s2: 180.0
+    # A servo with no encoder cannot detect a stall. Setting this true without
+    # a position sensor makes the node refuse to claim one.
+    with_position_feedback: false  # [INSTALL]
+    stall_timeout_s: 2.0
+    watch_hdog: true
+    home_on_start: true            # [INSTALL] false if the mechanism is manually positioned
+
+# --------------------------------------------------------------- camera ----
+camera_bridge:
+  ros__parameters:
+    driver: simulated              # [INSTALL] simulated | ip_webcam
+    ip_webcam_host: "192.168.1.100" # [INSTALL] the phone's static IP
+    ip_webcam_port: 8080
+
+    capture_timeout_s: 10.0
+    lock_focus: true
+    lock_exposure: true
+    default_zoom: 1.0
+
+    max_reconnect_attempts: 0      # 0 = forever; a phone comes back
+    reconnect_base_delay_s: 0.5
+    reconnect_max_delay_s: 30.0
+    degraded_after_failures: 3
+
+    # OFF until measured on the real device. A wrong threshold rejects every
+    # frame and the scan produces nothing, which is worse than no threshold.
+    min_sharpness: 0.0
+
+    heartbeat_hz: 1.0
+
+# --------------------------------------------------------------- planner ----
+scan_planner:
+  ros__parameters:
+    # PLACEHOLDERS, not measurements. The operator has not supplied a room.
+    # docs/HUMAN_ACTIONS.md item 5c.
+    depth_m: 12.0
+    width_m: 9.0
+    camera_height_m: 2.4
+    camera_offset_x_m: 0.0
+    seat_pitch_m: 0.9
+    frame_width_px: 4608
+    time_budget_s: 300.0
+    min_detect_face_px: 30.0
+    min_identify_face_px: 80.0
+    # Must match what servo_controller registers. A mismatch surfaces as
+    # "servo_unavailable" at the start of every sweep.
+    servo_action: "/stand/goto_angle"
+    capture_service: "/camera/capture"
+    zoom_service: "/camera/set_zoom"
+
+# -------------------------------------------------------------- uploader ----
+edge_uploader:
+  ros__parameters:
+    data_root: "/var/lib/attendance"  # [INSTALL]
+    base_url: "https://attendance.example.com"  # [INSTALL]
+    tenant_id: "00000000-0000-0000-0000-000000000000"  # [INSTALL] provisioned
+    device_id: "unprovisioned"        # [INSTALL] provisioned
+
+    batch_size: 10
+    max_queue_bytes: 8589934592       # 8 GiB
+    max_attempts: 5
+    upload_interval_s: 30.0
+    # Never block the scan path on the network. The outbox is the buffer.
+    offline_grace_s: 300.0

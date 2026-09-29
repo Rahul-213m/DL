@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>attendance_bringup</name>
+  <version>2.0.0</version>
+  <description>
+    The canonical, integrated launch for the classroom edge: a real node set
+    and a fully simulated one, selected by a single argument.
+  </description>
+  <maintainer email="eng@example.invalid">Attendance Platform Team</maintainer>
+  <license>Apache-2.0</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>attendance_interfaces</exec_depend>
+  <exec_depend>servo_controller</exec_depend>
+  <exec_depend>camera_bridge</exec_depend>
+  <exec_depend>scan_planner</exec_depend>
+  <exec_depend>edge_uploader</exec_depend>
+
+  <export><build_type>ament_cmake</build_type></export>
+</package>

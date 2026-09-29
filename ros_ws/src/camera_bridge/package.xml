@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>camera_bridge</name>
+  <version>2.0.0</version>
+  <description>
+    Phone camera access for the classroom scan: full-resolution stills, zoom
+    and focus control, reconnect with jittered backoff, and a heartbeat.
+
+    Replaces the legacy camera_interface node whose capture handler returned
+    True without ever producing an image.
+  </description>
+  <maintainer email="eng@example.invalid">Attendance Platform Team</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>builtin_interfaces</depend>
+  <depend>attendance_interfaces</depend>
+  <depend>python3-httpx</depend>
+  <depend>python3-numpy</depend>
+  <depend>python3-opencv</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export><build_type>ament_python</build_type></export>
+</package>

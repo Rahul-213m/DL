@@ -21,6 +21,10 @@ uint32 frames_rejected
 uint32 recapture_regions
 float64 duration_s
 string fault_code
+# Why. A bare fault code is not actionable to an operator standing in front
+# of a classroom: "plan_error" tells them nothing about which room parameter
+# is wrong.
+string error_message
 ---
 # uint8 phase
 uint8 PREPARING=0

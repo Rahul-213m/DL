@@ -29,8 +29,8 @@ float64 timeout_s
 # Set before moving. A pan with no homing reference has no meaningful zero.
 bool require_homed
 ---
-# bool success
-# string error_message
+bool success
+string error_message
 float64 reached_pan_deg
 float64 reached_tilt_deg
 # True when the request was clamped to a calibrated limit.

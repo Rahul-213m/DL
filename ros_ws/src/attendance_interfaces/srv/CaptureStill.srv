@@ -21,19 +21,24 @@ float32 focus_distance_m
 # Maximum time to wait. The bridge returns TIMEOUT rather than blocking
 # forever, because a wedged phone must not wedge the whole scan.
 float64 timeout_s
-
-# Device clock at exposure.
-builtin_interfaces/Time captured_at
-# Object-storage key the image was written to, or empty when not uploading.
-string object_key
-string sha256
-uint64 size_bytes
-CameraMetadata metadata
-bool cache_only
 ---
 bool success
 # Empty on success; actionable on failure.
 string error_code
 string error_message
+
 # True when the image is held in the local outbox and not yet uploaded.
 bool queued_for_upload
+
+# --- What was captured -------------------------------------------------
+# These are RESPONSE fields because the caller needs them to build the frame
+# manifest: the cloud deduplicates on sha256, and the operator console needs
+# the metadata to explain a rejected frame. An earlier revision of this file
+# put them in the REQUEST, which meant the client had to invent the values it
+# was supposed to receive, and a SHA-256 could never be returned at all.
+CameraMetadata metadata
+builtin_interfaces/Time captured_at
+# Object-storage key, or empty while the image is only in the local outbox.
+string object_key
+string sha256
+uint64 size_bytes

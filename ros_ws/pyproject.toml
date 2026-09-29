@@ -26,3 +26,8 @@ ignore = [
 # convention and every ROS package does it this way. Rewriting it with pathlib
 # would diverge from the ecosystem for no benefit.
 "**/setup.py" = ["PTH"]
+# Durability code deliberately uses the os-level API. fsync needs the file
+# descriptor from open(), and os.open/os.fsync on the containing directory is
+# the documented way to make a rename and its directory entry survive a power
+# cut. Rewriting these with pathlib would be churn, not clarity.
+"src/edge_uploader/edge_uploader/outbox.py" = ["PTH"]
