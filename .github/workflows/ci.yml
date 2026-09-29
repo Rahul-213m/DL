@@ -1,0 +1,155 @@
+# CI runs on CPU with no hardware and no GPU, and no model weights.
+# It must be green on a fresh clone with one command.
+name: CI
+
+on:
+  push:
+    branches: [main, "feature/**"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  cloud:
+    name: cloud lint + typecheck + test (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+
+      - name: Lint (ruff)
+        run: ruff check app tests scripts
+
+      - name: Format check (ruff format)
+        run: ruff format --check app tests scripts
+
+      - name: Type check (mypy)
+        run: mypy app
+
+      # CI has no model weights and no GPU. Tests that need them are marked
+      # and skipped rather than silently passing.
+      - name: Tests
+        run: pytest tests -q --cov=app --cov-report=term-missing --cov-report=xml
+
+      - name: Alembic migrations apply to a clean database
+        run: |
+          export DATABASE_URL="sqlite:////tmp/ci-migrate.db"
+          rm -f /tmp/ci-migrate.db
+          alembic upgrade head
+          alembic check
+
+      - name: Model licence guard is enforced
+        run: |
+          # Production must REFUSE to build with non-commercial weights.
+          set +e
+          DATABASE_URL="sqlite:////tmp/ci-lic.db" \
+          ENVIRONMENT=production \
+          API_KEY="$(python -c 'import secrets;print(secrets.token_urlsafe(48))')" \
+          JWT_SECRET="$(python -c 'import secrets;print(secrets.token_urlsafe(48))')" \
+          STORAGE_BACKEND=s3 S3_BUCKET=ci S3_KMS_KEY_ID=alias/ci \
+          JOB_QUEUE_BACKEND=sqs \
+          DETECTOR_BACKEND=insightface_buffalo_l \
+          EMBEDDER_BACKEND=insightface_buffalo_l \
+          python -m app.cli check_licensing
+          rc=$?
+          set -e
+          if [ "$rc" -eq 0 ]; then
+            echo "::error::production started with NON-COMMERCIAL weights - the guard failed"
+            exit 1
+          fi
+          echo "guard correctly refused non-commercial weights (exit $rc)"
+
+      - name: Model licence guard permits the permissive baseline
+        run: |
+          DATABASE_URL="sqlite:////tmp/ci-lic.db" \
+          ENVIRONMENT=production \
+          API_KEY="$(python -c 'import secrets;print(secrets.token_urlsafe(48))')" \
+          JWT_SECRET="$(python -c 'import secrets;print(secrets.token_urlsafe(48))')" \
+          STORAGE_BACKEND=s3 S3_BUCKET=ci S3_KMS_KEY_ID=alias/ci \
+          JOB_QUEUE_BACKEND=sqs \
+          python -m app.cli check_licensing
+
+      - name: Model weight hashes (skipped when absent)
+        run: python scripts/verify_model_hashes.py || true
+
+      - name: Secret scan
+        run: |
+          # Belt-and-braces: even if .gitignore is bypassed, a private key
+          # must never reach the repository.
+          ! git ls-files | grep -E '\.env$|\.pem$|\.key$|data/|ENROLL_PHOTOS/'
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage.xml
+          if-no-files-found: ignore
+
+  edge:
+    name: edge ROS 2 build + test (Jazzy)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    defaults:
+      run:
+        working-directory: ros_ws
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ROS 2 Jazzy
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y software-properties-common
+          sudo add-apt-repository ppa:ros2-ros-testing -y
+          sudo apt-get update
+          sudo apt-get install -y ros-jazzy-ros-base python3-colcon-common-extensions \
+                                  ros-jazzy-ament-copyright ros-jazzy-ament-flake8 \
+                                  ros-jazzy-ament-pep257 ros-jazzy-xacro \
+                                  ros-jazzy-ros-state-publisher ros-jazzy-rosidl-default-generators
+
+      - name: Source ROS
+        run: echo "/opt/ros/jazzy/setup.bash" >> "$GITHUB_PATH"
+
+      - name: Build
+        run: colcon build --symlink-install
+
+      - name: Test
+        run: |
+          colcon test --packages-select attendance_interfaces camera_bridge servo_controller scan_planner edge_uploader attendance_mocks
+          colcon test-result --verbose
+
+      - name: Lint edge python
+        working-directory: .
+        run: |
+          python -m pip install ruff==0.15.1
+          ruff check ros_ws/src
+
+  security:
+    name: dependency audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install pip-audit
+      - name: Audit
+        # Fails on known CVEs. `--strict` would also fail on unpinned deps,
+      # which is already covered by the exact-pin policy in ADR 0002.
+        run: pip-audit -r requirements.txt --progress-spinner off

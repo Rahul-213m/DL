@@ -1,5 +1,7 @@
 from dataclasses import dataclass
+
 import numpy as np
+
 
 @dataclass(frozen=True)
 class MatchResult:
@@ -15,6 +17,8 @@ def cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def route_match(roll_no: str | None, score: float, high: float, low: float) -> MatchResult:
-    if roll_no is not None and score >= high: return MatchResult(roll_no, score, "auto")
-    if roll_no is not None and score >= low: return MatchResult(roll_no, score, "confirm")
+    if roll_no is not None and score >= high:
+        return MatchResult(roll_no, score, "auto")
+    if roll_no is not None and score >= low:
+        return MatchResult(roll_no, score, "confirm")
     return MatchResult(None, score, "review")

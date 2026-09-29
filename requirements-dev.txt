@@ -1,0 +1,12 @@
+# Development and CI toolchain. CPU-only by design: CI has no GPU.
+#   pip install -r requirements.txt -r requirements-dev.txt
+pytest==9.1.1
+pytest-cov==6.0.0
+ruff==0.15.1
+mypy==1.14.1
+pre-commit==4.1.0
+types-passlib==1.7.7.20241221
+
+# Optional: enables `streamlit` reference UI from the archive.
+# Not on the CI path — the operator console is a FastAPI + static web app.
+streamlit==1.63.0

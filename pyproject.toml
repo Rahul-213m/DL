@@ -1,0 +1,226 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "attendance-cloud"
+version = "2.0.0"
+description = "Cloud perception, identity engine and operator console for autonomous classroom attendance."
+requires-python = ">=3.11"
+readme = "README.md"
+
+# Runtime pins are intentionally exact. These versions were MEASURED on the
+# dev machine (Ubuntu 24.04, Python 3.13.11) on 2026-09-29 and are the versions
+# the test suite passes against. Relaxing them is a deliberate decision, not a
+# default — see docs/decisions/0002-dependency-pinning.md
+dependencies = [
+    "fastapi==0.141.1",
+    "uvicorn[standard]==0.52.4",
+    "sqlalchemy==2.0.52",
+    "alembic==1.19.2",
+    "psycopg[binary]==3.3.5",
+    "pydantic==2.13.5",
+    "pydantic-settings==2.15.0",
+    "python-multipart==0.0.32",
+    "pillow==12.3.0",
+    "numpy==2.5.3",
+    "faiss-cpu==1.15.0",
+    "insightface==1.0.1",
+    "onnxruntime==1.29.0",
+    "opencv-python==5.0.0.93",
+    "pyjwt[crypto]==2.10.1",
+    "passlib[bcrypt]==1.7.4",
+    "bcrypt==4.2.1",
+    "openpyxl==3.1.5",
+    "reportlab==4.2.5",
+    "httpx==0.28.1",
+    "boto3==1.35.90",
+    "prometheus-client==0.21.1",
+    "opentelemetry-api==1.29.0",
+    "opentelemetry-sdk==1.29.0",
+    "pyyaml==6.0.3",
+    "python-dateutil==2.9.0.post0",
+]
+
+[project.optional-dependencies]
+# Liveness / anti-spoof. Kept optional: it is a separate commercial decision.
+liveness = []
+
+[tool.setuptools]
+packages = ["app"]
+
+# ---------------------------------------------------------------------------
+# RUFF — single source of truth for lint + format
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+extend-exclude = [
+    ".venv",
+    "archive",
+    "ros_ws/build",
+    "ros_ws/install",
+    "ros_ws/log",
+    "data",
+    "ENROLL_PHOTOS",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # bugbear
+    "C4",     # comprehensions
+    "UP",     # pyupgrade
+    "SIM",    # simplify
+    "RET",    # return
+    "ARG",    # unused arguments
+    "PTH",    # pathlib
+    "RUF",
+    "S",      # bandit security
+    "BLE",    # blind except
+    "DTZ",    # naive datetimes
+    "T20",    # print() in library code
+]
+ignore = [
+    "E501",    # line length handled by the formatter
+    "B008",    # FastAPI Depends() in defaults is the documented idiom
+    "RUF001",  # ambiguous unicode in strings (cosmetic)
+    "RUF002",
+    "RUF003",
+    "S101",    # assert: used deliberately in tests and invariant checks
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Tests legitimately use asserts, private access and magic values.
+"tests/**" = ["S", "ARG", "PTH", "DTZ", "T20", "B011", "SIM117"]
+"scripts/**" = ["T20"]
+"alembic/**" = ["E501", "I001"]
+# ROS nodes need rclpy; they are linted separately by the edge job.
+"ros_ws/src/**" = ["T20"]
+# A CLI's output medium IS stdout. BLE001 is correct there: an on-call
+# engineer needs the reason for any failure, not a traceback.
+"app/cli.py" = ["T20", "BLE001"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.ruff.format]
+docstring-code-format = false
+
+# ---------------------------------------------------------------------------
+# MYPY
+# ---------------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+strict_equality = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+# Legacy modules are exempted above. New code is held to the strict settings.
+show_error_codes = true
+pretty = true
+exclude = [
+    "^\\.venv/",
+    "^archive/",
+    "^ros_ws/",
+    "^data/",
+    "^alembic/",
+]
+
+# ---------------------------------------------------------------------------
+# LEGACY DEBT RATCHET
+# ---------------------------------------------------------------------------
+# The pre-W1 modules were written without type hints. W3 restructures them.
+# Until then they are checked but not required to be clean, and the count is
+# ratcheted so it can only go down.
+#
+#   mypy app                       -> full run
+#   mypy app/core app/registry ... -> must be zero errors (enforced in CI)
+#
+# `_legacy_mypy_errors` is asserted by tests/test_typing_ratchet.py, so adding
+# an untyped function fails CI rather than silently raising the debt.
+[tool.mypy."app.api.routes"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+warn_return_any = false
+
+[tool.mypy."app.pipeline.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+warn_return_any = false
+
+[tool.mypy."app.services.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+warn_return_any = false
+
+[tool.mypy."app.main"]
+disable_error_code = ["arg-type"]
+
+[tool.mypy.overrides]
+module = [
+    "faiss.*",
+    "insightface",
+    "insightface.*",
+    "insightface.app",
+    "insightface.app.*",
+    "insightface.model_zoo.*",
+    "onnxruntime.*",
+    "cv2.*",
+    "streamlit.*",
+    "jwt.*",
+    "passlib.*",
+]
+ignore_missing_imports = true
+
+# ---------------------------------------------------------------------------
+# PYTEST
+# ---------------------------------------------------------------------------
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["tests"]
+# -p no:cacheprovider keeps the repo clean; --strict-markers catches typos.
+addopts = [
+    "-ra",
+    "--strict-markers",
+    "--strict-config",
+    "-p", "no:cacheprovider",
+]
+markers = [
+    "unit: fast, no I/O beyond a temp dir",
+    "integration: exercises the API and/or database",
+    "slow: takes more than a few seconds",
+    "requires_model: needs InsightFace/OpenCV weights on disk",
+    "requires_ros: needs rclpy and a ROS 2 environment",
+    "edge: ROS edge node tests (run in the dedicated CI job)",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:starlette.*",
+    "ignore::DeprecationWarning:fastapi.*",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+omit = ["*/__pycache__/*", "*/archive/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+    "@abstractmethod",
+]

@@ -1,6 +1,8 @@
-from pathlib import Path
 from uuid import uuid4
+
 from app.core.config import settings
+
+
 class LocalStorage:
     def save(self, data: bytes, namespace: str, suffix: str = ".jpg") -> str:
         directory = settings.storage_root / namespace
@@ -9,7 +11,9 @@ class LocalStorage:
         path.write_bytes(data)
         return str(path)
 
-    def mirror_enrollment_photo(self, roll_no: str, data: bytes, source_tag: str, suffix: str = ".jpg") -> str | None:
+    def mirror_enrollment_photo(
+        self, roll_no: str, data: bytes, source_tag: str, suffix: str = ".jpg"
+    ) -> str | None:
         """Mirror one image unless the student's local-photo quota is full.
 
         The database gallery is the source of truth and callers must append its
@@ -18,12 +22,12 @@ class LocalStorage:
         so the image was intentionally not written to local storage.
         """
         import hashlib
+
         roll_dir = settings.enrollment_photos_root / roll_no
         roll_dir.mkdir(parents=True, exist_ok=True)
         image_suffixes = {".jpg", ".jpeg", ".png", ".webp"}
         photo_count = sum(
-            path.is_file() and path.suffix.lower() in image_suffixes
-            for path in roll_dir.iterdir()
+            path.is_file() and path.suffix.lower() in image_suffixes for path in roll_dir.iterdir()
         )
         if photo_count >= settings.max_enrollment_photos_per_student:
             return None
@@ -36,5 +40,6 @@ class LocalStorage:
         path = roll_dir / f"{source_tag}_{digest[:16]}{suffix}"
         path.write_bytes(data)
         return str(path)
+
 
 storage = LocalStorage()

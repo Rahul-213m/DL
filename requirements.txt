@@ -1,15 +1,34 @@
-fastapi>=0.115
-uvicorn[standard]>=0.30
-sqlalchemy>=2.0
-alembic>=1.13
-psycopg[binary]>=3.2
-pydantic-settings>=2.4
-python-multipart>=0.0.9
-pillow>=10.0
-numpy>=1.26
-faiss-cpu>=1.8
-insightface>=0.7.3
-onnxruntime>=1.18
-streamlit>=1.38
-pytest>=8.0
-httpx>=0.27
+# Cloud runtime. Every pin here is MEASURED on the dev machine
+# (Ubuntu 24.04.5, Python 3.13.11, x86_64) on 2026-09-29 via `pip freeze`.
+# The canonical list lives in pyproject.toml [project.dependencies].
+# This file exists so operators can `pip install -r requirements.txt`
+# without a build backend. Keep the two in sync (CI checks this).
+#
+#   pip install -r requirements.txt
+#
+fastapi==0.141.1
+uvicorn[standard]==0.52.4
+sqlalchemy==2.0.52
+alembic==1.19.2
+psycopg[binary]==3.3.5
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-multipart==0.0.32
+pillow==12.3.0
+numpy==2.5.3
+faiss-cpu==1.15.0
+insightface==1.0.1
+onnxruntime==1.29.0
+opencv-python==5.0.0.93
+pyjwt[crypto]==2.10.1
+passlib[bcrypt]==1.7.4
+bcrypt==4.2.1
+openpyxl==3.1.5
+reportlab==4.2.5
+httpx==0.28.1
+boto3==1.35.90
+prometheus-client==0.21.1
+opentelemetry-api==1.29.0
+opentelemetry-sdk==1.29.0
+pyyaml==6.0.3
+python-dateutil==2.9.0.post0

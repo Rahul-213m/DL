@@ -1,18 +1,26 @@
 import logging
 from threading import RLock
-import numpy as np
+
 import faiss
+import numpy as np
 from sqlalchemy.orm import Session
-from app.models.database import FaceGallery, Student
+
+from app.models.schema import FaceGallery, Student
+
 log = logging.getLogger(__name__)
+
 
 def pack_embedding(embedding: np.ndarray) -> bytes:
     return np.asarray(embedding, dtype=np.float32).tobytes()
+
+
 def unpack_embedding(data: bytes) -> np.ndarray:
     return np.frombuffer(data, dtype=np.float32).copy()
 
+
 class GalleryIndex:
     """Incremental FAISS cosine-similarity index; DB remains source of truth."""
+
     def __init__(self):
         self._index: faiss.IndexIDMap | None = None
         self._id_to_roll_no: dict[int, str] = {}
@@ -54,14 +62,36 @@ class GalleryIndex:
             raise ValueError("embedding dimension does not match gallery index")
         return self._index
 
-    def rebuild(self, db: Session) -> None:
+    def rebuild(self, db: Session) -> int:
+        """Reload every vector from the database, which is the source of truth.
+
+        Returns:
+            The resulting index size, so callers and the CLI can report it.
+
+        Note:
+            Rows whose embedding dimension disagrees with the index are
+            skipped, not crashed on. A mixed-dimension gallery means the
+            embedder changed (see docs/model_licensing.md §6); continuing with
+            the vectors that do match is better than refusing to serve, and
+            the mismatch is logged.
+        """
         with self._lock:
             self.entries = []
+            skipped = 0
             for entry in db.query(FaceGallery).all():
                 vec = unpack_embedding(entry.embedding)
                 if self._index is not None and self._index.d != vec.shape[0]:
+                    skipped += 1
                     continue
                 self.add(entry.roll_no, vec)
+            if skipped:
+                log.warning(
+                    "gallery rebuild skipped %d embedding(s) with a mismatched dimension; "
+                    "the embedder may have changed and the gallery needs re-enrolment "
+                    "(see docs/model_licensing.md)",
+                    extra={"skipped": skipped, "indexed": self.size},
+                )
+            return self.size
 
     def add(self, roll_no: str, embedding: np.ndarray) -> None:
         with self._lock:
@@ -83,7 +113,9 @@ class GalleryIndex:
             vector_id = int(ids[0][0])
             return self._id_to_roll_no.get(vector_id), float(scores[0][0])
 
+
 gallery_index = GalleryIndex()
+
 
 def append_gallery(db: Session, roll_no: str, embedding: np.ndarray, source: str, via: str) -> FaceGallery:
     """Persist an embedding to the DB (source of truth) and mirror it into FAISS.
@@ -94,21 +126,30 @@ def append_gallery(db: Session, roll_no: str, embedding: np.ndarray, source: str
     discarding the durable row, so a correction can never be silently lost.
     """
     student = db.get(Student, roll_no)
-    if student is None: raise ValueError("student must exist before adding gallery entry")
+    if student is None:
+        raise ValueError("student must exist before adding gallery entry")
     vector = np.asarray(embedding, dtype=np.float32).reshape(-1)
     if vector.size == 0 or not np.all(np.isfinite(vector)):
         raise ValueError("refusing to add an empty or non-finite embedding to the gallery")
     if not source or not str(source).strip():
         raise ValueError("gallery entries must record a real source image path")
-    entry = FaceGallery(roll_no=roll_no, embedding=pack_embedding(vector), source_image_path=source, added_via=via)
-    db.add(entry); student.gallery_embedding_count += 1
+    entry = FaceGallery(
+        roll_no=roll_no, embedding=pack_embedding(vector), source_image_path=source, added_via=via
+    )
+    db.add(entry)
+    student.gallery_embedding_count += 1
     db.flush()
     try:
         gallery_index.add(roll_no, vector)
     except Exception:
-        log.exception("FAISS incremental add failed; rebuilding index from DB", extra={"roll_no": roll_no, "via": via})
+        log.exception(
+            "FAISS incremental add failed; rebuilding index from DB", extra={"roll_no": roll_no, "via": via}
+        )
         try:
             gallery_index.rebuild(db)
         except Exception:
-            log.exception("FAISS rebuild from DB failed; index will be rebuilt on next startup", extra={"roll_no": roll_no, "via": via})
+            log.exception(
+                "FAISS rebuild from DB failed; index will be rebuilt on next startup",
+                extra={"roll_no": roll_no, "via": via},
+            )
     return entry

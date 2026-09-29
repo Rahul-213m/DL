@@ -1,0 +1,56 @@
+# ---------------------------------------------------------------------------
+# CRITICAL: prevents secrets and biometric data from being baked into images.
+# The original Dockerfile used `COPY . .` with no .dockerignore, which put
+# .env (API key), 850 MB of face crops and 664 MB of zips into every layer.
+# ---------------------------------------------------------------------------
+
+# Biometric data
+data/
+ENROLL_PHOTOS/
+archive/data/
+
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Local databases
+*.db
+*.db.bak
+*.db.pre_rectify
+
+# Archives
+*.zip
+*.tar
+*.tar.gz
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+
+# ROS build artifacts (the edge image builds from source)
+ros_ws/build/
+ros_ws/install/
+ros_ws/log/
+
+# VCS / CI / IDE
+.git/
+.github/
+.idea/
+.vscode/
+
+# Docs (not needed at runtime)
+docs/
+*.md
+
+# Local runtime state
+ui/session_history.json
