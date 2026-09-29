@@ -1,7 +1,8 @@
 import numpy as np
 
-from app.models.database import Base, SessionLocal, engine
+from app.models.database import SessionLocal, engine
 from app.models.schema import FaceGallery, Student
+from app.models.schema import LegacyBase as Base
 from app.services.gallery import append_gallery, gallery_index
 
 

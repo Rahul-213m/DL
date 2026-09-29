@@ -5,8 +5,9 @@ from fastapi.testclient import TestClient
 from PIL import Image
 
 from app.core.config import settings
-from app.models.database import Base, SessionLocal, engine
+from app.models.database import SessionLocal, engine
 from app.models.schema import FaceGallery, Student
+from app.models.schema import LegacyBase as Base
 from app.pipeline.recognizer import DetectedFace, recognizer
 
 

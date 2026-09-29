@@ -25,7 +25,7 @@ from app.core.config import settings
 
 # Importing the models module registers every table on Base.metadata.
 # Alembic cannot autogenerate against metadata it has never seen.
-from app.models import schema  # noqa: F401  (registers tables on Base.metadata)
+from app.models import schema, tenancy  # noqa: F401  (register tables on Base.metadata)
 from app.models.database import Base
 
 config = context.config
@@ -35,6 +35,23 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 target_metadata = Base.metadata
+
+
+def include_object(object, name, type_, reflected, compare_to):  # noqa: ANN001, ANN201
+    """Keep Alembic's hands off the ``legacy_*`` tables.
+
+    The pre-tenant tables are the "before" state of revision 0002. They are
+    deliberately NOT in the target metadata, because they are retained for
+    review and will be dropped by a human decision (docs/HUMAN_ACTIONS.md
+    item 4), not by a migration. Without this filter, `alembic check` would
+    demand a `drop_table` for every one of them, and a careless
+    `alembic revision --autogenerate` would generate exactly that.
+    """
+    if type_ == "table" and name.startswith("legacy_"):
+        return False
+    if type_ == "index" and name.startswith("ix_legacy_"):
+        return False
+    return True
 
 
 def run_migrations_offline() -> None:
@@ -62,6 +79,7 @@ def run_migrations_online() -> None:
             connection=connection,
             target_metadata=target_metadata,
             compare_type=True,
+            include_object=include_object,
             # Required for SQLite, which cannot ALTER most things in place.
             render_as_batch=connection.dialect.name == "sqlite",
         )
