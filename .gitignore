@@ -81,3 +81,15 @@ tmp/
 
 # ROS 2 edge workspace build artifacts (ros_ws/ paths listed above too)
 ros_ws/log/
+
+# Real classroom photographs. Tracked since an early commit and containing
+# EXIF GPS coordinates, which is location data about a school and its pupils.
+# Removed from the index in W5 review; the files stay on disk. Purging them
+# from history needs a human -- see docs/HUMAN_ACTIONS.md.
+dummy_test/
+# Any captured frame, at any stage of the pipeline.
+**/images/
+*.jpg
+*.jpeg
+*.png
+*.onnx
