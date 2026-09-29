@@ -1,0 +1,28 @@
+# Ruff configuration for the ROS edge workspace.
+#
+# SEPARATE from the cloud pyproject.toml on purpose. The edge runs on the ROS
+# system Python 3.12 with pytest 7, which cannot read the cloud config's
+# `minversion = 8.0`. One shared config made every edge test uncollectable.
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+extend-exclude = ["build", "install", "log"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RET", "PTH", "RUF", "BLE", "DTZ"]
+ignore = [
+    "E501",   # line length is the formatter's job
+    "RUF001", # ambiguous unicode
+    "RUF002",
+    "RUF003",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# A ROS node logs with get_logger(); T20 does not apply anyway.
+"src/*/test/*" = ["S", "ARG", "PTH", "DTZ", "B011", "SIM117"]
+# The archived legacy package keeps its original style on purpose.
+"src/attendance_mocks/*" = ["E", "W", "F", "I", "B", "C4", "UP", "SIM", "RET", "PTH", "RUF", "BLE", "DTZ"]
+# setup.py uses os.path.join and glob because that is the ament_python
+# convention and every ROS package does it this way. Rewriting it with pathlib
+# would diverge from the ecosystem for no benefit.
+"**/setup.py" = ["PTH"]

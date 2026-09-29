@@ -78,3 +78,6 @@ ros_ws/src/**/__pycache__/
 ui/session_history.json
 /tmp/
 tmp/
+
+# ROS 2 edge workspace build artifacts (ros_ws/ paths listed above too)
+ros_ws/log/

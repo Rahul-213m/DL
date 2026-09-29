@@ -1,0 +1,55 @@
+# Move the pan (and optionally tilt) axis to an angle.
+#
+# An ACTION, not a service, because a classroom scan needs three things a
+# service cannot give: progress feedback so the operator console can show a
+# sweep in progress, cancellation so a scan can be aborted safely, and an
+# explicit STALLED result rather than a timeout that looks like success.
+#
+# The legacy std_srvs/Trigger interface had none of these, which is why the
+# audit could not find stall detection or an emergency stop in the codebase:
+# there was nowhere to report one.
+
+# Where to go. Clamped to the calibrated limits; the clamp is reported in
+# feedback so the operator is never told it reached an angle it did not.
+float64 pan_angle_deg
+float64 tilt_angle_deg
+bool move_tilt
+
+# Speed policy. speed_deg_per_s <= 0 means "use the calibrated maximum".
+# Acceleration ramping is always applied: an instant velocity step is what
+# makes a hobby servo shudder and the capture blur.
+float64 speed_deg_per_s
+float64 accel_deg_per_s2
+
+# Give up after this long. A stall is reported as a STALLED result, which is
+# distinct from a TIMEOUT: the first means the mechanism is jammed, the second
+# means it is slow or the controller is unreachable.
+float64 timeout_s
+
+# Set before moving. A pan with no homing reference has no meaningful zero.
+bool require_homed
+---
+# bool success
+# string error_message
+float64 reached_pan_deg
+float64 reached_tilt_deg
+# True when the request was clamped to a calibrated limit.
+bool clamped
+# Milliseconds from motion start to arrival.
+float64 duration_ms
+# String error code; empty on success.
+string fault_code
+---
+# uint8 phase
+uint8 MOVING=0
+uint8 ARRIVED=1
+uint8 CLAMPED=2
+uint8 STALLED=3
+uint8 CANCELLED=4
+uint8 phase
+float64 pan_angle_deg
+float64 tilt_angle_deg
+float64 progress
+# True when the controller stopped reporting progress before the target.
+bool stalled
+string fault_code

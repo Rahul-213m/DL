@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>servo_controller</name>
+  <version>2.0.0</version>
+  <description>
+    Pan/tilt actuation for the classroom camera stand.
+
+    Replaces the legacy Trigger-based motor node with an action server that
+    enforces travel limits, applies acceleration ramping, supports homing and
+    calibration, and reports stalls and emergency stops explicitly. The audit
+    found no stall detection and no e-stop anywhere in the original code
+    because the std_srvs/Trigger interface had nowhere to report one.
+  </description>
+  <maintainer email="eng@example.invalid">Attendance Platform Team</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>builtin_interfaces</depend>
+  <depend>attendance_interfaces</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export><build_type>ament_python</build_type></export>
+</package>

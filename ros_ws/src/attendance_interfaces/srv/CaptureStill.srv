@@ -1,0 +1,39 @@
+# Capture one full-resolution still.
+#
+# A SERVICE, not a Trigger, because the parameters matter: a still taken at
+# 1x zoom of the whole room is a different artefact from one at 4x of the back
+# row, and the scan planner needs to ask for both. The legacy
+# std_srvs/Trigger capture could not express the difference, which is why
+# "wide pass then zoom pass" was not implementable.
+
+# Optical zoom. 1.0 is wide. Clamped to the driver's supported range.
+float64 zoom
+bool set_zoom
+
+# Lock focus and exposure so the values are identical between the preview and
+# the capture. Without this a phone re-exposes per frame and the same student
+# is captured at different brightness in different angles, which wrecks the
+# embedding's consistency.
+bool lock_focus
+bool lock_exposure
+float32 focus_distance_m
+
+# Maximum time to wait. The bridge returns TIMEOUT rather than blocking
+# forever, because a wedged phone must not wedge the whole scan.
+float64 timeout_s
+
+# Device clock at exposure.
+builtin_interfaces/Time captured_at
+# Object-storage key the image was written to, or empty when not uploading.
+string object_key
+string sha256
+uint64 size_bytes
+CameraMetadata metadata
+bool cache_only
+---
+bool success
+# Empty on success; actionable on failure.
+string error_code
+string error_message
+# True when the image is held in the local outbox and not yet uploaded.
+bool queued_for_upload

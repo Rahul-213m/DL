@@ -1,0 +1,12 @@
+# Set optical zoom and optionally lock it.
+#
+# Kept separate from CaptureStill so the scan planner can change zoom once per
+# region rather than once per frame, which on a phone with a motorised lens is
+# seconds of latency per frame.
+float64 zoom
+bool lock
+---
+bool success
+string error_message
+float64 applied_zoom
+float64 settle_time_s
