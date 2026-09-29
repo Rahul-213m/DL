@@ -376,12 +376,23 @@ are plausible phone values. See `docs/hardware/pixels_per_face.md`.
 
 ### What is NOT done
 
-1. **`scan_planner` cannot reach the servo action server.** `wait_for_server`
-   returns false inside the action execute callback even though the server is
-   up and answers the CLI. Suspected: rclpy graph-event delivery is not
-   processed while a callback group is saturated. Until this is fixed, a sweep
-   aborts with `servo_unavailable` before moving, so **no sweep has ever
-   completed end to end**.
+1. **A sweep now MOVES through all 16 steps, but captures are unreliable.**
+   The `servo_unavailable` blocker is fixed (see below): the sweep plans, moves
+   the mechanism to each angle, and steps through the whole plan. But only the
+   FIRST capture request reaches the camera; the rest time out client-side.
+
+   Cause: the execute callback uses
+   `rclpy.spin_until_future_complete(self, future)` to wait for service and
+   action replies, while `main()` is already running `executor.spin()` on the
+   same node. rclpy does not support spinning a node that another executor is
+   already spinning; it works for the first request and then races.
+
+   The fix is to make the execute callback a **coroutine** so rclpy's
+   `await_or_execute` awaits it and the futures are awaited rather than
+   re-spun. An earlier attempt at this failed with
+   `RuntimeError: no running event loop` because the helper used
+   `asyncio.sleep`; the correct form is to `await` the rclpy future directly.
+   **This is the next thing to do.**
 2. **No edge face detector.** `assess_frame` needs face boxes, so the edge
    currently checks resolution and sharpness only, and the cloud remains the
    authoritative quality and identity gate. Calling `assess_frame` with an
@@ -421,3 +432,57 @@ The pattern is worth stating plainly: **the driver logic was well tested and
 the ROS wiring was untested, and the wiring was where every integration bug
 was.** The servo package shipped in W5 part 1 with 55 passing tests and could
 not move the mechanism once.
+
+
+---
+
+## W5 follow-up: the sweep now moves (blocker fixed, one defect left)
+
+**The `servo_unavailable` blocker recorded above is FIXED.** A sweep now plans,
+moves the mechanism to every angle, and steps through the entire plan. Verified
+by running it: 16 steps, servo reached each commanded angle, the sweep
+terminated with a report rather than hanging.
+
+### Root cause, and it is a lesson about rclpy
+
+`scan_planner` created its `ActionClient` in `__init__`, which runs at launch
+time -- before the executor starts spinning and before `servo_controller` has
+advertised itself. rclpy resolves a client's graph membership **at
+construction**, so that client cached an empty answer and reported the server as
+unavailable for the lifetime of the process, even though the server was running
+and answered `ros2 action send_goal` perfectly. The client is now created per
+sweep (`_fresh_goto_client`).
+
+Four more API mistakes on the same path, each found by running the thing:
+
+- `Client` has no `wait_for_service_async`, and this Jazzy build's
+  `ActionClient` has no `wait_for_server_async` either. Both are poll loops.
+- `send_goal()` **blocks and returns the `GetResult_Response` directly**. It
+  does not return a `ClientGoalHandle`, so there is no `.accepted` and no
+  `.get_result()` on it.
+- The GetResult status byte is the full `action_msgs/GoalStatus` enum, where
+  `SUCCEEDED` is **4**, not 0. Assuming 0 made every successful move report
+  `motion_status_4` -- a working feature hidden behind a permanent error.
+- `FrameManifest` had no `notes`/`kept`/`pan_deg`/`zoom`/`retake_count`, so
+  every frame report raised. Added: an operator debugging a bad attendance
+  report needs to know where the camera was pointing and why a frame was
+  dropped.
+
+### The remaining defect
+
+Only the first capture request reaches the camera; the rest time out. The
+execute callback waits with `rclpy.spin_until_future_complete` while `main()`
+is already spinning the same node, which rclpy does not support. Fix: make the
+callback a coroutine so rclpy awaits it and the futures are awaited directly
+(no `asyncio.sleep` -- that is what produced `no running event loop` earlier).
+
+### Also fixed, and worth keeping
+
+A capture's success is keyed on an explicit `succeeded` flag, **not** on
+`image is not None`. The image bytes deliberately do not travel in the ROS
+response -- they live in the outbox and go to object storage -- so keying
+success on bytes reported every good capture as a failure with an empty reason.
+
+The sweep never finishes blank: any unexpected exception becomes
+`fault_code: internal_error` with the exception text. That safety net caught
+two of the bugs above on its own.

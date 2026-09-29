@@ -41,6 +41,15 @@ from scan_planner.planner import (
     plan_sweep,
 )
 
+# action_msgs/GoalStatus. Note these are NOT 0/1/2: the status byte of a
+# GetResult response is the full GoalStatus enum, where SUCCEEDED is 4.
+# Assuming 0 meant success made every successful move look like a failure
+# ("motion_status_4"), which is exactly the sort of off-by-one that hides a
+# working feature behind a permanent error.
+GOAL_SUCCEEDED = 4
+GOAL_CANCELED = 5
+GOAL_ABORTED = 6
+
 PHASE_PREPARING = RunScanSequence.Feedback.PREPARING
 PHASE_MOVING = RunScanSequence.Feedback.MOVING
 PHASE_SETTLING = RunScanSequence.Feedback.SETTLING
@@ -208,7 +217,8 @@ class ScanPlannerNode(Node):
             result.scan_id = self._scan_id
             self.get_logger().error(result.error_message)
             return result
-        if not self._goto_client.wait_for_server(timeout_sec=10.0):
+        goto_client = self._fresh_goto_client()
+        if not goto_client.wait_for_server(timeout_sec=15.0):
             goal_handle.abort()
             result.fault_code = "servo_unavailable"
             result.error_message = (
@@ -261,10 +271,12 @@ class ScanPlannerNode(Node):
 
                 result.frames_attempted += 1
                 outcome = self._capture(step)
-                if outcome.image is None:
+                if not outcome.succeeded:
                     result.frames_rejected += 1
                     self._publish_manifest(step, retake, outcome.reason, kept=False)
-                    self.get_logger().warn(f"step {position}: {outcome.reason}")
+                    self.get_logger().warn(
+                        f"step {position}: {outcome.reason or 'capture failed with no reason'}"
+                    )
                     break
 
                 # Face-size gating needs boxes, and there is no edge detector
@@ -311,6 +323,42 @@ class ScanPlannerNode(Node):
         self._publish(feedback, goal_handle, 5, plan.step_count - 1, plan, plan.steps[-1])
         return result
 
+    def _spin_for(self, future, timeout_s: float):
+        """Pump this node until a future resolves, or the timeout expires.
+
+        Returns the future's value, or None on timeout. The future is then
+        cancelled so a late reply cannot resolve into a dead sweep.
+        """
+        rclpy.spin_until_future_complete(self, future, timeout_sec=timeout_s)
+        if not future.done():
+            future.cancel()
+            return None
+        return future.result()
+
+    def _fresh_goto_client(self) -> ActionClient:
+        """Create a fresh action client for the servo.
+
+        rclpy's ActionClient resolves which servers exist when it is
+        CONSTRUCTED. A client built at launch time, before the executor has
+        been spun and before servo_controller has advertised itself, caches an
+        empty answer and reports the server as unavailable for the lifetime of
+        the process -- which is what made every sweep abort with
+        "servo_unavailable" on a machine where the servo was running and
+        answering `ros2 action send_goal` perfectly.
+
+        Recreating the client per sweep costs a few milliseconds and removes
+        the entire class of problem, including a slow-starting servo.
+        """
+        if self._goto_client is not None:
+            self._goto_client.destroy()
+        self._goto_client = ActionClient(
+            self,
+            GoToAngle,
+            str(self.get_parameter("servo_action").value),
+            callback_group=self._callbacks,
+        )
+        return self._goto_client
+
     def _room_from_parameters(self) -> RoomGeometry:
         """Build the room description from parameters."""
         return RoomGeometry(
@@ -332,18 +380,32 @@ class ScanPlannerNode(Node):
         goal.timeout_s = float(self.get_parameter("motor_timeout_s").value)
         goal.require_homed = True
 
-        # The goal carries its own timeout_s; get_result() blocks until the
-        # server answers, and the server bounds that by the goal's own timeout.
-        goal_handle = self._goto_client.send_goal(goal)
+        # ASYNC form, spun to completion. The blocking send_goal() deadlocks
+        # when called from inside a callback -- its own docstring says "Do not
+        # call this method in a callback or a deadlock may occur" -- and it did
+        # exactly that: the sweep hung on step 0 forever, with no log line,
+        # which is the worst possible way to fail.
+        #
+        # send_goal_async() returns a future for a ClientGoalHandle; only then
+        # can get_result_async() be requested. spin_until_future_complete
+        # pumps THIS node so the replies can actually be delivered.
+        timeout = float(self.get_parameter("motor_timeout_s").value) + 10.0
+        goal_handle = self._spin_for(self._goto_client.send_goal_async(goal), timeout)
+        if goal_handle is None:
+            return False, "motion_goal_timeout"
         if not goal_handle.accepted:
             return False, "motion_goal_rejected"
 
-        wrapped = goal_handle.get_result()
+        result_future = goal_handle.get_result_async()
+        wrapped = self._spin_for(result_future, timeout)
 
-        # STALLED is a distinct result, not a timeout that looks like success.
-        if wrapped.result.status == 4:  # ABORTED
-            return False, "motion_aborted"
-        motion = wrapped.result.result
+        # STALLED is a distinct fault code, not a timeout that looks like
+        # success: the mechanism is jammed, versus merely slow.
+        motion = wrapped.result
+        if wrapped.status != GOAL_SUCCEEDED:
+            if wrapped.status == GOAL_CANCELED:
+                return False, "motion_cancelled"
+            return False, motion.fault_code or f"motion_status_{wrapped.status}"
         if not motion.success:
             return False, motion.fault_code or "motion_failed"
         if motion.fault_code == "stalled":
@@ -407,7 +469,11 @@ class ScanPlannerNode(Node):
             return CaptureOutcome(image=None, reason="camera returned no response")
 
         if not response.success:
-            return CaptureOutcome(image=None, reason=response.error_message or "capture failed")
+            # A failure with no message is a bug in the reporter, not an
+            # absence of information, so the fallback string is explicit.
+            return CaptureOutcome(
+                image=None, reason=response.error_message or "capture failed with no reason"
+            )
 
         # The image bytes are fetched by the uploader from the outbox; the
         # planner works with the response metadata and the detector's boxes.
@@ -416,6 +482,7 @@ class ScanPlannerNode(Node):
         return CaptureOutcome(
             image=None,
             reason="",
+            succeeded=True,
             width=width,
             height=height,
             sha256=response.sha256,
@@ -443,6 +510,12 @@ class ScanPlannerNode(Node):
         message.scan_id = self._scan_id
         message.correlation_id = self._scan_id
         message.sequence = step.index + 1
+        message.step_index = step.index
+        message.retake_count = retake
+        message.pan_deg = step.pan_deg
+        message.zoom = step.zoom
+        message.distance_m = step.distance_m
+        message.kept = kept
         message.notes = note
         if outcome is not None:
             message.sha256 = outcome.sha256
@@ -450,7 +523,6 @@ class ScanPlannerNode(Node):
             message.object_key = outcome.object_key
             if outcome.metadata is not None:
                 message.metadata = outcome.metadata
-        del kept
         self._manifest_pub.publish(message)
 
 
@@ -468,7 +540,14 @@ class CaptureOutcome:
         object_key="",
         metadata=None,
         sharpness=0.0,
+        succeeded=False,
     ) -> None:
+        # `succeeded` is the success flag, NOT (image is not None). The image
+        # bytes deliberately do not travel in the ROS response -- they live in
+        # the outbox and go to object storage -- so keying success on the
+        # presence of bytes reported every good capture as a failure with an
+        # empty reason.
+        self.succeeded = succeeded
         self.image = image
         self.reason = reason
         self.width = width

@@ -26,3 +26,18 @@ uint64 size_bytes
 # Sequence within the scan, 1-based. Lets the cloud detect a missing frame.
 uint32 sequence
 string scan_id
+
+# --- What the edge did at this frame -----------------------------------
+# An operator debugging a bad attendance report needs to know where the camera
+# was pointing and why the frame was kept or dropped. Without these the
+# manifest says only that a frame existed, which is not enough to tell a
+# misaimed sweep from a blurry lens.
+uint32 step_index
+uint32 retake_count
+float64 pan_deg
+float64 zoom
+float64 distance_m
+# False when the edge discarded the frame. A rejected frame is still
+# published: a sweep that silently drops frames cannot be diagnosed.
+bool kept
+string notes
