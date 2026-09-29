@@ -1,0 +1,72 @@
+# config/scan.yaml
+#
+# Configuration for the Attendance Camera Stand ROS 2 system.
+# All parameters are loaded by scan_controller.py at startup.
+# Modify these values to change scanning behaviour WITHOUT editing Python code.
+
+scan_controller:
+  ros__parameters:
+
+    # ----------------------------------------------------------------
+    # scan_angles: list of horizontal angles (degrees) to visit.
+    # The stand will rotate to each angle in order, capture an image,
+    # then move on.  After the last angle the stand returns to 0°.
+    # Valid range: 0 – 359  (angles are normalised automatically).
+    # ----------------------------------------------------------------
+    scan_angles:
+      - 0
+      - 60
+      - 120
+      - 180
+      - 240
+      - 300
+
+    # ----------------------------------------------------------------
+    # stabilization_time: how many seconds to wait after the stand
+    # reaches the target angle before requesting a camera capture.
+    # This prevents motion blur in the captured image.
+    # ----------------------------------------------------------------
+    stabilization_time: 1.0
+
+    # ----------------------------------------------------------------
+    # number_of_cycles: how many complete scan cycles to run.
+    # Set to 0 for infinite continuous scanning.
+    # ----------------------------------------------------------------
+    number_of_cycles: 1
+
+    # ----------------------------------------------------------------
+    # angle_tolerance: the stand is considered "at target" when the
+    # difference between current and target angle is within this value
+    # (degrees).
+    # ----------------------------------------------------------------
+    angle_tolerance: 1.0
+
+    # ----------------------------------------------------------------
+    # motor_timeout: maximum seconds to wait for the motor to reach
+    # the target angle before logging a warning and continuing.
+    # ----------------------------------------------------------------
+    motor_timeout: 10.0
+
+motor_controller:
+  ros__parameters:
+
+    # ----------------------------------------------------------------
+    # rotation_speed: simulated angular velocity (degrees per second).
+    # The simulated motor will move toward its target at this speed.
+    # ----------------------------------------------------------------
+    rotation_speed: 45.0
+
+    # ----------------------------------------------------------------
+    # publish_rate: how often (Hz) the motor publishes current_angle.
+    # ----------------------------------------------------------------
+    publish_rate: 10.0
+
+camera_interface:
+  ros__parameters:
+
+    # ----------------------------------------------------------------
+    # capture_delay: simulated shutter delay (seconds).
+    # The camera service returns after this delay to mimic a real
+    # phone camera.  Set to 0.0 for instant response.
+    # ----------------------------------------------------------------
+    capture_delay: 0.5
