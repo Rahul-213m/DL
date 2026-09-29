@@ -18,7 +18,10 @@ servo_controller:
     pan_max_deg: 90.0
     max_speed_deg_per_s: 45.0
     max_accel_deg_per_s2: 180.0
-    with_position_feedback: false
+    # The name MUST match declare_parameter in servo_node.py. ROS 2 silently
+    # ignores an undeclared parameter, so a typo here is invisible: the node
+    # falls back to its default and believes it has an encoder it does not.
+    has_position_feedback: false
     stall_timeout_s: 2.0
     watch_hdog: true
     home_on_start: true
@@ -26,6 +29,13 @@ servo_controller:
 camera_bridge:
   ros__parameters:
     driver: simulated
+    # SAME data_root as edge_uploader below. The camera writes the durable
+    # record; the uploader drains it. They are separate processes on purpose,
+    # so a uploader crash cannot lose a capture and a camera crash cannot stop
+    # an upload.
+    outbox_data_root: "/tmp/attendance-simulated"
+    tenant_id: "00000000-0000-0000-0000-000000000000"
+    device_id: "simulated-device"
     capture_timeout_s: 10.0
     lock_focus: true
     lock_exposure: true

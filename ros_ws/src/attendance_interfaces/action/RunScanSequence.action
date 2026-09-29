@@ -9,8 +9,14 @@
 # Empty request: the sequence comes from the node's parameters, so the
 # behaviour is reviewable in a YAML file rather than in a request.
 ---
-# bool success
-# string error_message
+# Every action result in this package carries success, error_message and
+# fault_code. `success` was COMMENTED OUT here, so the handler's
+# `result.success = False` raised AttributeError inside the action server,
+# which ABORTED the goal and substituted a DEFAULT result: no message, no
+# fault code, nothing to diagnose. Fourth instance of the same defect.
+# error_message and fault_code are declared further down, where their
+# rationale is recorded.
+bool success
 string scan_id
 # Frames the sweep attempted and frames it accepted. A gap between them is a
 # coverage problem and must be visible, not silently absorbed.

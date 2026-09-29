@@ -26,6 +26,7 @@ import threading
 import time
 
 import rclpy
+from edge_uploader.outbox import EdgeOutbox, QueueFull
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
@@ -54,6 +55,12 @@ class CameraBridgeNode(Node):
         self.declare_parameter("ip_webcam_host", "192.168.1.100")
         self.declare_parameter("ip_webcam_port", 8080)
         self.declare_parameter("capture_timeout_s", 10.0)
+        # Where durable captures go. The same data_root the uploader drains, so
+        # a capture is written once and uploaded later, by a different process.
+        self.declare_parameter("outbox_data_root", "")
+        self.declare_parameter("tenant_id", "00000000-0000-0000-0000-000000000000")
+        self.declare_parameter("device_id", "unprovisioned-device")
+        self.declare_parameter("min_faces_to_upload", 1)
         self.declare_parameter("heartbeat_hz", 1.0)
         self.declare_parameter("max_reconnect_attempts", 0)
         self.declare_parameter("reconnect_base_delay_s", 0.5)
@@ -100,6 +107,32 @@ class CameraBridgeNode(Node):
             self._publish_status,
             callback_group=callbacks,
         )
+        # The durable outbox. Constructed here, in the node that holds the
+        # image bytes, because nothing else can write the record.
+        #
+        # It was previously absent: the capture path set
+        # `response.queued_for_upload = True` and kept no bytes anywhere. The
+        # operator console said "queued", the journal stayed empty, and the
+        # uploader drained nothing -- a success report for work never done.
+        data_root = str(self.get_parameter("outbox_data_root").value or "")
+        self._outbox: EdgeOutbox | None = None
+        if data_root:
+            self._outbox = EdgeOutbox(
+                root=str(data_root),
+                tenant_id=str(self.get_parameter("tenant_id").value),
+                device_id=str(self.get_parameter("device_id").value),
+                min_faces_to_upload=int(self.get_parameter("min_faces_to_upload").value),
+            )
+            self.get_logger().info(
+                f"durable outbox at {data_root}: captures are written here and "
+                f"uploaded later by edge_uploader; stats={self._outbox.stats()}"
+            )
+        else:
+            self.get_logger().warn(
+                "no outbox_data_root configured, so captures are NOT durable and "
+                "will not be uploaded. Set it to the uploader's data_root."
+            )
+
         self.create_service(CaptureStill, "/camera/capture", self._on_capture, callback_group=callbacks)
         self.create_service(SetZoom, "/camera/set_zoom", self._on_set_zoom, callback_group=callbacks)
 
@@ -167,14 +200,55 @@ class CameraBridgeNode(Node):
                 self._last_capture = time.monotonic()
                 self._detail = ""
 
+            # Durability FIRST. The response may only claim the capture is
+            # queued once the bytes are on disk and the journal record is
+            # fsynced. Reporting success first and enqueueing afterwards is
+            # how a capture gets acknowledged and then lost.
+            queued = False
+            if self._outbox is not None:
+                try:
+                    record = self._outbox.enqueue(
+                        data,
+                        session_id=str(request.session_id),
+                        captured_at=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(time.time())),
+                        # Face count is not known on the edge: detection is a
+                        # cloud concern. Recorded as 0 with the real count
+                        # unknown, never as a fabricated 1.
+                        face_count=0,
+                        quality_score=0.0,
+                    )
+                    queued = True
+                    response.object_key = record.image_path.name
+                    response.sha256 = record.sha256
+                    response.size_bytes = record.size_bytes
+                except QueueFull as exc:
+                    # The queue is full and cannot evict. That is a real
+                    # failure: the scan must know its frames are not being
+                    # kept, rather than sweeping on and losing them silently.
+                    last_error = f"outbox full: {exc}"
+                    self.get_logger().error(last_error)
+                    with self._lock:
+                        self._state = ConnectionState.ERROR
+                        self._detail = last_error
+                    response.success = False
+                    response.error_code = "queue_full"
+                    response.error_message = last_error
+                    response.queued_for_upload = False
+                    return response
+            else:
+                self.get_logger().error(
+                    "capture succeeded but there is no outbox to put it in; the "
+                    "frame will be lost. This is a configuration fault."
+                )
+
             response.success = True
             response.error_code = ""
             response.error_message = ""
-            response.queued_for_upload = True
+            response.queued_for_upload = queued
             response.captured_at = self.get_clock().now().to_msg()
-            response.sha256 = _sha256(data)
-            response.size_bytes = len(data)
-            response.queued_for_upload = True
+            if not queued:
+                response.sha256 = _sha256(data)
+                response.size_bytes = len(data)
             response.metadata = _metadata_message(self, metadata, sharpness)
             self.get_logger().info(
                 f"captured #{self._capture_count} "

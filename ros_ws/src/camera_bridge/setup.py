@@ -14,7 +14,7 @@ setup(
         (f"share/{package_name}", ["package.xml"]),
         (os.path.join("share", package_name, "config"), glob("config/*.yaml")),
     ],
-    install_requires=["setuptools"],
+    install_requires=["setuptools", "edge_uploader"],
     zip_safe=True,
     maintainer="Attendance Platform Team",
     maintainer_email="eng@example.invalid",

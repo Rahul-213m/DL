@@ -26,7 +26,10 @@ servo_controller:
     max_accel_deg_per_s2: 180.0
     # A servo with no encoder cannot detect a stall. Setting this true without
     # a position sensor makes the node refuse to claim one.
-    with_position_feedback: false  # [INSTALL]
+    # The name MUST match declare_parameter in servo_node.py. ROS 2 silently
+    # ignores an undeclared parameter, so a typo here is invisible: the node
+    # falls back to its default and believes it has an encoder it does not.
+    has_position_feedback: false  # [INSTALL]
     stall_timeout_s: 2.0
     watch_hdog: true
     home_on_start: true            # [INSTALL] false if the mechanism is manually positioned
@@ -38,6 +41,9 @@ camera_bridge:
     ip_webcam_host: "192.168.1.100" # [INSTALL] the phone's static IP
     ip_webcam_port: 8080
 
+    # SAME data_root as edge_uploader below, so a capture written by the
+    # camera is the record the uploader drains.
+    outbox_data_root: "/var/lib/attendance"  # [INSTALL]
     capture_timeout_s: 10.0
     lock_focus: true
     lock_exposure: true

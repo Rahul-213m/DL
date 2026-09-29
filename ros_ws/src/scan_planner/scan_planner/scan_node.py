@@ -476,6 +476,13 @@ class ScanPlannerNode(Node):
         request.lock_exposure = True
         request.set_zoom = False
         request.timeout_s = float(self.get_parameter("capture_timeout_s").value)
+        # Scan context, so the durable record the camera writes can be linked
+        # back to the sweep that produced it. Without these the outbox record
+        # had no session, no angle and no region, and no frame manifest could
+        # be built from it after the fact.
+        request.session_id = self._scan_id
+        request.pan_angle_deg = float(step.pan_deg)
+        request.region_name = str(step.zoom_level_name)
 
         # Awaited, and bounded by the camera's own timeout_s: the bridge
         # returns a TIMEOUT fault rather than blocking forever, so a wedged

@@ -21,6 +21,20 @@ float32 focus_distance_m
 # Maximum time to wait. The bridge returns TIMEOUT rather than blocking
 # forever, because a wedged phone must not wedge the whole scan.
 float64 timeout_s
+
+# --- Scan context --------------------------------------------------------
+# The camera is the only node holding the image bytes, so the camera is the
+# only place the durable outbox record can be written. But it cannot know
+# which session, angle or region a frame belongs to: only the scan planner
+# does. These were missing, so the outbox record had no link back to the
+# sweep that produced it and no frame manifest could be built.
+#
+# A capture made outside a sweep (a manual operator capture) leaves these
+# empty, and the record says so rather than being filed under a fabricated
+# session.
+string session_id
+float64 pan_angle_deg
+string region_name
 ---
 bool success
 # Empty on success; actionable on failure.

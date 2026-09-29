@@ -17,6 +17,12 @@
   <depend>std_srvs</depend>
   <depend>builtin_interfaces</depend>
   <depend>attendance_interfaces</depend>
+  <!-- The durable outbox lives in edge_uploader because the uploader drains
+       it, but the camera writes it because the camera is the only node that
+       holds the image bytes. Splitting the write from the read across a
+       package boundary is deliberate: the alternative was a capture path that
+       reported "queued" while keeping nothing. -->
+  <depend>edge_uploader</depend>
   <depend>python3-httpx</depend>
   <depend>python3-numpy</depend>
   <depend>python3-opencv</depend>

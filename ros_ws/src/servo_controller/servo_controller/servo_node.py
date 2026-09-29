@@ -187,6 +187,34 @@ class ServoControllerNode(Node):
             callback_group=callbacks,
         )
 
+        # A parameter in the YAML that the node never declared is ignored by
+        # ROS 2 with no warning at all. The failure mode is the worst kind:
+        # the node falls back to its default and reports a capability it does
+        # not have. `with_position_feedback: false` in the shipped config was
+        # silently ignored for exactly this reason, so the node believed it had
+        # an encoder -- with stall detection reported as armed and no encoder
+        # to arm it with.
+        #
+        # So the near-miss spellings are checked explicitly, and so is the
+        # value the node is actually running with.
+        for misspelled in ("with_position_feedback", "has_position_sensor", "position_feedback"):
+            if self.has_parameter(misspelled):
+                self.get_logger().error(
+                    f"parameter '{misspelled}' is set in the config but is NOT a parameter "
+                    f"of this node, so ROS 2 ignored it. The intended name is "
+                    f"'has_position_feedback'. Nothing about the real hardware changed."
+                )
+        self.get_logger().info(
+            f"position feedback: {self._pan_limits.has_position_feedback}"
+            + (
+                ""
+                if self._pan_limits.has_position_feedback
+                else " -- NO ENCODER, so stall detection is DISABLED. A jam will not be "
+                "detected and the reported current_angle is a value being integrated from "
+                "our own commands, not a measurement. Add an encoder (e.g. AS5600) to close "
+                "this gap; see docs/hardware/servo_selection.md."
+            )
+        )
         self.get_logger().info(
             f"ServoController ready: driver={driver_name} "
             f"pan=[{self._pan_limits.min_deg:.0f}, {self._pan_limits.max_deg:.0f}] "
@@ -362,21 +390,37 @@ class ServoControllerNode(Node):
         # Using goal_handle.feedback raised AttributeError inside the action
         # server, which aborted every move -- and the unit tests did not catch
         # it because they exercised the driver, not the ROS action wiring.
-        feedback = GoToAngle.Feedback()
-        result = GoToAngle.Result()
+        #
+        # These MUST be Home's own message types. They were GoToAngle's, so
+        # every Home goal returned a default-constructed Home.Result and
+        # aborted with success=false and NO message and NO fault code: the
+        # exact blank-abort shape this project keeps producing. A near
+        # neighbour action with the same shape is enough to get it wrong.
+        feedback = Home.Feedback()
+        result = Home.Result()
         self._cancelled.clear()
 
         with self._lock:
             self._state = "HOMING"
 
         deadline = time.monotonic() + (float(goal.timeout_s) if goal.timeout_s > 0 else 20.0)
-        for phase_value, label in ((0, "APPROACHING"), (3, "SETTLING")):
+        for phase_value in (Home.Feedback.APPROACHING, Home.Feedback.SETTLING):
             feedback.phase = phase_value
             feedback.progress = 0.5
+            feedback.current_angle_deg = self._driver.position()
             goal_handle.publish_feedback(feedback)
-            del label
             if time.monotonic() > deadline:
                 break
+
+        if time.monotonic() > deadline:
+            result.success = False
+            result.error_message = (
+                f"homing did not start within {goal.timeout_s or 20.0:.0f}s; "
+                "the node is too busy to drive the mechanism"
+            )
+            result.fault_code = FAULT_TIMEOUT
+            goal_handle.succeed()
+            return result
 
         try:
             home_angle = self._driver.home()
