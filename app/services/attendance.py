@@ -23,17 +23,84 @@ def _jpg(image: Image.Image) -> bytes:
     return out.getvalue()
 
 
-def _is_duplicate(db: Session, session_id: int, embedding: np.ndarray) -> bool:
-    pending = (
-        db.query(AttendanceEvent)
-        .join(ReviewQueue)
-        .filter(AttendanceEvent.session_id == session_id, ReviewQueue.status == "pending")
-        .all()
-    )
-    return any(
-        cosine_similarity(embedding, unpack_embedding(e.embedding)) >= settings.high_confidence_threshold
-        for e in pending
-    )
+class PendingReviewIndex:
+    """The session's unresolved faces, loaded once per frame.
+
+    **Fixed in W2 (docs/00_audit.md 4.5).** The legacy ``_is_duplicate``
+    re-queried the pending-review set and re-unpacked every stored 2 KB
+    embedding once per detected face: O(F x P) with a database round trip per
+    face, which for a 300-student classroom with 100 pending reviews is 30,000
+    blob deserialisations per frame.
+
+    The frame processor is the only thing that knows when a frame begins and
+    ends, so it is the only thing that can decide when the cache is stale.
+    A time- or count-based cache inside the comparison function cannot: it has
+    to query in order to know whether its own cache is valid, which is the very
+    cost being removed.
+
+    Usage:
+        with PendingReviewIndex.for_frame(db, session_id) as pending:
+            for face in faces:
+                if pending.covers(face.embedding):
+                    ...
+    """
+
+    __slots__ = ("_vectors",)
+
+    def __init__(self, vectors: list[np.ndarray]) -> None:
+        self._vectors = vectors
+
+    @classmethod
+    def for_frame(cls, db: Session, session_id: int) -> "PendingReviewIndex":
+        """Load this session's pending review embeddings. One query."""
+        rows = (
+            db.query(AttendanceEvent.embedding)
+            .join(ReviewQueue, ReviewQueue.event_id == AttendanceEvent.event_id)
+            .filter(AttendanceEvent.session_id == session_id, ReviewQueue.status == "pending")
+            .all()
+        )
+        return cls([unpack_embedding(row.embedding) for row in rows])
+
+    def covers(self, embedding: np.ndarray, threshold: float | None = None) -> bool:
+        """Whether an unresolved face already covers this person.
+
+        Pure in-memory comparison against the preloaded set.
+        """
+        if not self._vectors:
+            return False
+        limit = settings.high_confidence_threshold if threshold is None else threshold
+        return any(cosine_similarity(embedding, candidate) >= limit for candidate in self._vectors)
+
+    def add(self, embedding: np.ndarray) -> None:
+        """Register a newly created review, so later faces in the same frame
+        see it. Without this, the same person could be queued twice from two
+        different tiles in one frame."""
+        self._vectors.append(embedding)
+
+    def __len__(self) -> int:
+        """Number of pending reviews preloaded."""
+        return len(self._vectors)
+
+    def __bool__(self) -> bool:
+        """False when there is nothing pending, so callers can short-circuit."""
+        return bool(self._vectors)
+
+
+def _is_duplicate(
+    db: Session,
+    session_id: int,
+    embedding: np.ndarray,
+    *,
+    pending: PendingReviewIndex | None = None,
+) -> bool:
+    """Backwards-compatible wrapper around :class:`PendingReviewIndex`.
+
+    Correct but slower: it loads the pending set on every call. The frame
+    processor passes a preloaded ``pending`` instead and gets the O(1) path.
+    Retained so the existing tests and any external caller keep working.
+    """
+    index = pending if pending is not None else PendingReviewIndex.for_frame(db, session_id)
+    return index.covers(embedding)
 
 
 def _iou(first: tuple[int, int, int, int], second: tuple[int, int, int, int]) -> float:
@@ -130,6 +197,10 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
     log.info(
         "faces detected", extra={"stage": "faces_detected", "session_id": session_id, "count": len(faces)}
     )
+
+    # ONE query for the whole frame, not one per face. See PendingReviewIndex
+    # for the reasoning (docs/00_audit.md 4.5).
+    pending = PendingReviewIndex.for_frame(db, session_id)
     created = 0
     for face in faces:
         x1, y1, x2, y2 = face.bbox
@@ -143,7 +214,12 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
             )
             continue
         crop_path = storage.save(_jpg(image.crop((x1, y1, x2, y2))), f"sessions/{session_id}/faces")
-        guess, score = gallery_index.search(face.embedding)
+        # The index returns one match per IDENTITY, not per vector. Unpacking
+        # .best here is the seam between the new index and this legacy path;
+        # W3 finishes the migration to the identity engine proper.
+        best = gallery_index.search(face.embedding).best
+        guess = best.roll_no if best else None
+        score = best.score if best else 0.0
         result = route_match(
             guess, score, settings.high_confidence_threshold, settings.low_confidence_threshold
         )
@@ -167,7 +243,7 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
                 extra={"session_id": session_id, "roll_no": result.roll_no},
             )
             continue
-        if result.route in {"review", "confirm"} and _is_duplicate(db, session_id, face.embedding):
+        if pending is not None and result.route in {"review", "confirm"} and pending.covers(face.embedding):
             continue
         match_type = (
             "auto"
@@ -193,6 +269,7 @@ def process_frame(db: Session, session_id: int, content: bytes) -> int:
             )
             db.add(queue)
             db.flush()
+            pending.add(face.embedding)
             log.info(
                 "review queue item created",
                 extra={

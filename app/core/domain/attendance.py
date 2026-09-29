@@ -121,6 +121,11 @@ class StudentObservation:
     best_captured_at: datetime | None = None
     best_angle_deg: float | None = None
     first_seen_at: datetime | None = None
+    #: Sightings where this student was only a *proposed* candidate, never
+    #: confirmed. We know somebody was there and we think it was them, which
+    #: is exactly UNVERIFIED and definitely not ABSENT.
+    candidate_sighting_count: int = 0
+    candidate_angles: set[float] = field(default_factory=set)
     #: Set when a human overrode the automated decision.
     manual_override: str | None = None
 
@@ -191,7 +196,12 @@ def classify(
             continue
 
         if observation.sighting_count == 0:
-            result[roll_no] = AttendanceStatus.ABSENT
+            # Seen only as a proposal: not absent, but not certifiable either.
+            result[roll_no] = (
+                AttendanceStatus.UNVERIFIED
+                if observation.candidate_sighting_count > 0
+                else AttendanceStatus.ABSENT
+            )
             continue
 
         if meets_presence_rule(observation, policy):

@@ -11,10 +11,11 @@ def test_incremental_gallery_update():
     db = SessionLocal()
     db.add(Student(roll_no="1", name="One"))
     db.commit()
-    gallery_index.entries = []
+    gallery_index.reset()
     append_gallery(db, "1", np.array([1, 0], dtype=np.float32), "x", "manual_label")
     db.commit()
-    assert gallery_index.search(np.array([0.9, 0.1], dtype=np.float32))[0] == "1"
+    outcome = gallery_index.search(np.array([0.9, 0.1], dtype=np.float32))
+    assert outcome.best is not None and outcome.best.roll_no == "1"
     assert db.get(Student, "1").gallery_embedding_count == 1
     db.close()
 
@@ -30,7 +31,7 @@ def test_append_gallery_persists_when_faiss_add_fails(monkeypatch):
     db = SessionLocal()
     db.add(Student(roll_no="R4", name="R4"))
     db.commit()
-    gallery_index.entries = []
+    gallery_index.reset()
 
     def boom(*_args, **_kwargs):
         raise ValueError("embedding dimension does not match gallery index")
@@ -123,11 +124,11 @@ def test_review_resolution_for_new_roll_persists_across_restart(monkeypatch, tmp
     db.close()
 
     # Simulate a server restart: FAISS is rebuilt from the DB.
-    gallery_index.entries = []
+    gallery_index.reset()
     db = SessionLocal()
     gallery_index.rebuild(db)
-    matched, _score = gallery_index.search(np.array([0.5, 0.8660254], dtype=np.float32))
-    assert matched == "R4"
+    outcome = gallery_index.search(np.array([0.5, 0.8660254], dtype=np.float32))
+    assert outcome.best is not None and outcome.best.roll_no == "R4"
     db.close()
 
 

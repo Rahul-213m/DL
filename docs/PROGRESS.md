@@ -17,7 +17,7 @@ be able to continue without asking anything.
 |---|---|---|
 | W1 | Repo hygiene, safety, tooling, Alembic, CI | ✅ DONE |
 | W2 | Correctness fixes from the audit | ✅ DONE |
-| W3 | Pure core + interfaces | 🟡 MOSTLY DONE (ports, types, domain logic, new perception pipeline all landed in W1/W2; legacy route handlers still monolithic) |
+| W3 | Pure core + interfaces | ✅ DONE (ports, types, domain, vector index, identity engine, perception pipeline) |
 | W4 | Multi-tenant data model + auth/RBAC | ⬜ |
 | W5 | Edge ROS 2 Jazzy packages | ⬜ |
 | W6 | Cloud perception + identity engine | 🟡 PARTIAL (ModelRegistry + 2 backends in W1; decision engine, quality gate, dedup, tiling in W2; vector index rework, GPU batching, liveness to do) |
@@ -238,7 +238,72 @@ extreme pose or blur is a hypothesis, not a finding. Tracked in
 
 ---
 
-## Next: W3 — pure core + interfaces (mostly landed; finish the route split)
+## W3 — Pure core + interfaces — **DONE**
+
+### Done
+
+**Vector index** (`app/services/vector_index.py`) — replaces the legacy flat
+FAISS wrapper with a per-identity exact search.
+
+- **One result per identity, not per vector.** The legacy index searched k=1
+  over raw vectors, so a student with 20 enrollment photos occupied 20 rows and
+  the odds the top hit was *them* rather than the next student were 20-to-1 at
+  equal true similarity. This is the mechanism behind the audit's imbalance
+  concern, and it is now correct by construction.
+- **Gallery depth is exposed.** `IdentityMatch.exemplar_count` surfaces the
+  R1=131 / R4=1 asymmetry (audit 4.4) as data rather than a footnote.
+- **Search is per-identity top-k**, because the margin rule needs a runner-up
+  and a runner-up must be a *different* student, not that student's second-best
+  exemplar.
+- **Roster is a query filter**, so an out-of-roster candidate is never scored.
+- **MEASURED** on the CI machine: 4,500 vectors (300 students x 15 exemplars,
+  128-d) searched in **< 10 ms**. Exact search is the right choice at this
+  scale; FAISS stays behind the same port for >10^5.
+- Dimension mismatch raises with an actionable message rather than silently
+  mixing embedding spaces.
+
+**Identity engine** (`app/services/identity.py`) — the "brain".
+
+- Orchestrates index search + the three decision rules + the quality gate.
+- **Gallery-depth gate**: a match on a student with fewer than
+  `MIN_EXEMPLARS_FOR_AUTO` (3) is demoted CONFIRMED → UNCERTAIN, because a
+  nearest-neighbour score is an order statistic over exemplars and a
+  one-exemplar student is systematically harder to match than a hundred-
+  exemplar one. Demotes only; never promotes.
+- **Quality gate is a hard ceiling**: a poor face can be *proposed* to the
+  operator but can never be auto-confirmed.
+- `resolve_session()` does what the legacy system could not: cross-frame
+  clustering → per-student evidence → PRESENT/ABSENT/UNVERIFIED.
+- `unknown_summary()` produces the exact conversational opening the brief
+  asks for.
+
+**`_is_duplicate` fixed properly** (audit 4.5). The first attempt used a cache
+keyed on the pending count — which meant it had to *query* to know whether its
+own cache was valid, i.e. it kept the cost it was meant to remove. Replaced
+with `PendingReviewIndex`, built **once per frame** by the processor that
+knows the frame boundary. A test that counts `query()` calls now proves
+one query per FRAME, never per face.
+
+**Archive** (`archive/README.md`) — every removed behaviour is listed with the
+module that replaced it and why. Nothing is deleted; the ROS package's
+reconciliation is documented there too.
+
+### Tests: 257 passed (was 206 at end of W2; +51)
+
+`tests/test_identity_engine.py` (43) and `tests/test_w3_performance.py` (8) are
+new, plus the original 23 still green.
+
+### Two more real bugs the tests found
+
+1. **A student proposed-but-never-confirmed was reported ABSENT.** We saw
+   somebody and thought it was R1; claiming absence is a stronger statement
+   than the evidence supports. `StudentObservation` now tracks candidate
+   sightings separately, which is what makes UNVERIFIED reachable.
+2. **The time-based dedup cache was ineffective** (above).
+
+---
+
+## Next: W4 — multi-tenant data model + auth/RBAC
 
 Each gets a **failing regression test first**, then the fix, then a before/after
 measurement on the sample images in `dummy_test/` and `ENROLL_PHOTOS/`.
