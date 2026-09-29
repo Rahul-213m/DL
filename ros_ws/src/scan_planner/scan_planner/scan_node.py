@@ -18,6 +18,7 @@ cancellation callback rather than after the current step.
 
 from __future__ import annotations
 
+import threading
 import time
 import uuid
 
@@ -204,19 +205,24 @@ class ScanPlannerNode(Node):
             # row must not look like a clean success.
             self.get_logger().warn(warning)
 
-        # rclpy's blocking waits are correct HERE, from a plain callback under
-        # a MultiThreadedExecutor. They are only wrong from a coroutine
-        # callback, where the executor cannot process the waitable the wait
-        # depends on -- which is why this node is not a coroutine.
-        if not self._capture_client.wait_for_service(timeout_sec=10.0):
-            goal_handle.abort()
-            result.fault_code = "camera_unavailable"
-            result.error_message = (
-                f"{self.get_parameter('capture_service').value} is not available; is camera_bridge running?"
-            )
-            result.scan_id = self._scan_id
-            self.get_logger().error(result.error_message)
-            return result
+        # No explicit wait_for_service / wait_for_server here, and that is
+        # deliberate. Polling readiness from inside this callback is what made
+        # the sweep unreliable: the previous version called
+        # spin_until_future_complete on a node that main() was already
+        # spinning, which rclpy does not support -- the first capture arrived
+        # and every later one timed out client-side.
+        #
+        # Instead the wait is bounded by the PROTOCOL, not by us: the camera
+        # bridge enforces request.timeout_s and the servo enforces
+        # goal.timeout_s. The party that knows how long is allowed to wait is
+        # the party that waits, and an unreachable node produces a timeout
+        # there rather than a race here.
+        self.get_logger().info(
+            f"readiness: capture={self._capture_client.service_is_ready()} "
+            f"zoom={self._zoom_client.service_is_ready()} "
+            f"servo={self._goto_client.server_is_ready() if self._goto_client else 'not yet created'}"
+        )
+
         goto_client = self._fresh_goto_client()
         if not goto_client.wait_for_server(timeout_sec=15.0):
             goal_handle.abort()
@@ -323,14 +329,30 @@ class ScanPlannerNode(Node):
         self._publish(feedback, goal_handle, 5, plan.step_count - 1, plan, plan.steps[-1])
         return result
 
-    def _spin_for(self, future, timeout_s: float):
-        """Pump this node until a future resolves, or the timeout expires.
+    def _wait_future(self, future, timeout_s: float):
+        """Block until an rclpy future resolves, or the timeout expires.
 
-        Returns the future's value, or None on timeout. The future is then
-        cancelled so a late reply cannot resolve into a dead sweep.
+        Deliberately NOT `rclpy.spin_until_future_complete`: this node is
+        already being spun by the MultiThreadedExecutor in `main()`, and
+        re-spinning a node that another executor owns is not supported. It
+        worked for the first capture and then every later one timed out
+        client-side, which looked like a broken camera.
+
+        Also deliberately NOT `asyncio`: rclpy drives a coroutine callback
+        through a bare generator protocol with no running event loop, so
+        `asyncio.sleep` there raises "no running event loop".
+
+        A `threading.Event` set from the future's done-callback needs neither.
+        The callback is invoked by the executor on whichever thread completes
+        the future, and this call occupies only one of the executor's eight
+        worker threads -- the one already running the sweep.
+
+        Returns the result, or None on timeout (after cancelling the future so
+        a late reply cannot resolve into a dead sweep).
         """
-        rclpy.spin_until_future_complete(self, future, timeout_sec=timeout_s)
-        if not future.done():
+        done = threading.Event()
+        future.add_done_callback(lambda _future: done.set())
+        if not done.wait(timeout_s):
             future.cancel()
             return None
         return future.result()
@@ -389,18 +411,21 @@ class ScanPlannerNode(Node):
         # send_goal_async() returns a future for a ClientGoalHandle; only then
         # can get_result_async() be requested. spin_until_future_complete
         # pumps THIS node so the replies can actually be delivered.
+        # A rclpy future is awaitable: it yields itself, and rclpy's Task
+        # resumes the coroutine when the reply lands. No asyncio, no sleeping,
+        # no re-spinning the node.
         timeout = float(self.get_parameter("motor_timeout_s").value) + 10.0
-        goal_handle = self._spin_for(self._goto_client.send_goal_async(goal), timeout)
+        goal_handle = self._wait_future(self._goto_client.send_goal_async(goal), timeout)
         if goal_handle is None:
             return False, "motion_goal_timeout"
         if not goal_handle.accepted:
             return False, "motion_goal_rejected"
-
-        result_future = goal_handle.get_result_async()
-        wrapped = self._spin_for(result_future, timeout)
+        wrapped = self._wait_future(goal_handle.get_result_async(), timeout)
 
         # STALLED is a distinct fault code, not a timeout that looks like
         # success: the mechanism is jammed, versus merely slow.
+        if wrapped is None:
+            return False, "motion_result_timeout"
         motion = wrapped.result
         if wrapped.status != GOAL_SUCCEEDED:
             if wrapped.status == GOAL_CANCELED:
@@ -429,20 +454,17 @@ class ScanPlannerNode(Node):
         therefore done once, here, and the per-capture request sets
         ``set_zoom: false``.
         """
-        if not self._zoom_client.wait_for_service(timeout_sec=2.0):
-            self.get_logger().warn("set_zoom service unavailable; keeping the current zoom")
+        if not self._zoom_client.service_is_ready():
+            self.get_logger().warn("set_zoom service not ready; keeping the current zoom")
             return
         request = SetZoom.Request()
         request.zoom = float(zoom)
         request.lock = True
-        future = self._zoom_client.call_async(request)
-        rclpy.spin_until_future_complete(self, future, timeout_sec=3.0)
-        if not future.done():
-            future.cancel()
-            self.get_logger().warn("set_zoom timed out; continuing at the current zoom")
+        response = self._wait_future(self._zoom_client.call_async(request), 5.0)
+        if response is None:
+            self.get_logger().warn("set_zoom did not answer; keeping the current zoom")
             return
-        response = future.result()
-        if response is not None and response.error_message:
+        if response.error_message:
             self.get_logger().warn(response.error_message)
 
     def _capture(self, step: ScanStep):
@@ -455,18 +477,18 @@ class ScanPlannerNode(Node):
         request.set_zoom = False
         request.timeout_s = float(self.get_parameter("capture_timeout_s").value)
 
-        future = self._capture_client.call_async(request)
-        rclpy.spin_until_future_complete(
-            self,
-            future,
-            timeout_sec=float(self.get_parameter("capture_timeout_s").value) + 5.0,
+        # Awaited, and bounded by the camera's own timeout_s: the bridge
+        # returns a TIMEOUT fault rather than blocking forever, so a wedged
+        # phone cannot wedge the sweep.
+        response = self._wait_future(
+            self._capture_client.call_async(request),
+            # The camera enforces its own timeout_s and returns a TIMEOUT
+            # fault; this bound is only a backstop so a node that vanishes
+            # cannot hang the sweep forever.
+            float(self.get_parameter("capture_timeout_s").value) + 10.0,
         )
-        if not future.done():
-            future.cancel()
-            return CaptureOutcome(image=None, reason="capture timed out")
-        response = future.result()
         if response is None:
-            return CaptureOutcome(image=None, reason="camera returned no response")
+            return CaptureOutcome(image=None, reason="no response within the capture budget")
 
         if not response.success:
             # A failure with no message is a bug in the reporter, not an

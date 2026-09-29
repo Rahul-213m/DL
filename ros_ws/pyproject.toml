@@ -31,3 +31,7 @@ ignore = [
 # the documented way to make a rename and its directory entry survive a power
 # cut. Rewriting these with pathlib would be churn, not clarity.
 "src/edge_uploader/edge_uploader/outbox.py" = ["PTH"]
+# The action execute callbacks return a result message on every path. They are
+# large, and RET503's "add a return at the end" would be a silent no-op that
+# returns None on a path that should not be reachable.
+"src/servo_controller/servo_controller/servo_node.py" = ["RET503"]

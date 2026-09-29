@@ -272,7 +272,6 @@ def _metadata_message(node, metadata, sharpness: float):
     message.camera_angle_deg = 0.0
     message.extra_keys = ["sharpness"]
     message.extra_values = [f"{sharpness:.2f}"]
-    del node._min_sharpness
     return message
 
 

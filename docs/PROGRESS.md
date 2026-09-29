@@ -486,3 +486,36 @@ success on bytes reported every good capture as a failure with an empty reason.
 The sweep never finishes blank: any unexpected exception becomes
 `fault_code: internal_error` with the exception text. That safety net caught
 two of the bugs above on its own.
+
+
+## W5 follow-up 2: a full simulated sweep now runs end to end
+
+```
+frames_attempted: 16
+frames_captured: 16
+frames_rejected: 0
+duration_s: 5.895
+fault_code: ''
+```
+
+Four nodes launched with one command, no crashes. Suites: 255 ROS tests,
+330 cloud tests, edge lint clean.
+
+### Still not done
+
+1. **A sweep does not yet write to the outbox.** The sweep captures and
+   publishes a `FrameManifest`, but nothing enqueues the image to the durable
+   `EdgeOutbox`, so the uploader has nothing to send. The outbox logic itself
+   is well tested (51 tests) -- it is the WIRING that is missing, and it is
+   the same wiring-shaped gap that this whole workstream keeps hitting.
+2. **No edge face detector**, so the edge gates on resolution and sharpness
+   only and the cloud remains the authoritative quality/identity gate.
+3. **`IpWebcamDriver` is unverified** against any phone app.
+4. **No rosbag fixtures**, and the uploader has still never met a real API.
+5. **The `servo_controller` result-type bug class is worth guarding.** Three
+   separate action-callback defects (`.feedback`, `.result`, and a result
+   message with its fields commented out) shipped with 55 passing tests,
+   because the tests covered the driver and not the ROS wiring. An
+   integration smoke test that starts all four nodes and drives one capture
+   and one move would have caught all three, and would have caught the camera
+   crash too. That is the first thing to add in W6.
