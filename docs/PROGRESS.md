@@ -16,14 +16,14 @@ be able to continue without asking anything.
 | WS | Workstream | Status |
 |---|---|---|
 | W1 | Repo hygiene, safety, tooling, Alembic, CI | ✅ DONE |
-| W2 | Correctness fixes from the audit | ⬜ NEXT |
-| W3 | Pure core + interfaces | ⬜ (interfaces landed early in W1; domain logic pending) |
+| W2 | Correctness fixes from the audit | ✅ DONE |
+| W3 | Pure core + interfaces | 🟡 MOSTLY DONE (ports, types, domain logic, new perception pipeline all landed in W1/W2; legacy route handlers still monolithic) |
 | W4 | Multi-tenant data model + auth/RBAC | ⬜ |
 | W5 | Edge ROS 2 Jazzy packages | ⬜ |
-| W6 | Cloud perception + identity engine | ⬜ (ModelRegistry + 2 backends landed in W1) |
+| W6 | Cloud perception + identity engine | 🟡 PARTIAL (ModelRegistry + 2 backends in W1; decision engine, quality gate, dedup, tiling in W2; vector index rework, GPU batching, liveness to do) |
 | W7 | Continual learning + operator layer | ⬜ |
 | W8 | Attendance service + reporting | ⬜ |
-| W9 | Security, privacy, compliance | ⬜ (retention module landed in W1) |
+| W9 | Security, privacy, compliance | 🟡 PARTIAL (retention landed W1; erasure/consent/KMS still to do) |
 | W10 | Observability + reliability + fault injection | ⬜ |
 | W11 | Deployment (Docker, Terraform, edge installer, cost) | ⬜ |
 | W12 | Evaluation, benchmarks, docs | ⬜ |
@@ -124,7 +124,121 @@ surviving a FAISS failure.
 
 ---
 
-## Next: W2 — correctness fixes
+## W2 — Correctness fixes from the audit — **DONE**
+
+### Done, with measurements
+
+**The image ingestion boundary** (`app/core/domain/imageops.py`) — the single
+place images are decoded. Fixes audit 4.1 and 4.2 at the root.
+
+| Fix | Evidence |
+|---|---|
+| **4.1 BGR channel order** | **MEASURED, paired, 4 students / 23 photos / 253 pairs.** Separability **+0.2893 → +0.3679** (+27%). Same-person p05 **0.121 → 0.404**. See `docs/benchmarks.md` §1. Reproduce: `python scripts/measure_channel_order.py` |
+| **4.2 EXIF orientation** | All 8 cases tested, including a **pixel-content** check (a corner marker must move), not just dimensions. 10 tests. |
+| **4.8 det_score floor + quality gate** | 3-tier: REJECT / POOR / GOOD. A 50 px face is matchable but **cannot auto-confirm**, and requests a zoom re-capture. Previously `det_score` was captured and never used. |
+| **4.10 evidence = aligned crop** | The stored evidence is now the 112×112 warp the embedder consumed, not a raw box slice. Asserted in tests. |
+
+**A real perf bug found by measurement, not by reading.** The first
+`YuNetDetector` called `setInputSize((width, height))`, silently overriding the
+configured working size — so the detector ran at full 12 MP. `scripts/sweep_detector.py`
+measured the cost: **6× latency and 9× false positives for zero recall gain**
+(1280/0.60: 1.58 FP/img, 153 ms vs 320/0.70: 0.17 FP/img, 26 ms). Fixed by
+downscaling to a working size and mapping boxes back. Pinned by
+`test_working_size_is_not_ignored`.
+
+**Decision engine** (`app/core/domain/decision.py`) — fixes 4.3.
+- k=1 argmax replaced by score + **margin** + **roster prior**.
+- `REASON_BETWEEN` added because the first draft reused `below_low_threshold`
+  for both "matched nothing" and "matched unconfidently", making the column
+  useless for calibration.
+- Runner-up is always a **different identity**, so a multi-exemplar gallery does
+  not make every match look ambiguous.
+- The project's own documented failure (R1 0.632 vs R3 0.631) is a test.
+
+**Dedup** (`app/core/domain/dedup.py`) — fixes 4.5. Framework-free clustering,
+O(n·k) over cluster count, **zero database access**. The legacy `_is_duplicate`
+re-queried the pending-review table and re-unpacked every embedding once per
+face. Purity is enforced by an AST test.
+
+**Attendance** (`app/core/domain/attendance.py`) — fixes 4.6.
+PRESENT / ABSENT / **UNVERIFIED**, with a configurable presence rule
+(`once` / `times` / `confirmed`) and a `required_distinct_angles` knob.
+
+**Session close-out** (`app/core/domain/session.py`) — fixes 4.9. Idempotent
+close, watchdog sweep, reason recorded. 9 of 11 legacy sessions had a NULL
+`end_time`.
+
+**Job queue** (`app/core/domain/jobs.py`) — fixes 4.7. Bounded, idempotent,
+retrying, with an explicit concurrency bound replacing the 40-thread AnyIO
+pool that hammered one ONNX session.
+
+**New perception pipeline** (`app/pipeline/perception.py`) — tiles → detect →
+quality → align → batch-embed, returning faces, rejections **with reasons**, and
+recapture regions.
+
+### Bugs my own tests found (all fixed)
+
+Writing the tests first was worth it — these were all mine:
+
+1. **Manual override was silently ignored.** `classify()` returned ABSENT
+   before checking `manual_override`, so a teacher marking an absent-looking
+   student present had no effect. The override is now applied first.
+2. **Tile cap off by one.** A 4×4 grid plus the full-frame pass produced **17**
+   detector calls under a 16-tile cap.
+3. **NMS let artefacts through.** A 4 px box inside a 100 px box has IoU
+   0.0016, so the overlap-only artefact check never fired.
+4. **Job dedup never fired.** `_in_flight` is keyed by `job_id`, not
+   `dedup_key`, so the membership test never matched and five redeliveries of
+   the same frame ran five times. Replaced with a single `_seen` map reserved
+   at enqueue.
+5. **Tiling regressed small frames.** The new pipeline tiled unconditionally,
+   doubling detector work on every 640×480 frame.
+6. **W1 left `recognizer.py` broken at runtime** — it used settings fields W1
+   had removed. mypy caught it. Now a shim over the registry, so it inherits
+   the licence guard.
+
+### Test results
+
+```
+$ .venv/bin/python -m pytest -q
+206 passed          (was 51 at end of W1; +155 this workstream)
+
+$ ruff check app tests scripts      -> All checks passed!
+$ ruff format --check               -> clean
+$ mypy app                          -> 32 errors, all in the 2 legacy
+                                       files W3 restructures; ratcheted
+```
+
+All 23 original behavioural tests still pass: manual label outranks auto,
+unconfirmed ≠ present, reversible review actions, DB survives FAISS failure.
+
+### Measured on real 4K classroom photos (MEASURED)
+
+```
+IMG_...143415.jpg:  1021ms  detected=2 usable=2 rejected=0 recapture=0 largest=955px
+  timings: decode=345ms detect=382ms quality_align_embed=147ms
+```
+
+**The pipeline is dominated by decode and detect, not embedding** (~96% of the
+time). Recognition was never the bottleneck; face *location* is. That reframes
+where optimisation effort belongs.
+
+### Still UNVERIFIED (and labelled as such in docs/benchmarks.md)
+
+TAR@FAR, FAR, FRR, coverage %, duplicate rate, unknown-rate trend, end-to-end
+scan time, GPU figures. No evaluation set exists. Protocol in
+`docs/data_collection_protocol.md`; GPU run in HUMAN_ACTIONS item 6.
+
+### Known diagnostic gap
+
+Detector recall caps at **0.75** on the portrait set and does not improve with
+working size — 6 of 24 portraits found no face. Cause **not diagnosed**;
+extreme pose or blur is a hypothesis, not a finding. Tracked in
+`docs/LIMITATIONS.md` (written in W12).
+
+---
+
+## Next: W3 — pure core + interfaces (mostly landed; finish the route split)
 
 Each gets a **failing regression test first**, then the fix, then a before/after
 measurement on the sample images in `dummy_test/` and `ENROLL_PHOTOS/`.
@@ -148,7 +262,15 @@ measurement on the sample images in `dummy_test/` and `ENROLL_PHOTOS/`.
 - **W5 needs the ROS workspace created at `ros_ws/`.** Verified: `~/ros_ws` does
   not exist; `/home/rahul/ros2_ws` is an unrelated ROS tutorial workspace
   (cpp_pubsub, turtle_shapes, urdf_tutorial). `attendance_robot/` is the only
-  copy, so there is nothing to merge — it becomes the canonical `ros_ws/src/`.
-- **W12 needs the AWS GPU benchmark.** Script + protocol to be written; the run
-  itself is HUMAN_ACTIONS.
+  copy, so there is nothing to merge — it moves to `ros_ws/src/` with an
+  ARCHIVE.md explaining the move.
+- **W5 needs the servo model and phone answered** (HUMAN_ACTIONS 5a/5b). The
+  packages will be written behind hardware-abstraction interfaces with
+  simulated implementations regardless, so this is not a hard blocker — but the
+  wiring guide and the pixels-per-face maths cannot be finished without it.
+- **W12 needs the AWS GPU benchmark** (HUMAN_ACTIONS 6) and a real classroom
+  data set (HUMAN_ACTIONS 7). Scripts and protocols exist; the runs are
+  human-only.
+- **W4 auth needs the product decisions** (HUMAN_ACTIONS 8). Defaults will hold
+  until answered: individual logins, multi-tenant cloud, no offline mandate.
 - **Nothing else is blocked.**

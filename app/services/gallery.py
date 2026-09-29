@@ -21,7 +21,7 @@ def unpack_embedding(data: bytes) -> np.ndarray:
 class GalleryIndex:
     """Incremental FAISS cosine-similarity index; DB remains source of truth."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._index: faiss.IndexIDMap | None = None
         self._id_to_roll_no: dict[int, str] = {}
         self._roll_no_to_ids: dict[str, set[int]] = {}

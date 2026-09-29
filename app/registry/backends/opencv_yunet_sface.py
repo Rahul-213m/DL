@@ -35,7 +35,9 @@ log = logging.getLogger(__name__)
 SFACE_INPUT_SIZE = (112, 112)
 #: YuNet's native working resolution. The model is fully convolutional and
 #: scales; larger inputs find smaller faces but cost more.
-YUNET_INPUT_SIZE = (320, 320)
+#: YuNet reference working size. The default used in production is 640; see
+#: YuNetDetector for the measured trade-off.
+YUNET_REFERENCE_SIZE = 320
 #: YuNet's landmark count: left eye, right eye, nose, left mouth, right mouth.
 YUNET_LANDMARKS = 5
 
@@ -74,17 +76,40 @@ def _resolve_weights(local_path: str | None, env_var: str, hint_url: str) -> Pat
 class YuNetDetector:
     """Face detector built on OpenCV's YuNet.
 
-    Thread safety: a single ``cv2.FaceDetectorYN`` instance is NOT documented as
-    thread-safe, so a lock serialises inference. Inference on CPU is fast enough
-    (single-digit milliseconds for a 640x480 tile) that contention is not the
-    bottleneck; batch parallelism happens at the job-queue level instead.
+    Operating point (MEASURED 2026-09-29, see docs/benchmarks.md)
+    ------------------------------------------------------------
+    YuNet is designed for a small input (the reference demo uses 320x320). It
+    is a fully-convolutional net, so feeding it a 12 MP frame "works", but it
+    is both slow and noisy: on single-person portrait photos it reported a
+    mean of 2.62 faces at threshold 0.6, i.e. 1.62 false positives per image.
+
+    The fix is to **scale the image down to the working size, detect, and map
+    the boxes back**. Face scale within the network is then consistent with
+    training, which is what the detector's receptive field expects.
+
+    There is a real trade-off here, recorded honestly in docs/benchmarks.md:
+    a smaller working size finds small faces better (they survive the
+    downscale) but is worse at separating nearby large faces. ``working_size``
+    is therefore configuration, not a constant.
+
+    Thread safety: a single ``cv2.FaceDetectorYN`` is not documented as
+    thread-safe, so a lock serialises inference. Concurrency comes from the
+    job-queue level instead.
     """
 
     name = "opencv_yunet"
 
-    def __init__(self, input_size: tuple[int, int] = YUNET_INPUT_SIZE, score_threshold: float = 0.6) -> None:
-        self.input_size = input_size
+    def __init__(
+        self,
+        working_size: int = 640,
+        score_threshold: float = 0.7,
+        nms_threshold: float = 0.3,
+        top_k: int = 5000,
+    ) -> None:
+        self.working_size = working_size
         self.score_threshold = score_threshold
+        self.nms_threshold = nms_threshold
+        self.top_k = top_k
         self._lock = threading.Lock()
         self._net: cv2.FaceDetectorYN | None = None
         self._path: Path | None = None
@@ -100,54 +125,80 @@ class YuNetDetector:
             self._net = cv2.FaceDetectorYN.create(
                 str(self._path),
                 "",
-                [self.input_size[0], self.input_size[1]],
+                [self.working_size, self.working_size],
                 self.score_threshold,
-                0.3,  # NMS threshold
-                5000,  # top-k before NMS
+                self.nms_threshold,
+                self.top_k,
             )
         return self._net
 
     def warmup(self) -> None:
         """Load the network and run one throwaway inference."""
-        self.detect(np.zeros((self.input_size[1], self.input_size[0], 3), dtype=np.uint8))
+        self.detect(np.zeros((self.working_size, self.working_size, 3), dtype=np.uint8))
 
-    def set_input_size(self, size: tuple[int, int]) -> None:
-        """Change the working resolution. Takes effect on the next call."""
-        if size != self.input_size:
-            self.input_size = size
+    def set_working_size(self, size: int) -> None:
+        """Change the network input size. Takes effect on the next call."""
+        if size != self.working_size:
+            self.working_size = size
             self._net = None  # force recreation with the new size
 
     def detect(self, image: np.ndarray) -> list[tuple[BBox, np.ndarray, float]]:
         """Detect faces in a **BGR** image.
 
+        The image is downscaled so its shorter side is ``working_size``, faces
+        are found at that scale, then boxes and landmarks are mapped back to
+        source-image pixels so every downstream coordinate stays in one space.
+
         Args:
             image: ``(H, W, 3)`` uint8 BGR array.
 
         Returns:
-            ``[(bbox, landmarks[N,2] float32, score), ...]``.
+            ``[(bbox, landmarks[N,2] float32, score), ...]`` in source coords.
         """
         if image.dtype != np.uint8:
             image = np.clip(image, 0, 255).astype(np.uint8)
         height, width = image.shape[:2]
+        if height == 0 or width == 0:
+            return []
+
+        scale = self.working_size / float(min(height, width))
+        if scale < 1.0:
+            # Downscale: preserves small faces better than upscaling does.
+            net_w = max(self.working_size, round(width * scale))
+            net_h = max(self.working_size, round(height * scale))
+            resized = cv2.resize(image, (net_w, net_h), interpolation=cv2.INTER_AREA)
+        else:
+            net_w, net_h = width, height
+            resized = image
 
         net = self._ensure()
         with self._lock:
-            # setInputSize must be re-issued whenever the image changes size.
-            net.setInputSize((width, height))
-            _, faces = net.detect(image)
+            net.setInputSize((net_w, net_h))
+            _, faces = net.detect(resized)
 
         if faces is None:
             return []
 
+        # Map back to source coordinates. scale_x and scale_y differ because
+        # only the shorter side was normalised.
+        scale_x = width / float(net_w)
+        scale_y = height / float(net_h)
+
         results: list[tuple[BBox, np.ndarray, float]] = []
         for face in faces:
             # YuNet returns integral x/y/w/h; int() keeps numpy ints out of BBox.
-            x, y, w, h = (round(int(v)) for v in face[:4])
+            x, y, w, h = (int(v) for v in face[:4])
             score = float(face[-1])
             landmarks = np.asarray(face[4 : 4 + YUNET_LANDMARKS * 2], dtype=np.float32).reshape(
                 YUNET_LANDMARKS, 2
+            ) * np.array([scale_x, scale_y], dtype=np.float32)
+            bbox: BBox = (
+                round(x * scale_x),
+                round(y * scale_y),
+                round((x + w) * scale_x),
+                round((y + h) * scale_y),
             )
-            results.append(((x, y, x + w, y + h), landmarks, score))
+            results.append((bbox, landmarks, score))
         return results
 
 

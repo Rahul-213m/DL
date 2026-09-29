@@ -165,10 +165,7 @@ disallow_untyped_defs = false
 disallow_incomplete_defs = false
 warn_return_any = false
 
-[tool.mypy."app.main"]
-disable_error_code = ["arg-type"]
-
-[tool.mypy.overrides]
+[[tool.mypy.overrides]]
 module = [
     "faiss.*",
     "insightface",

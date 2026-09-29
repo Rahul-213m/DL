@@ -99,7 +99,32 @@ class Settings(BaseSettings):
     #: the top score is. Set to 0.0 to disable. See docs/00_audit.md §4.3.
     match_margin_threshold: float = 0.08
     #: Detector confidence below which a face is discarded outright.
-    min_detection_score: float = 0.50
+    min_detection_score: float = 0.70
+    #: Working size (shorter side, px) the detector runs at. The image is
+    #: downscaled to this before inference and boxes are mapped back to source
+    #: coordinates afterwards.
+    #:
+    #: MEASURED 2026-09-29 by `scripts/sweep_detector.py` on 24 single-person
+    #: portraits (3060x4080), counting every non-dominant detection as a false
+    #: positive. Reproduce with `python scripts/sweep_detector.py`.
+    #:
+    #:     working  thresh  FP/img  recall   ms/img
+    #:          320    0.70    0.17    0.75     25.9   <- chosen
+    #:          640    0.70    0.79    0.75     46.0
+    #:         1280    0.60    1.58    0.75    153.1
+    #:
+    #: The single most important result: running the detector at full 12 MP
+    #: costs **6x the latency and 9x the false positives** for no recall gain.
+    #:
+    #: KNOWN LIMITATION: 320 is right for the enrollment and wide-pass paths
+    #: (one face, large). A back-row face at 40 px inside a 1600 px tile becomes
+    #: 8 px in the network input, below YuNet's documented 10x10 minimum. Zoom
+    #: passes must therefore raise this value for the region they enlarge --
+    #: see `DETECTOR_WORKING_SIZE_ZOOM`, and docs/LIMITATIONS.md.
+    detector_working_size: int = 320
+    #: Working size for a zoom pass, where the region has been optically or
+    #: digitally enlarged and small faces are the whole point.
+    detector_working_size_zoom: int = 960
     #: Minimum detected face width AND height in pixels. The recognition
     #: target is 80-112 px; 40 px is the floor below which embeddings are
     #: unreliable, not a quality target.
@@ -130,6 +155,23 @@ class Settings(BaseSettings):
     min_mean_luma: float = 40.0
     #: Standard deviation of luma below which illumination is considered flat.
     min_luma_stddev: float = 15.0
+
+    # ------------------------------------------------------------------
+    # Presence rule (how much evidence makes a student present)
+    # ------------------------------------------------------------------
+    #: "once" | "times" | "confirmed". See app/core/domain/attendance.py.
+    #:   once     - a single sighting is enough (cheapest, most false accepts)
+    #:   times    - needs REQUIRED_SIGHTINGS
+    #:   confirmed - needs at least one CONFIRMED decision (strictest)
+    presence_rule: str = "once"
+    required_sightings: int = 1
+    #: Minimum distinct pan angles. A student seen once from a lucky angle is
+    #: the most common false accept in a real classroom, where someone can
+    #: leave immediately after the sweep passes. Raising this trades operator
+    #: workload for accuracy.
+    required_distinct_angles: int = 1
+    #: Minutes into the session after which a first sighting is LATE.
+    late_after_minutes: int | None = None
 
     # ------------------------------------------------------------------
     # Liveness (interface reserved; implementation is a separate purchase)
@@ -308,6 +350,25 @@ class Settings(BaseSettings):
         # --- Job queue -------------------------------------------------------
         if self.max_concurrent_inference_jobs < 1:
             problems.append("MAX_CONCURRENT_INFERENCE_JOBS must be >= 1")
+
+        # --- Presence rule --------------------------------------------------
+        if self.presence_rule not in {"once", "times", "confirmed"}:
+            problems.append(
+                f"PRESENCE_RULE must be 'once', 'times' or 'confirmed', got '{self.presence_rule}'"
+            )
+        if self.required_sightings < 1:
+            problems.append("REQUIRED_SIGHTINGS must be >= 1")
+        if self.required_distinct_angles < 1:
+            problems.append("REQUIRED_DISTINCT_ANGLES must be >= 1")
+
+        # --- Detector geometry ---------------------------------------------
+        if self.detector_working_size < 64:
+            problems.append(
+                "DETECTOR_WORKING_SIZE must be >= 64; below that YuNet cannot see a face "
+                "(its documented minimum is 10x10 px)"
+            )
+        if not 0 < self.min_detection_score <= 1:
+            problems.append("MIN_DETECTION_SCORE must be in (0, 1]")
 
         if problems:
             raise ValueError("Invalid configuration:\n  - " + "\n  - ".join(problems))

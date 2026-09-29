@@ -67,7 +67,7 @@ class InsightFaceDetector:
 
     def _ensure(self) -> Any:
         if self._app is None:
-            from insightface.app import FaceAnalysis  # type: ignore[import-untyped]
+            from insightface.app import FaceAnalysis
 
             from app.core.config import settings
 
@@ -113,7 +113,7 @@ class InsightFaceEmbedder:
 
     def _ensure(self) -> Any:
         if self._app is None:
-            from insightface.app import FaceAnalysis  # type: ignore[import-untyped]
+            from insightface.app import FaceAnalysis
 
             from app.core.config import settings
 
