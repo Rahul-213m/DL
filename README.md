@@ -219,3 +219,9 @@ Every face detection creates an `AttendanceEvent` row in the database with:
 The original capture event is retained. If an operator undoes a review decision, the event returns to the pending queue and the gallery embedding added by that decision is removed; no separate `REVERTED` event is created.
 
 Run `python scripts/purge_old_frames.py` (e.g. daily via cron) to delete old image files while keeping all database records intact.
+
+---
+
+For the verified fresh-clone startup and integration flow, see [docs/INTEGRATION.md](docs/INTEGRATION.md).
+
+---
