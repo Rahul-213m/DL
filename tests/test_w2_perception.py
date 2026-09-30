@@ -76,6 +76,7 @@ class FakeEmbedder:
 
     def __init__(self) -> None:
         self.batches: list[int] = []
+        self.batch_calls: list[int] = []
 
     def warmup(self) -> None:
         """No weights to load."""
@@ -91,8 +92,14 @@ class FakeEmbedder:
         return (vector / norm).astype(np.float32)
 
     def embed_batch(self, aligned_crops: list[np.ndarray]) -> list[np.ndarray]:
-        """Record the batch size so batching can be asserted."""
+        """Record the batch size so batching can be asserted.
+
+        ``batch_calls`` counts only *batch* invocations. ``batches`` also picks
+        up the per-crop entries that ``embed`` appends when a batch fans out,
+        so it cannot answer "was this frame embedded in one call?".
+        """
         self.batches.append(len(aligned_crops))
+        self.batch_calls.append(len(aligned_crops))
         return [self.embed(crop) for crop in aligned_crops]
 
 
@@ -123,6 +130,20 @@ def _scene(width: int, height: int, seed: int = 0) -> np.ndarray:
     """
     rng = np.random.default_rng(seed)
     return rng.integers(0, 255, (height, width, 3), dtype=np.uint8)
+
+
+def _two_tone_scene(width: int = 600, height: int = 400) -> np.ndarray:
+    """Noise everywhere, but the right-hand half is much brighter.
+
+    Both halves keep high-frequency detail so the sharpness gate passes and
+    both are well lit, so the ONLY thing that separates them is brightness.
+    That is what lets a test target one specific face by content.
+    """
+    rng = np.random.default_rng(7)
+    scene = rng.integers(0, 200, (height, width, 3), dtype=np.uint8)
+    right = scene[:, width // 2 :].astype(np.int32) + 130
+    scene[:, width // 2 :] = np.clip(right, 0, 255).astype(np.uint8)
+    return scene
 
 
 def _context(**kwargs: object) -> FrameContext:
@@ -250,22 +271,32 @@ class TestPerceptionPipeline:
         assert not result.faces[0].needs_recapture
 
     def test_a_frame_with_one_broken_face_still_others(self, monkeypatch: pytest.MonkeyPatch) -> None:
-        """One unusable face must not fail the whole frame."""
+        """One unusable face must not fail the whole frame.
+
+        The failure is triggered by the crop's CONTENT (a bright crop), not by
+        a call counter, so the test means the same thing whether the pipeline
+        embeds one crop at a time or all of them in a single batch. A counter
+        silently stops testing anything the moment batching is introduced.
+        """
         from app.registry import loader
 
         class HalfBrokenEmbedder(FakeEmbedder):
-            """Fails on the second embed call only."""
+            """Fails on any bright crop, whatever the call order."""
 
-            def __init__(self) -> None:
-                super().__init__()
-                self.calls = 0
+            BRIGHT = 130.0
 
             def embed(self, aligned_crop: np.ndarray) -> np.ndarray:
-                """Count separately from batches; super() also appends."""
-                self.calls += 1
-                if self.calls == 2:
+                """Reject the bright region; the dark one embeds normally."""
+                if float(aligned_crop.mean()) > self.BRIGHT:
                     raise RuntimeError("simulated ONNX failure")
                 return super().embed(aligned_crop)
+
+            def embed_batch(self, aligned_crops: list[np.ndarray]) -> list[np.ndarray]:
+                """Also fail as a batch, so the per-crop fallback is exercised."""
+                self.batches.append(len(aligned_crops))
+                if any(float(crop.mean()) > self.BRIGHT for crop in aligned_crops):
+                    raise RuntimeError("simulated batched ONNX failure")
+                return [self.embed(crop) for crop in aligned_crops]
 
         monkeypatch.setattr(
             loader,
@@ -276,9 +307,42 @@ class TestPerceptionPipeline:
                 HalfBrokenEmbedder(),
             ),
         )
-        result = process_frame_bytes(_png_bytes(_scene(600, 400)), _context())
+        result = process_frame_bytes(_png_bytes(_two_tone_scene()), _context())
         assert len(result.faces) == 1, "the surviving face must still be reported"
         assert any("embed_failed" in reason for _obs, reason in result.rejected)
+
+    def test_embeddings_are_batched_once_per_frame(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        """A frame of many faces is one batch, not one call per face.
+
+        MEASURED cost of getting this wrong: on a 4K classroom frame the
+        per-crop path re-pays SFace's fixed cost 300 times. The fake records
+        batch sizes, so this asserts one call carrying every crop.
+        """
+        from app.registry import loader
+
+        embedder = FakeEmbedder()
+        monkeypatch.setattr(
+            loader,
+            "_loaded",
+            loader.LoadedRegistry(
+                loader.ModelRegistry(),
+                FakeDetector(
+                    [
+                        ((10, 10, 210, 210), 0.95),
+                        ((210, 10, 410, 210), 0.95),
+                        ((410, 10, 590, 210), 0.95),
+                    ]
+                ),
+                embedder,
+            ),
+        )
+        result = process_frame_bytes(_png_bytes(_scene(600, 300)), _context())
+        assert len(result.faces) == 3, "all three faces should survive"
+        assert embedder.batch_calls == [3], (
+            "the three crops must travel in one batched call, not three calls"
+        )
 
     def test_tiling_bounds_the_detector_calls(self, monkeypatch: pytest.MonkeyPatch) -> None:
         """A huge frame must not create unbounded inference calls."""

@@ -21,6 +21,7 @@ from app.registry.backends.licensed_stub import (
     UnconfiguredDetector,
     UnconfiguredEmbedder,
 )
+from app.registry.backends.liveness_stub import LivenessStub, NullLiveness
 from app.registry.backends.opencv_yunet_sface import SFaceRecognizer, YuNetDetector
 from app.registry.models import ModelDescriptor, ModelRegistry, NonCommercialModelError
 
@@ -32,17 +33,31 @@ class LoadedRegistry:
 
     Held as one object so the licences and the live models can never drift
     apart: they are built together and swapped atomically.
+
+    The optional ``liveness`` attribute is the third model role. It is ``None``
+    when no checker is configured, and a checker with ``supported`` False when
+    only the development stub is available: the caller must be able to ask
+    "did you actually check?" and get an honest answer either way.
     """
 
-    def __init__(self, registry: ModelRegistry, detector: Any, embedder: Any) -> None:
+    def __init__(
+        self,
+        registry: ModelRegistry,
+        detector: Any,
+        embedder: Any,
+        liveness: Any | None = None,
+    ) -> None:
         self.registry = registry
         self.detector = detector
         self.embedder = embedder
+        self.liveness = liveness
 
     def warmup(self) -> None:
-        """Load both models eagerly."""
+        """Load both models eagerly, plus the checker if there is one."""
         self.detector.warmup()
         self.embedder.warmup()
+        if self.liveness is not None:
+            self.liveness.warmup()
 
     def shutdown(self) -> None:
         """Release any resources the backends hold."""
@@ -77,6 +92,28 @@ class LoadedRegistry:
             )
         return rows
 
+    def describe_liveness(self) -> dict[str, Any]:
+        """Report what, if anything, is checking for spoofed faces.
+
+        Returned alongside :meth:`describe` on the models endpoint, because the
+        honest answer to "is this deployment protected against a photo of a
+        photo?" has to be visible without reading the source.
+        """
+        checker = self.liveness
+        if checker is None:
+            return {
+                "configured": False,
+                "performs_check": False,
+                "backend": None,
+                "enabled": settings.liveness_enabled,
+            }
+        return {
+            "configured": True,
+            "performs_check": bool(getattr(checker, "performs_check", getattr(checker, "supported", False))),
+            "backend": getattr(checker, "name", "unknown"),
+            "enabled": settings.liveness_enabled,
+        }
+
 
 # ---------------------------------------------------------------------------
 # Backend factories
@@ -94,6 +131,13 @@ _EMBEDDER_FACTORIES: dict[str, Any] = {
     "opencv_sface": SFaceRecognizer,
     "insightface_buffalo_l": InsightFaceEmbedder,
     "licensed_placeholder": UnconfiguredEmbedder,
+}
+
+#: Liveness checkers. Only the two honest options ship today; a real checker
+#: is a drop-in class with ``check(image, bbox) -> float`` (ADR 0004).
+_LIVENESS_FACTORIES: dict[str, Any] = {
+    "stub": LivenessStub,
+    "null": NullLiveness,
 }
 
 _lock = threading.Lock()
@@ -140,12 +184,22 @@ def load_registry(force: bool = False) -> LoadedRegistry:
         detector = _build(settings.detector_backend, _DETECTOR_FACTORIES, "detector")
         embedder = _build(settings.embedder_backend, _EMBEDDER_FACTORIES, "embedder")
 
-        _loaded = LoadedRegistry(registry=registry, detector=detector, embedder=embedder)
+        # The liveness slot is optional and absent by default. It is built even
+        # when disabled so a misconfiguration is a startup error rather than a
+        # surprise at the first suspected spoof.
+        liveness = None
+        if settings.liveness_backend:
+            liveness = _build(settings.liveness_backend, _LIVENESS_FACTORIES, "liveness")
+
+        _loaded = LoadedRegistry(
+            registry=registry, detector=detector, embedder=embedder, liveness=liveness
+        )
         log.info(
             "model registry loaded",
             extra={
                 "detector": settings.detector_backend,
                 "embedder": settings.embedder_backend,
+                "liveness": settings.liveness_backend,
                 "environment": settings.environment,
                 "production": settings.is_production,
                 "providers": settings.provider_list,

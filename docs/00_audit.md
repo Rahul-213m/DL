@@ -11,6 +11,36 @@
 > Where I could not verify something (no hardware present), I say **UNVERIFIED** and give the
 > protocol to verify it. I have invented no benchmark numbers.
 
+## Current Re-audit — 2026-09-30
+
+This section supersedes the maturity claims in the 2026-09-29 snapshot below where later work
+has changed the code. The original findings remain as historical context; they are not a current
+description of every subsystem. This pass inspected the current source tree, ran the cloud suite
+and ROS workspace tests, and added focused W6 evaluation/benchmark coverage. The working tree
+already contained uncommitted W6 implementation files before this pass; they remain uncommitted.
+
+| Workstream | Current status | Evidence and remaining boundary |
+|---|---|---|
+| W1–W3 | **Implemented per prior workstream records** | Repo safety/tooling, correctness/domain core and identity/vector-index layers are present; cloud and ROS verification is recorded below. |
+| W4 | **Substantially implemented; production decisions remain** | `app/api/routes_v1.py`, `app/models/tenancy.py`, `app/services/tenancy.py`, `tests/test_tenancy.py`, `tests/test_v1_api.py`: tenant auth/RBAC, consent, roster, audited operations, session lifecycle and CSV register exist. Deployment-grade identity provisioning and policy review still need operator/legal sign-off. |
+| W5 | **Partially implemented** | `ros_ws/` builds all seven packages and passes 259 edge tests on Jazzy. `docs/PROGRESS.md` records a verified simulated 16-frame sweep. The sweep is not wired to the durable outbox; phone-app and physical hardware paths remain unverified. |
+| W6 | **Partially implemented; active WIP** | The perception pipeline batches through `InsightFaceEmbedder`; the permissive SFace adapter satisfies the batch contract with a serial loop because its API is single-image. Calibration CLI, consented data protocol, held-out verification-pair evaluator and aggregate-only `scripts/benchmark_pipeline.py` exist. Liveness backends are placeholders, are not consulted by the perception path, and perform no anti-spoof check. Real-data TAR@FAR remains unavailable. |
+| W7 | **Partial foundations only** | `UnknownCluster` storage and `unresolved_clusters()` exist, as do identity resolution and a legacy Streamlit tester. No complete unknown-cluster operator workflow, conversational API, or gated metric-update/version/rollback/poisoning/gallery-aging service was found. |
+| W8 | **Partial** | `app/api/routes_v1.py` closes sessions and serves register JSON/CSV. XLSX/PDF export, timetable-driven scheduling and webhook delivery are absent. |
+| W9 | **Partial** | Consent checks, biometric erasure service/API, retention and an S3 SSE-KMS storage adapter exist. Erasure can report pending object keys rather than proving external deletion; legal/compliance approval, end-to-end KMS/key lifecycle and verification remain open. |
+| W10 | **Partial** | Prometheus-style metrics, request instrumentation and health/readiness endpoints exist in `app/observability/metrics.py` and `app/main.py`. Fault-injection coverage, OpenTelemetry trace integration and an operator debug visualizer were not found. |
+| W11 | **Partial** | `Dockerfile` and `docker-compose.yml` exist, but the Dockerfile is single-stage. No Terraform files were found; edge installer and cost model are absent. |
+| W12 | **Partial** | `scripts/measure_channel_order.py`, `scripts/sweep_detector.py`, `scripts/evaluate.py` and `docs/benchmarks.md` cover focused measurements and held-out verification-pair evaluation. A synthetic classroom generator and `docs/LIMITATIONS.md` are absent. Real classroom attendance accuracy remains **UNVERIFIED**. |
+
+### Re-audit validation and risks
+
+- Full cloud suite: **431 passed, 4 warnings**. Warnings are Starlette/httpx and FastAPI status-code deprecations.
+- Edge workspace: **7 packages built; 259 tests passed**, 0 failures. One existing warning remains because `attendance_mocks/test/manual_test.py::test_angle_normalisation` returns a value instead of asserting.
+- `ruff check app tests scripts` passes; repository-wide `ruff format --check` reports 15 files to format. `mypy app` has **10 remaining errors**, all in legacy `app/api/routes.py`; the typing-ratchet tests pass. The invalid per-module mypy config syntax has been corrected.
+- The calibration fixture had been committing setup rows without adding attendance events to the SQLAlchemy session, and reused a fixed tenant slug in the process-shared in-memory database; both fixture problems are corrected.
+- The repository still contains biometric-related human actions that cannot be completed by code alone: licensing/legal decisions, git-history purge approval, consented held-out classroom data, and physical phone/servo verification. See `docs/HUMAN_ACTIONS.md`.
+- The benchmark harness has not been run on consent-approved real images. The held-out evaluator measures verification pairs only; do not present it as classroom false-present performance or treat the system as production-complete.
+
 ---
 
 ## 1. Environment as Measured

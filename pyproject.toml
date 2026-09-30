@@ -150,17 +150,8 @@ exclude = [
 #
 # `_legacy_mypy_errors` is asserted by tests/test_typing_ratchet.py, so adding
 # an untyped function fails CI rather than silently raising the debt.
-[tool.mypy."app.api.routes"]
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-warn_return_any = false
-
-[tool.mypy."app.pipeline.*"]
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-warn_return_any = false
-
-[tool.mypy."app.services.*"]
+[[tool.mypy.overrides]]
+module = ["app.api.routes", "app.pipeline.*", "app.services.*"]
 disallow_untyped_defs = false
 disallow_incomplete_defs = false
 warn_return_any = false

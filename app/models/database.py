@@ -17,13 +17,16 @@ query is issued without a tenant context. See docs/decisions/0007-multitenancy.m
 from __future__ import annotations
 
 import contextlib
+import logging
 from collections.abc import Iterator
 from typing import Any
 
-from sqlalchemy import DateTime, create_engine, event, text
+from sqlalchemy import DateTime, create_engine, event, inspect, text
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 
 from app.core.config import settings
+
+log = logging.getLogger(__name__)
 
 
 class Base(DeclarativeBase):
@@ -131,19 +134,33 @@ def get_db() -> Iterator[Session]:
         db.close()
 
 
+class SchemaRevisionError(RuntimeError):
+    """The database is not at the Alembic revision this build requires.
+
+    A distinct type so callers can react differently by severity: production
+    must not serve traffic against it at all, development only needs to say
+    so loudly. Both remain ``RuntimeError`` subclasses, so existing
+    ``except RuntimeError`` handling keeps working.
+    """
+
+
 def assert_schema_current(expected_revision: str) -> None:
     """Verify the database is at the expected Alembic revision.
 
     Raises:
-        RuntimeError: if Alembic has not been run, or is behind. Refusing to
-            serve traffic against an out-of-date schema is far safer than the
-            alternative, which is confusing runtime errors deep in a scan.
+        SchemaRevisionError: if Alembic has not been run, or is behind.
+            Refusing to serve traffic against an out-of-date schema is far
+            safer than the alternative, which is confusing runtime errors deep
+            in a scan.
     """
-    with engine.connect() as connection:
-        row = connection.execute(text("SELECT version_num FROM alembic_version")).fetchone()
-    current = row[0] if row else None
+    if not inspect(engine).has_table("alembic_version"):
+        current = None
+    else:
+        with engine.connect() as connection:
+            row = connection.execute(text("SELECT version_num FROM alembic_version")).fetchone()
+        current = row[0] if row else None
     if current != expected_revision:
-        raise RuntimeError(
+        raise SchemaRevisionError(
             "Database schema is out of date. "
             f"Expected Alembic revision '{expected_revision}', found '{current}'. "
             "Run: alembic upgrade head"
@@ -156,10 +173,25 @@ def assert_no_tables_in_production(expected_revision: str) -> None:
     The legacy code called ``Base.metadata.create_all()`` at startup.
     ``create_all`` cannot ALTER an existing table, so schema changes silently
     applied only to fresh databases. See docs/00_audit.md §6.5.
+
+    In development the check is advisory rather than fatal, but it still runs
+    and still reports: a developer whose database is two migrations behind
+    should be told that, not left to discover it as
+    ``sqlite3.OperationalError: no such table: tenants`` several layers deep
+    in a request handler. This is not hypothetical -- the database shipped in
+    this repository is still at ``0001``.
     """
-    if not settings.is_production:
+    if settings.is_production:
+        assert_schema_current(expected_revision)
         return
-    assert_schema_current(expected_revision)
+    try:
+        assert_schema_current(expected_revision)
+    except SchemaRevisionError as exc:
+        log.error(
+            "schema is behind the code; the server will fail on the first request "
+            "that touches a missing table. Run `alembic upgrade head`.",
+            extra={"stage": "startup", "detail": str(exc)},
+        )
 
 
 def healthcheck() -> dict[str, Any]:

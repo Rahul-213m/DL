@@ -65,12 +65,10 @@ def db() -> Session:
 
 def _truncate_all(session: Session) -> None:
     from app.models.database import Base
-    from app.models.schema import LegacyBase
 
     session.rollback()
-    for metadata in (Base.metadata, LegacyBase.metadata):
-        for table in reversed(metadata.sorted_tables):
-            session.execute(table.delete())
+    for table in reversed(Base.metadata.sorted_tables):
+        session.execute(table.delete())
     session.commit()
     del Base
 

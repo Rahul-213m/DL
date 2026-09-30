@@ -18,15 +18,46 @@ be able to continue without asking anything.
 | W1 | Repo hygiene, safety, tooling, Alembic, CI | ✅ DONE |
 | W2 | Correctness fixes from the audit | ✅ DONE |
 | W3 | Pure core + interfaces | ✅ DONE (ports, types, domain, vector index, identity engine, perception pipeline) |
-| W4 | Multi-tenant data model + auth/RBAC | ⬜ |
-| W5 | Edge ROS 2 Jazzy packages | ⬜ |
-| W6 | Cloud perception + identity engine | 🟡 PARTIAL (ModelRegistry + 2 backends in W1; decision engine, quality gate, dedup, tiling in W2; vector index rework, GPU batching, liveness to do) |
-| W7 | Continual learning + operator layer | ⬜ |
-| W8 | Attendance service + reporting | ⬜ |
-| W9 | Security, privacy, compliance | 🟡 PARTIAL (retention landed W1; erasure/consent/KMS still to do) |
-| W10 | Observability + reliability + fault injection | ⬜ |
-| W11 | Deployment (Docker, Terraform, edge installer, cost) | ⬜ |
-| W12 | Evaluation, benchmarks, docs | ⬜ |
+| W4 | Multi-tenant data model + auth/RBAC | 🟡 PARTIAL (tenant-scoped auth/RBAC, consent, audit, roster, ingestion and API tests exist; production identity/policy decisions remain) |
+| W5 | Edge ROS 2 Jazzy packages | 🟡 PARTIAL (7 packages build and 259 edge tests pass; simulated 16-frame sweep recorded working; durable outbox and physical verification remain) |
+| W6 | Cloud perception + identity engine | 🟡 PARTIAL (InsightFace batch path, calibration, data protocol, held-out evaluator and benchmark harness exist; liveness is not wired and real-data evidence is unavailable) |
+| W7 | Continual learning + operator layer | 🟡 PARTIAL (unknown-cluster storage/listing and identity core exist; operator workflow, conversational API and gated metric lifecycle remain) |
+| W8 | Attendance service + reporting | 🟡 PARTIAL (session close-out and JSON/CSV register exist; XLSX/PDF, timetable scheduler and webhook remain) |
+| W9 | Security, privacy, compliance | 🟡 PARTIAL (consent, retention, erasure and S3 SSE-KMS adapter exist; deletion verification, key lifecycle and legal/compliance approval remain) |
+| W10 | Observability + reliability + fault injection | 🟡 PARTIAL (Prometheus-style metrics, health/readiness and request instrumentation exist; fault injection, tracing and debug visualizer remain) |
+| W11 | Deployment (Docker, Terraform, edge installer, cost) | 🟡 PARTIAL (Docker/Compose exist; Docker is single-stage and Terraform, edge installer and cost model are absent) |
+| W12 | Evaluation, benchmarks, docs | 🟡 PARTIAL (focused detector/channel measurements and a held-out verification evaluator exist; synthetic classroom generator and LIMITATIONS.md remain) |
+
+## Re-audit — 2026-09-30
+
+The original W1–W3 notes and W5 follow-up entries below are historical work records. The current
+status table reflects the source tree as it exists now; see the current re-audit in
+`docs/00_audit.md` for the evidence and boundaries. Do not infer that a workstream is complete
+from an earlier section describing one passing component or one successful simulated run.
+
+### Immediate W6 work
+
+- The working tree already contained calibration logic, the database score collector, a CLI
+  script, liveness placeholders, an S3 SSE-KMS adapter, and the batched perception path. Those
+  files were not committed when re-audited.
+- `tests/test_w6_calibration_data.py` initially exposed fixture defects: seeded attendance
+  events were never added to the session, and committed rows collided across tests. Both are
+  fixed; the module passes **8 tests**.
+- `docs/data_collection_protocol.md` now specifies consent, session-separated splits, score-file
+  provenance, retention and deletion verification. `scripts/evaluate.py` selects a threshold on
+  calibration sessions and measures the fixed threshold on held-out test sessions.
+- Synthetic evaluator tests pass, but there is no consented real held-out score file. No TAR@FAR
+  claim should be made about the project's real-world attendance performance.
+- `scripts/benchmark_pipeline.py` runs the configured perception path on explicitly supplied
+  images and reports aggregate p50/p95 stage latency and coverage without writing image data or
+  paths. Its real-world run remains blocked on consent-approved inputs.
+- Liveness classes are registry placeholders only; `app/pipeline/perception.py` does not consult
+  them, and no shipped backend performs anti-spoofing. Report real-data metrics only when the
+  human actions in `docs/HUMAN_ACTIONS.md` provide consented held-out samples.
+- Final verification: cloud suite **431 passed, 4 warnings**; ROS workspace **7 packages built,
+  259 tests passed**. `ruff check app tests scripts` passes. Repository-wide formatting still has
+  15 files to normalize; `mypy app` has 10 legacy errors in `app/api/routes.py`, while the
+  typing-ratchet tests pass.
 
 ---
 
@@ -303,42 +334,13 @@ new, plus the original 23 still green.
 
 ---
 
-## Next: W4 — multi-tenant data model + auth/RBAC
+## W4/W5 status correction
 
-Each gets a **failing regression test first**, then the fix, then a before/after
-measurement on the sample images in `dummy_test/` and `ENROLL_PHOTOS/`.
-
-| # | Fix | Audit ref |
-|---|---|---|
-| 1 | RGB→BGR channel order into InsightFace | §4.1 |
-| 2 | EXIF orientation | §4.2 |
-| 3 | k=1 nearest neighbour → k=2 + margin rule | §4.3 |
-| 4 | `det_score` floor + real face-size target | §4.8 |
-| 5 | Evidence crop = the aligned crop actually embedded | §4.10 |
-| 6 | `_is_duplicate` per-face DB query | §4.5 |
-| 7 | `absentees()` global roster → per-class roster | §4.6 |
-| 8 | Unclosed sessions → close-out | §4.9 |
-| 9 | `BackgroundTasks` → bounded job queue | §4.7 |
-
----
-
-## Blockers
-
-- **W5 needs the ROS workspace created at `ros_ws/`.** Verified: `~/ros_ws` does
-  not exist; `/home/rahul/ros2_ws` is an unrelated ROS tutorial workspace
-  (cpp_pubsub, turtle_shapes, urdf_tutorial). `attendance_robot/` is the only
-  copy, so there is nothing to merge — it moves to `ros_ws/src/` with an
-  ARCHIVE.md explaining the move.
-- **W5 needs the servo model and phone answered** (HUMAN_ACTIONS 5a/5b). The
-  packages will be written behind hardware-abstraction interfaces with
-  simulated implementations regardless, so this is not a hard blocker — but the
-  wiring guide and the pixels-per-face maths cannot be finished without it.
-- **W12 needs the AWS GPU benchmark** (HUMAN_ACTIONS 6) and a real classroom
-  data set (HUMAN_ACTIONS 7). Scripts and protocols exist; the runs are
-  human-only.
-- **W4 auth needs the product decisions** (HUMAN_ACTIONS 8). Defaults will hold
-  until answered: individual logins, multi-tenant cloud, no offline mandate.
-- **Nothing else is blocked.**
+The W4 implementation and the ROS workspace now exist, so the old ``Next: W4`` and “workspace
+needs to be created” notes are superseded. W4 has tenant-aware API, consent, audit, class roster,
+ingest and session-close paths with tests. W5 has edge packages and a simulated sweep recorded as
+working. Remaining work is integration, production verification and the explicitly human-only
+hardware/legal/data actions; neither workstream should be marked done yet.
 
 ---
 

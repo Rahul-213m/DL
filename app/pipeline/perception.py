@@ -99,6 +99,55 @@ class FrameResult:
     timings_ms: dict[str, float] = field(default_factory=dict)
 
 
+def _embed_all(crops: list[np.ndarray]) -> list[FloatArray | None]:
+    """Embed every crop, one batch where possible.
+
+    A batch call either returns one vector per crop or raises: ONNX Runtime
+    validates the whole batch at once, so a single malformed crop takes the
+    whole call down with it. A 300-face frame must not be lost to one bad
+    crop, so the batch is attempted first and any failure degrades to
+    per-crop calls, where only the offending face is lost and it is lost with
+    a reason.
+
+    Returns:
+        One entry per input crop, ``None`` where that crop failed. The order
+        and length always match the input.
+    """
+    if not crops:
+        return []
+    from app.registry.loader import load_registry
+
+    embedder = load_registry().embedder
+    batched = getattr(embedder, "embed_batch", None)
+    if callable(batched):
+        try:
+            vectors = list(batched(crops))
+            if len(vectors) == len(crops):
+                return [np.asarray(v, dtype=np.float32) for v in vectors]
+            log.warning(
+                "embedder returned %d vectors for %d crops; falling back to single calls",
+                len(vectors),
+                len(crops),
+            )
+        except Exception as exc:  # noqa: BLE001 - any backend failure degrades
+            log.warning(
+                "batched embedding failed, retrying per crop",
+                extra={"crops": len(crops), "error": f"{type(exc).__name__}: {exc}"},
+            )
+
+    results: list[FloatArray | None] = []
+    for crop in crops:
+        try:
+            results.append(np.asarray(embedder.embed(crop), dtype=np.float32))
+        except Exception as exc:  # noqa: BLE001 - one bad face must not fail the frame
+            log.warning(
+                "embedding failed for one face",
+                extra={"error": f"{type(exc).__name__}: {exc}"},
+            )
+            results.append(None)
+    return results
+
+
 def _measure(observation: FaceObservation, crop_bgr: np.ndarray) -> FaceObservation:
     """Fill in the measured quality metrics of an observation.
 
@@ -196,6 +245,10 @@ def process_frame_bytes(
     survivors: list[DetectedFaceResult] = []
     rejected: list[tuple[FaceObservation, str]] = []
     recapture: list[tuple[int, int, int, int]] = []
+    #: Faces that passed the gate and are waiting to be embedded. Embedded as
+    #: one batch below, because a per-face call re-pays the network's fixed
+    #: cost 300 times in a full classroom frame.
+    pending: list[tuple[FaceObservation, np.ndarray, Any, bytes, int]] = []
 
     for observation in merged:
         landmarks = np.array([[p.x, p.y] for p in observation.landmarks], dtype=np.float32)
@@ -219,25 +272,25 @@ def process_frame_bytes(
         if report.needs_recapture:
             recapture.append(measured.bbox)
 
-        embedding: FloatArray | None = None
-        try:
-            embedding = registry.embedder.embed(crop)
-        except Exception as exc:  # noqa: BLE001 - one bad face must not fail the frame
-            log.warning(
-                "embedding failed for one face",
-                extra={"bbox": measured.bbox, "error": f"{type(exc).__name__}"},
-            )
-            rejected.append((measured, f"embed_failed:{type(exc).__name__}"))
-            continue
-
         evidence = imageops.encode_jpeg(crop) if store_evidence_crops else b""
+        pending.append((measured, crop, report, evidence, tile_of.get(id(observation), 0)))
+
+    # --- Embed, in one batch -------------------------------------------
+    embeddings = _embed_all([crop for _, crop, _, _, _ in pending])
+
+    for (measured, _crop, report, evidence, tile_index), embedding in zip(
+        pending, embeddings, strict=False
+    ):
+        if embedding is None:
+            rejected.append((measured, "embed_failed"))
+            continue
         survivors.append(
             DetectedFaceResult(
                 observation=measured,
                 embedding=embedding,
                 aligned_crop=evidence,
                 quality=report,
-                tile_index=tile_of.get(id(observation), 0),
+                tile_index=tile_index,
             )
         )
     timings["quality_align_embed_ms"] = (time.perf_counter() - start) * 1000.0

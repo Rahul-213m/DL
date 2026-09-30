@@ -25,21 +25,22 @@ from app.services import tenancy
 
 @pytest.fixture
 def client(request: pytest.FixtureRequest) -> TestClient:
-    """A test client over a truncated database.
+    """A test client over freshly created legacy and tenant schemas.
 
-    The suite shares one in-memory SQLite database, so a tenant created by one
-    test is still there for the next. Without truncation the second signup in
-    the file hits a UNIQUE(slug) violation during *setup* and the failure is
-    reported against the wrong test entirely.
+    Legacy tests drop their prefixed tables while resetting their own data.
+    Recreate both independent schemas because application startup rebuilds the
+    legacy gallery as well as tenant indexes.
     """
-    from app.models.database import Base, SessionLocal
+    from app.models.database import Base, SessionLocal, engine
     from app.models.schema import LegacyBase
 
     db = SessionLocal()
     db.rollback()
-    for metadata in (Base.metadata, LegacyBase.metadata):
-        for table in reversed(metadata.sorted_tables):
-            db.execute(table.delete())
+    metadata_sets = (Base.metadata, LegacyBase.metadata)
+    for metadata in metadata_sets:
+        metadata.drop_all(engine)
+    for metadata in metadata_sets:
+        metadata.create_all(engine)
     db.commit()
     db.close()
 
@@ -143,9 +144,7 @@ class TestAuthentication:
         assert me.json()["role"] == Role.ADMIN.value
         assert me.json()["tenant"]["slug"] == "kings-college"
 
-    def test_a_second_signup_against_the_same_tenant_is_refused(
-        self, client: TestClient, admin
-    ):
+    def test_a_second_signup_against_the_same_tenant_is_refused(self, client: TestClient, admin):
         """Otherwise anyone can add themselves as an admin to a college they
         merely know the name of."""
         response = client.post(
@@ -181,9 +180,7 @@ class TestAuthentication:
         )
         assert response.status_code == 401
 
-    def test_an_unknown_email_gives_the_same_error_as_a_wrong_password(
-        self, client: TestClient, admin
-    ):
+    def test_an_unknown_email_gives_the_same_error_as_a_wrong_password(self, client: TestClient, admin):
         unknown = client.post(
             "/v1/auth/signin", json={"email": "nobody@nowhere.example", "password": "whatever-1234"}
         )
@@ -200,9 +197,7 @@ class TestAuthentication:
         response = client.get("/v1/auth/me", headers={"Authorization": "Bearer not.a.jwt"})
         assert response.status_code == 401
 
-    def test_a_teacher_does_not_receive_admin_capabilities(
-        self, client: TestClient, admin
-    ):
+    def test_a_teacher_does_not_receive_admin_capabilities(self, client: TestClient, admin):
         """The capability map drives which controls the console renders, so a
         leak here is a UI that offers buttons the server will refuse."""
         invited = client.post(
@@ -220,8 +215,7 @@ class TestAuthentication:
 
         signed_in = client.post(
             "/v1/auth/signin",
-            json={"email": "teacher@kings.example",
-                  "password": "correct-horse-battery-staple-42"},
+            json={"email": "teacher@kings.example", "password": "correct-horse-battery-staple-42"},
         )
         assert signed_in.status_code == 200, signed_in.text
         me = client.get(
@@ -240,9 +234,7 @@ class TestAuthentication:
 
 
 class TestTenantIsolationOverHttp:
-    def test_tenant_b_cannot_see_tenant_a_students(
-        self, client: TestClient, admin
-    ):
+    def test_tenant_b_cannot_see_tenant_a_students(self, client: TestClient, admin):
         _class_and_student(client, admin, "A001")
         other = client.post(
             "/v1/auth/signup",
@@ -259,9 +251,7 @@ class TestTenantIsolationOverHttp:
         seen = client.get("/v1/people/students", headers=other_headers).json()["students"]
         assert all(s["roll_no"] != "A001" for s in seen)
 
-    def test_tenant_b_cannot_close_tenant_a_session(
-        self, client: TestClient, admin
-    ):
+    def test_tenant_b_cannot_close_tenant_a_session(self, client: TestClient, admin):
         _class_and_student(client, admin, "A001")
         classes = client.get("/v1/people/students", headers=admin).json()
         del classes
@@ -289,9 +279,7 @@ class TestTenantIsolationOverHttp:
         device = client.post("/v1/admin/devices", headers=admin, json={"name": "hall-a-pan-tilt"})
         assert device.status_code == 201, device.text
         secret = device.json()["device_secret"]
-        client.post(
-            f"/v1/admin/devices/{device.json()['device_id']}/active", headers=admin
-        )
+        client.post(f"/v1/admin/devices/{device.json()['device_id']}/active", headers=admin)
         device_headers = {
             "X-Device-Id": device.json()["device_id"],
             "X-Device-Secret": secret,
@@ -308,9 +296,7 @@ class TestTenantIsolationOverHttp:
         del tenant_id
 
 
-def _make_session(
-    client: TestClient, headers: dict[str, str], *, new_class: bool = False
-) -> int:
+def _make_session(client: TestClient, headers: dict[str, str], *, new_class: bool = False) -> int:
     """Start a session through the API and return its id.
 
     ``new_class=True`` forces a second class, for the test that a class cannot
@@ -343,17 +329,13 @@ class TestConsentOverHttp:
         student_id = _class_and_student(client, admin, "A001")
         del student_id
         # Create one with the default (pending).
-        response = client.post(
-            "/v1/people/students", headers=admin, json={"roll_no": "A002", "name": "A002"}
-        )
+        response = client.post("/v1/people/students", headers=admin, json={"roll_no": "A002", "name": "A002"})
         pending = client.get("/v1/people/consent/pending", headers=admin).json()
         assert response.status_code == 201
         assert any(s["roll_no"] == "A002" for s in pending["pending"])
         assert not any(s["roll_no"] == "A001" for s in pending["pending"])
 
-    def test_granting_then_withdrawing_consent_is_recorded(
-        self, client: TestClient, admin
-    ):
+    def test_granting_then_withdrawing_consent_is_recorded(self, client: TestClient, admin):
         student_id = _class_and_student(client, admin, "A001")
         granted = client.post(
             f"/v1/people/students/{student_id}/consent",
@@ -400,9 +382,7 @@ class TestConsentOverHttp:
             db.commit()
             from app.core.security import issue_token
 
-            token = issue_token(
-                subject=row.user_id, tenant_id=tenant_id, role=Role.TEACHER
-            )
+            token = issue_token(subject=row.user_id, tenant_id=tenant_id, role=Role.TEACHER)
         finally:
             db.close()
         response = client.post(
@@ -433,21 +413,15 @@ class TestFrameIngestOverHttp:
         assert body["duplicate"] is False
         assert body["faces_accepted"] + body["faces_rejected"] == body["faces_seen"]
 
-    def test_a_replayed_frame_is_a_duplicate_not_an_error(
-        self, client: TestClient, admin
-    ):
+    def test_a_replayed_frame_is_a_duplicate_not_an_error(self, client: TestClient, admin):
         """The edge retries at least once by design. A 409 on a retry would
         leave the operator's outbox permanently stuck."""
         session_id = _make_session(client, admin)
         meta = '{"frame_id": "duplicate12345"}'
         payload = {"meta": meta}
         files = {"content": ("frame.jpg", _jpeg(), "image/jpeg")}
-        first = client.post(
-            f"/v1/sessions/{session_id}/frames", headers=admin, data=payload, files=files
-        )
-        second = client.post(
-            f"/v1/sessions/{session_id}/frames", headers=admin, data=payload, files=files
-        )
+        first = client.post(f"/v1/sessions/{session_id}/frames", headers=admin, data=payload, files=files)
+        second = client.post(f"/v1/sessions/{session_id}/frames", headers=admin, data=payload, files=files)
         assert first.status_code == 202 and first.json()["duplicate"] is False
         assert second.status_code == 202 and second.json()["duplicate"] is True
 
@@ -486,9 +460,7 @@ class TestFrameIngestOverHttp:
 
 
 class TestSessionLifecycle:
-    def test_a_session_cannot_be_started_twice_for_one_class(
-        self, client: TestClient, admin
-    ):
+    def test_a_session_cannot_be_started_twice_for_one_class(self, client: TestClient, admin):
         """Two open sessions for one class would double-count every student."""
         first = _make_session(client, admin)
         second = _make_session(client, admin, new_class=True)
@@ -501,9 +473,7 @@ class TestSessionLifecycle:
         db = SessionLocal()
         try:
             klass = db.query(Class).filter_by(tenant_id=tenant_id).first()
-            conflict = client.post(
-                "/v1/sessions", headers=admin, json={"class_id": klass.class_id}
-            )
+            conflict = client.post("/v1/sessions", headers=admin, json={"class_id": klass.class_id})
             assert conflict.status_code == 409
         finally:
             db.close()
@@ -524,36 +494,30 @@ class TestSessionLifecycle:
 
 
 class TestRegister:
-    def test_the_register_lists_every_roster_member(
-        self, client: TestClient, admin
-    ):
+    def test_the_register_lists_every_roster_member(self, client: TestClient, admin):
         """A register where a student is simply missing is how a teacher
         concludes the software is unreliable."""
         for roll in ("R001", "R002", "R003"):
             _class_and_student(client, admin, roll)
         session_id = _make_session(client, admin)
 
-        register = client.get(
-            f"/v1/reports/sessions/{session_id}/register", headers=admin
-        ).json()
+        register = client.get(f"/v1/reports/sessions/{session_id}/register", headers=admin).json()
         roll_numbers = {r["roll_no"] for r in register["rows"]}
         assert {"R001", "R002", "R003"} <= roll_numbers
         assert register["tally"].get("absent", 0) >= 3
 
-    def test_a_student_without_consent_is_excluded_not_absent(
-        self, client: TestClient, admin
-    ):
+    def test_a_student_without_consent_is_excluded_not_absent(self, client: TestClient, admin):
         """Claiming a student was absent requires recognising them, which is
         the processing they declined. 'Absent' would be a contradiction."""
         # Created without consent, so the API's default pending state applies.
-        client.post(
-            "/v1/people/students", headers=admin, json={"roll_no": "NOCON", "name": "No Consent"}
-        )
+        client.post("/v1/people/students", headers=admin, json={"roll_no": "NOCON", "name": "No Consent"})
         class_id = _default_class(client, admin)
         listed = client.get(f"/v1/people/classes/{class_id}", headers=admin).json()
-        pending_id = next(
-            r["student_id"] for r in listed["roster"] if r["roll_no"] == "NOCON"
-        ) if any(r["roll_no"] == "NOCON" for r in listed["roster"]) else None
+        pending_id = (
+            next(r["student_id"] for r in listed["roster"] if r["roll_no"] == "NOCON")
+            if any(r["roll_no"] == "NOCON" for r in listed["roster"])
+            else None
+        )
         if pending_id is None:
             created = client.post(
                 "/v1/people/students",
@@ -568,12 +532,8 @@ class TestRegister:
             )
         session_id = _make_session(client, admin)
 
-        register = client.get(
-            f"/v1/reports/sessions/{session_id}/register", headers=admin
-        ).json()
-        row = next(
-            r for r in register["rows"] if r["student_id"] == pending_id
-        )
+        register = client.get(f"/v1/reports/sessions/{session_id}/register", headers=admin).json()
+        row = next(r for r in register["rows"] if r["student_id"] == pending_id)
         assert row["status"] == "excluded_no_consent"
         assert row["status"] != "absent"
 
@@ -581,18 +541,13 @@ class TestRegister:
         """A spreadsheet import that silently reorders columns is a corruption
         bug that surfaces months later in a marks calculation."""
         session_id = _make_session(client, admin)
-        response = client.get(
-            f"/v1/reports/sessions/{session_id}/register.csv", headers=admin
-        )
+        response = client.get(f"/v1/reports/sessions/{session_id}/register.csv", headers=admin)
         assert response.status_code == 200
         assert response.headers["content-type"].startswith("text/csv")
         first_line = response.text.splitlines()[0]
         assert first_line.startswith("roll_no,name,status,evidence_count,best_score")
 
-
-    def test_withdrawing_consent_removes_the_gallery_and_the_vector(
-        self, client: TestClient, admin
-    ):
+    def test_withdrawing_consent_removes_the_gallery_and_the_vector(self, client: TestClient, admin):
         """The one that matters. Recording "withdrawn" and leaving the
         template in the index means the register keeps recognising a face whose
         owner asked to be left alone, and it does so confidently."""
@@ -610,7 +565,8 @@ class TestRegister:
 
         response = client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "withdrawn", "purpose": "test"},
+            headers=admin,
+            json={"state": "withdrawn", "purpose": "test"},
         )
         assert response.status_code == 200, response.text
         assert response.json()["gallery_removed"] == 1
@@ -624,32 +580,30 @@ class TestRegister:
         finally:
             db.close()
 
-    def test_a_withdrawn_student_is_not_still_reported_as_pending(
-        self, client: TestClient, admin
-    ):
+    def test_a_withdrawn_student_is_not_still_reported_as_pending(self, client: TestClient, admin):
         """Guards the join, not the state machine: 'has a pending row' is not
         the same question as 'is currently pending', and once history is
         append-only the two answers diverge."""
         student_id = _class_and_student(client, admin, "PENDING01")
         client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "pending", "purpose": "guardian form sent"},
+            headers=admin,
+            json={"state": "pending", "purpose": "guardian form sent"},
         )
         pending = client.get("/v1/people/consent/pending", headers=admin).json()
         assert [p["student_id"] for p in pending["pending"]] == [student_id]
 
         client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "granted", "purpose": "signed form returned"},
+            headers=admin,
+            json={"state": "granted", "purpose": "signed form returned"},
         )
         after = client.get("/v1/people/consent/pending", headers=admin).json()
         assert after["pending"] == [], after
 
 
 class TestErasureReportsHonestCounts:
-    def test_pending_object_deletion_counts_this_students_keys(
-        self, client: TestClient, admin
-    ):
+    def test_pending_object_deletion_counts_this_students_keys(self, client: TestClient, admin):
         """The privacy response must not under-report. Reading the keys after
         nulling them returns zero, so a subject would be told their crops were
         accounted for while they were still in storage."""
@@ -663,10 +617,15 @@ class TestErasureReportsHonestCounts:
         db = SessionLocal()
         try:
             event = tenancy.AttendanceEvent(
-                tenant_id=tenant_id, session_id=session_id, frame_id="f-erase-1",
-                student_id=student_id, roll_no="KEYS01",
+                tenant_id=tenant_id,
+                session_id=session_id,
+                frame_id="f-erase-1",
+                student_id=student_id,
+                roll_no="KEYS01",
                 face_crop_key=f"{tenant_id}/crops/KEYS01-1.jpg",
-                embedding=b"\x00" * 512, confidence_score=0.91, match_type="MEASURED",
+                embedding=b"\x00" * 512,
+                confidence_score=0.91,
+                match_type="MEASURED",
             )
             db.add(event)
             db.commit()
@@ -684,6 +643,7 @@ class TestErasureReportsHonestCounts:
         assert sorted(body["pending_object_keys"]) == sorted(
             ["test/KEYS01", f"{tenant_id}/crops/KEYS01-1.jpg"]
         ), body
+
 
 # ===========================================================================
 # Multi-tenant identity isolation
@@ -722,9 +682,14 @@ def _enrol_faces(client: TestClient, headers: dict[str, str], rolls: list[str]) 
             vector = np.zeros(512, dtype=np.float32)
             vector[index % 512] = 1.0
             entry = tenancy.add_gallery_entry(
-                db, headers["_tenant"], student_id, roll,
-                pack_embedding(vector), hashlib.sha256(vector.tobytes()).hexdigest(),
-                "test/" + roll, "enrollment",
+                db,
+                headers["_tenant"],
+                student_id,
+                roll,
+                pack_embedding(vector),
+                hashlib.sha256(vector.tobytes()).hexdigest(),
+                "test/" + roll,
+                "enrollment",
             )
             db.flush()
             tenant_indexes.add(db, headers["_tenant"], entry.gallery_id, roll, vector)
@@ -734,9 +699,7 @@ def _enrol_faces(client: TestClient, headers: dict[str, str], rolls: list[str]) 
 
 
 class TestTenantIndexIsolation:
-    def test_a_tenant_index_only_holds_its_own_vectors(
-        self, client: TestClient, admin
-    ):
+    def test_a_tenant_index_only_holds_its_own_vectors(self, client: TestClient, admin):
         """The regression this guards: a single process-wide index across all
         tenants, which makes a cross-tenant match possible rather than merely
         unlikely."""
@@ -746,8 +709,13 @@ class TestTenantIndexIsolation:
         def provision(slug: str, email: str, roll: str) -> str:
             signup = client.post(
                 "/v1/auth/signup",
-                json={"tenant_slug": slug, "organisation": slug, "email": email,
-                      "display_name": "Admin", "password": "correct-horse-battery-staple-42"},
+                json={
+                    "tenant_slug": slug,
+                    "organisation": slug,
+                    "email": email,
+                    "display_name": "Admin",
+                    "password": "correct-horse-battery-staple-42",
+                },
             )
             assert signup.status_code == 201, signup.text
             headers = {"Authorization": f"Bearer {signup.json()['token']}"}
@@ -771,9 +739,7 @@ class TestTenantIndexIsolation:
         finally:
             db.close()
 
-    def test_erasure_removes_the_vector_from_the_live_index(
-        self, client: TestClient, admin
-    ):
+    def test_erasure_removes_the_vector_from_the_live_index(self, client: TestClient, admin):
         """An erased face must stop matching immediately, not at the next
         restart. The old code deleted the rows first and so never learned which
         vectors to drop."""
@@ -790,9 +756,7 @@ class TestTenantIndexIsolation:
         finally:
             db.close()
 
-        student_id = client.get(
-            "/v1/people/students", headers=admin
-        ).json()["students"][0]["student_id"]
+        student_id = client.get("/v1/people/students", headers=admin).json()["students"][0]["student_id"]
         erased = client.post(
             "/v1/privacy/erase",
             headers=admin,
@@ -809,9 +773,7 @@ class TestTenantIndexIsolation:
 
 
 class TestRosterAndConsentLedger:
-    def test_a_class_can_hold_more_than_one_student(
-        self, client: TestClient, admin
-    ):
+    def test_a_class_can_hold_more_than_one_student(self, client: TestClient, admin):
         """Guards a stray UNIQUE(tenant_id, class_id) on class_members, which
         capped every class at exactly one student."""
         class_id = _default_class(client, admin)
@@ -820,9 +782,7 @@ class TestRosterAndConsentLedger:
         assert len(listed["roster"]) == 5
         assert set(ids) == {r["student_id"] for r in listed["roster"]}
 
-    def test_withdrawing_then_regranting_keeps_the_history(
-        self, client: TestClient, admin
-    ):
+    def test_withdrawing_then_regranting_keeps_the_history(self, client: TestClient, admin):
         """A ledger that keeps only the current state cannot answer "when did
         they consent?", and a UNIQUE(tenant_id, student_id) makes regranting
         impossible rather than merely lossy."""
@@ -832,33 +792,36 @@ class TestRosterAndConsentLedger:
         student_id = _class_and_student(client, admin, "LEDGER1")
         client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "withdrawn", "purpose": "test"},
+            headers=admin,
+            json={"state": "withdrawn", "purpose": "test"},
         )
         client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "granted", "purpose": "test"},
+            headers=admin,
+            json={"state": "granted", "purpose": "test"},
         )
         db = SessionLocal()
         try:
             tenant_id = client.get("/v1/auth/me", headers=admin).json()["tenant"]["id"]
             history = consent_history(db, tenant_id, student_id)
             assert [record.state for record in history] == [
-                "granted", "withdrawn", "granted",
+                "granted",
+                "withdrawn",
+                "granted",
             ]
             assert tenancy.get_consent(db, tenant_id, student_id).state == "granted"
         finally:
             db.close()
 
-    def test_a_withdrawal_takes_effect_immediately(
-        self, client: TestClient, admin
-    ):
+    def test_a_withdrawal_takes_effect_immediately(self, client: TestClient, admin):
         """A withdrawn student must not be matched on "any granted record"."""
         from app.models.database import SessionLocal
 
         student_id = _class_and_student(client, admin, "NOWITHDRAW")
         client.post(
             f"/v1/people/students/{student_id}/consent",
-            headers=admin, json={"state": "withdrawn", "purpose": "test"},
+            headers=admin,
+            json={"state": "withdrawn", "purpose": "test"},
         )
         db = SessionLocal()
         try:
@@ -874,24 +837,17 @@ class TestRosterAndConsentLedger:
 
 
 class TestObservability:
-    def test_a_correlation_id_is_echoed_and_never_leaks_into_metrics(
-        self, client: TestClient, admin
-    ):
+    def test_a_correlation_id_is_echoed_and_never_leaks_into_metrics(self, client: TestClient, admin):
         """A user reporting "it failed at 10:04" must be traceable from a
         screenshot. The id must also stay out of the metrics labels, or every
         request becomes its own time series."""
-        response = client.get(
-            "/v1/auth/me", headers={**admin, "X-Correlation-Id": "corr-abc-123"}
-        )
+        response = client.get("/v1/auth/me", headers={**admin, "X-Correlation-Id": "corr-abc-123"})
         assert response.status_code == 200
         assert response.headers["X-Correlation-Id"] == "corr-abc-123"
 
         body = client.get("/metrics").text
         assert "corr-abc-123" not in body
-        assert (
-            'attendance_http_requests_total{method="GET",route="/v1/auth/me",status="200"}'
-            in body
-        ), body
+        assert 'attendance_http_requests_total{method="GET",route="/v1/auth/me",status="200"}' in body, body
 
     def test_one_request_does_not_create_one_time_series(self, client: TestClient, admin):
         """Labels must be the route template, not the concrete path. A label
@@ -900,13 +856,11 @@ class TestObservability:
         session_id = _make_session(client, admin)
         client.get(f"/v1/sessions/{session_id}", headers=admin)
         body = client.get("/metrics").text
-        assert f"route=\"/v1/sessions/{session_id}\"" not in body, body
+        assert f'route="/v1/sessions/{session_id}"' not in body, body
         assert 'route="/v1/sessions/{session_id}"' in body, body
 
-    def test_a_request_with_no_correlation_id_still_gets_one(
-        self, client: TestClient, admin
-    ):
-        """"None" in a log line is worse than no log line: it looks like data."""
+    def test_a_request_with_no_correlation_id_still_gets_one(self, client: TestClient, admin):
+        """ "None" in a log line is worse than no log line: it looks like data."""
         response = client.get("/v1/auth/me", headers=admin)
         assert response.headers["X-Correlation-Id"]
         assert response.headers["X-Correlation-Id"] != "None"
@@ -940,9 +894,7 @@ class TestObservability:
 
 
 class TestErasure:
-    def test_erasure_requires_echoing_the_roll_number(
-        self, client: TestClient, admin
-    ):
+    def test_erasure_requires_echoing_the_roll_number(self, client: TestClient, admin):
         """Otherwise a script iterating student ids could erase a whole college."""
         student_id = _class_and_student(client, admin, "E001")
         wrong = client.post(
@@ -952,9 +904,7 @@ class TestErasure:
         )
         assert wrong.status_code == 422
 
-    def test_erasure_removes_embeddings_and_keeps_the_audit_trail(
-        self, client: TestClient, admin
-    ):
+    def test_erasure_removes_embeddings_and_keeps_the_audit_trail(self, client: TestClient, admin):
         student_id = _class_and_student(client, admin, "E001")
         response = client.post(
             "/v1/privacy/erase",
@@ -1065,8 +1015,8 @@ class TestHistogramInternals:
         for value in (0.05, 0.2, 0.3, 2.0):
             histogram.observe({"route": "/a"}, value)
         text = "".join(histogram.render())
-        assert "t_seconds_sum{route=\"/a\"} 2.55" in text, text
-        assert "t_seconds_count{route=\"/a\"} 4" in text, text
+        assert 't_seconds_sum{route="/a"} 2.55' in text, text
+        assert 't_seconds_count{route="/a"} 4' in text, text
 
     def test_concurrent_observations_do_not_lose_counts(self):
         """The request path is a threadpool, so two threads incrementing the
@@ -1080,4 +1030,4 @@ class TestHistogramInternals:
         with ThreadPoolExecutor(max_workers=8) as pool:
             list(pool.map(lambda _: histogram.observe({"route": "/a"}, 0.1), range(500)))
         text = "".join(histogram.render())
-        assert "t_seconds_count{route=\"/a\"} 500" in text, text
+        assert 't_seconds_count{route="/a"} 500' in text, text

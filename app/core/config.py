@@ -174,9 +174,21 @@ class Settings(BaseSettings):
     late_after_minutes: int | None = None
 
     # ------------------------------------------------------------------
-    # Liveness (interface reserved; implementation is a separate purchase)
+    # Liveness (no permissively licensed model exists; see docs/model_licensing.md)
     # ------------------------------------------------------------------
     liveness_enabled: bool = False
+    #: Which liveness backend to construct.
+    #:   None    - no checker at all; attendance events record
+    #:             "liveness_not_configured" so the gap is auditable.
+    #:   "null"  - explicitly accepted as not performed (records the fact).
+    #:   "stub"  - exercises the code path in dev only; REFUSED in production,
+    #:             because a stub that scores every face as live is a false
+    #:             claim of protection.
+    #:   <real>  - a drop-in checker with a ``check(image, bbox) -> float``.
+    liveness_backend: str | None = None
+    #: Score below which a face is treated as a suspected spoof and never
+    #: auto-confirmed. Only consulted when a real checker is configured.
+    liveness_min_score: float = 0.5
 
     # ------------------------------------------------------------------
     # Image ingestion limits
@@ -392,6 +404,26 @@ class Settings(BaseSettings):
             )
         if not 0 < self.min_detection_score <= 1:
             problems.append("MIN_DETECTION_SCORE must be in (0, 1]")
+
+        # --- Liveness ---------------------------------------------------------
+        if self.liveness_enabled and self.liveness_backend is None:
+            problems.append(
+                "LIVENESS_ENABLED is set but LIVENESS_BACKEND is not. Set "
+                "LIVENESS_BACKEND='null' to record that spoof checking is not "
+                "performed, or a real checker key."
+            )
+        if self.is_production and self.liveness_backend == "stub":
+            # A stub scores every face as live. Running it in production would
+            # create the appearance of anti-spoof protection that does not
+            # exist, which is a compliance statement, not a setting.
+            problems.append(
+                "LIVENESS_BACKEND=stub is refused in production: it performs no "
+                "check and would misrepresent spoof protection. Use 'null' to "
+                "record that checking is not performed, or configure a real "
+                "checker. See docs/model_licensing.md."
+            )
+        if not 0 < self.liveness_min_score <= 1:
+            problems.append("LIVENESS_MIN_SCORE must be in (0, 1]")
 
         if problems:
             raise ValueError("Invalid configuration:\n  - " + "\n  - ".join(problems))
