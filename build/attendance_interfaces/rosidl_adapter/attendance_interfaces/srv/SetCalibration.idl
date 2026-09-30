@@ -1,0 +1,61 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from attendance_interfaces/srv/SetCalibration.srv
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module srv {
+    @verbatim (language="comment", text=
+      "Install a classroom calibration." "\n"
+      "" "\n"
+      "Servo angles mean nothing without calibration: which physical angle is \"0\"," "\n"
+      "where the pan stops, and which angle looks at which part of the room. This" "\n"
+      "service installs all of it atomically so the stand is never half-calibrated." "\n"
+      "" "\n"
+      "The calibration is produced by a procedure in docs/hardware/wiring.md and" "\n"
+      "stored in YAML on the edge device. It is per-room.")
+    struct SetCalibration_Request {
+      @verbatim (language="comment", text=
+        "Angles the software will enforce. Requests outside are clamped, and the" "\n"
+        "clamp is reported back in MoveToAngle.")
+      double pan_min_deg;
+
+      double pan_max_deg;
+
+      double tilt_min_deg;
+
+      double tilt_max_deg;
+
+      @verbatim (language="comment", text=
+        "Speed limits, so a slow classroom scan does not blur the capture.")
+      double max_speed_deg_per_s;
+
+      double max_accel_deg_per_s2;
+
+      @verbatim (language="comment", text=
+        "What angle the operator should call \"0\", in the driver's own units. Read" "\n"
+        "from the calibration file produced during homing.")
+      double home_angle_deg;
+
+      @verbatim (language="comment", text=
+        "Per-angle mapping from servo angle to a human-readable region label, used" "\n"
+        "in the evidence record so an operator can tell which shot a face came from.")
+      sequence<string> region_angles;
+
+      sequence<string> region_names;
+
+      @verbatim (language="comment", text=
+        "Optional direct-drive flag. A hobby servo has no feedback, so the software" "\n"
+        "cannot detect a stall and CANNOT honestly claim to have reached an angle." "\n"
+        "This flag makes that explicit in the state rather than implied.")
+      boolean has_position_feedback;
+    };
+    struct SetCalibration_Response {
+      boolean success;
+
+      string error_message;
+
+      boolean requires_homing;
+    };
+  };
+};

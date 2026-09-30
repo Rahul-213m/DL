@@ -1,0 +1,2 @@
+[console_scripts]
+camera_bridge = camera_bridge.camera_node:main

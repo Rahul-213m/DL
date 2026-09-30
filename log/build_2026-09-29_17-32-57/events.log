@@ -1,0 +1,849 @@
+[0.000000] (-) TimerEvent: {}
+[0.000634] (attendance_interfaces) JobQueued: {'identifier': 'attendance_interfaces', 'dependencies': OrderedDict()}
+[0.000673] (attendance_robot) JobQueued: {'identifier': 'attendance_robot', 'dependencies': OrderedDict()}
+[0.000709] (servo_controller) JobQueued: {'identifier': 'servo_controller', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces'})}
+[0.000733] (attendance_interfaces) JobStarted: {'identifier': 'attendance_interfaces'}
+[0.006452] (attendance_robot) JobStarted: {'identifier': 'attendance_robot'}
+[0.012026] (attendance_interfaces) JobProgress: {'identifier': 'attendance_interfaces', 'progress': 'cmake'}
+[0.012715] (attendance_interfaces) Command: {'cmd': ['/usr/bin/cmake', '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces', '-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.099714] (-) TimerEvent: {}
+[0.199956] (-) TimerEvent: {}
+[0.273381] (attendance_interfaces) StdoutLine: {'line': b'-- The C compiler identification is GNU 13.3.0\n'}
+[0.273660] (attendance_interfaces) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 13.3.0\n'}
+[0.273768] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.300075] (-) TimerEvent: {}
+[0.307995] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.317210] (attendance_interfaces) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.317553] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.317900] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.331451] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.400209] (-) TimerEvent: {}
+[0.462386] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.470606] (attendance_interfaces) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.470960] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.471212] (attendance_interfaces) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.473924] (attendance_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[0.500311] (-) TimerEvent: {}
+[0.600510] (-) TimerEvent: {}
+[0.633517] (attendance_interfaces) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[0.700628] (-) TimerEvent: {}
+[0.720714] (attendance_interfaces) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.751768] (attendance_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.6.1 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)\n'}
+[0.759217] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.800754] (-) TimerEvent: {}
+[0.809808] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.857398] (attendance_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 4.6.9 (/opt/ros/jazzy/share/rosidl_adapter/cmake)\n'}
+[0.860639] (attendance_interfaces) StdoutLine: {'line': b'-- Found std_msgs: 5.3.8 (/opt/ros/jazzy/share/std_msgs/cmake)\n'}
+[0.900916] (-) TimerEvent: {}
+[1.001146] (-) TimerEvent: {}
+[1.101344] (-) TimerEvent: {}
+[1.201544] (-) TimerEvent: {}
+[1.290530] (attendance_robot) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/build', '--no-deps', 'symlink_data'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}), 'shell': False}
+[1.301657] (-) TimerEvent: {}
+[1.401866] (-) TimerEvent: {}
+[1.502070] (-) TimerEvent: {}
+[1.602263] (-) TimerEvent: {}
+[1.628547] (attendance_robot) StdoutLine: {'line': b'running develop\n'}
+[1.702401] (-) TimerEvent: {}
+[1.728610] (attendance_interfaces) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.12.1 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)\n'}
+[1.802538] (-) TimerEvent: {}
+[1.833371] (attendance_robot) StdoutLine: {'line': b'running egg_info\n'}
+[1.833575] (attendance_robot) StdoutLine: {'line': b'creating attendance_robot.egg-info\n'}
+[1.852362] (attendance_robot) StdoutLine: {'line': b'writing attendance_robot.egg-info/PKG-INFO\n'}
+[1.852894] (attendance_robot) StdoutLine: {'line': b'writing dependency_links to attendance_robot.egg-info/dependency_links.txt\n'}
+[1.853152] (attendance_robot) StdoutLine: {'line': b'writing entry points to attendance_robot.egg-info/entry_points.txt\n'}
+[1.853391] (attendance_robot) StdoutLine: {'line': b'writing requirements to attendance_robot.egg-info/requires.txt\n'}
+[1.853584] (attendance_robot) StdoutLine: {'line': b'writing top-level names to attendance_robot.egg-info/top_level.txt\n'}
+[1.853672] (attendance_robot) StdoutLine: {'line': b"writing manifest file 'attendance_robot.egg-info/SOURCES.txt'\n"}
+[1.894595] (attendance_robot) StdoutLine: {'line': b"reading manifest file 'attendance_robot.egg-info/SOURCES.txt'\n"}
+[1.895158] (attendance_robot) StdoutLine: {'line': b"writing manifest file 'attendance_robot.egg-info/SOURCES.txt'\n"}
+[1.902661] (-) TimerEvent: {}
+[1.917180] (attendance_robot) StdoutLine: {'line': b'running build_ext\n'}
+[1.917540] (attendance_robot) StdoutLine: {'line': b'Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages/attendance-robot.egg-link (link to .)\n'}
+[1.917964] (attendance_robot) StdoutLine: {'line': b'Installing camera_interface script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot\n'}
+[1.918249] (attendance_robot) StdoutLine: {'line': b'Installing motor_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot\n'}
+[1.918419] (attendance_robot) StdoutLine: {'line': b'Installing scan_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot\n'}
+[1.918595] (attendance_robot) StdoutLine: {'line': b'\n'}
+[1.918672] (attendance_robot) StdoutLine: {'line': b'Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot\n'}
+[1.918743] (attendance_robot) StdoutLine: {'line': b'running symlink_data\n'}
+[1.918918] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/ament_index\n'}
+[1.919003] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/ament_index/resource_index\n'}
+[1.919081] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/ament_index/resource_index/packages\n'}
+[1.919153] (attendance_robot) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/resource/attendance_robot -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/ament_index/resource_index/packages\n'}
+[1.919381] (attendance_robot) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/package.xml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot\n'}
+[1.919466] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/launch\n'}
+[1.919538] (attendance_robot) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/launch/display.launch.py -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/launch\n'}
+[1.919664] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/urdf\n'}
+[1.919733] (attendance_robot) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/urdf/attendance_stand.urdf.xacro -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/urdf\n'}
+[1.919804] (attendance_robot) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/config\n'}
+[1.919873] (attendance_robot) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/config/scan.yaml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/config\n'}
+[1.985255] (attendance_robot) CommandEnded: {'returncode': 0}
+[1.996263] (attendance_robot) JobEnded: {'identifier': 'attendance_robot', 'rc': 0}
+[2.002806] (-) TimerEvent: {}
+[2.103041] (-) TimerEvent: {}
+[2.203273] (-) TimerEvent: {}
+[2.265880] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.303385] (-) TimerEvent: {}
+[2.403602] (-) TimerEvent: {}
+[2.503828] (-) TimerEvent: {}
+[2.604043] (-) TimerEvent: {}
+[2.704264] (-) TimerEvent: {}
+[2.804520] (-) TimerEvent: {}
+[2.904771] (-) TimerEvent: {}
+[2.956472] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.959103] (attendance_interfaces) StdoutLine: {'line': b'-- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)\n'}
+[3.004896] (-) TimerEvent: {}
+[3.105099] (-) TimerEvent: {}
+[3.112279] (attendance_interfaces) StdoutLine: {'line': b'-- Found PythonExtra: /usr/bin/python3  \n'}
+[3.205248] (-) TimerEvent: {}
+[3.305463] (-) TimerEvent: {}
+[3.405709] (-) TimerEvent: {}
+[3.505929] (-) TimerEvent: {}
+[3.605862] (attendance_interfaces) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed \n'}
+[3.606155] (-) TimerEvent: {}
+[3.706442] (-) TimerEvent: {}
+[3.707101] (attendance_interfaces) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[3.713265] (attendance_interfaces) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.17.5 (/opt/ros/jazzy/share/ament_lint_auto/cmake)\n'}
+[3.735175] (attendance_interfaces) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[3.736478] (attendance_interfaces) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[3.740907] (attendance_interfaces) StdoutLine: {'line': b'-- Configuring done (3.7s)\n'}
+[3.806631] (-) TimerEvent: {}
+[3.807359] (attendance_interfaces) StdoutLine: {'line': b'-- Generating done (0.1s)\n'}
+[3.822036] (attendance_interfaces) StdoutLine: {'line': b'-- Build files have been written to: /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces\n'}
+[3.838310] (attendance_interfaces) CommandEnded: {'returncode': 0}
+[3.839161] (attendance_interfaces) JobProgress: {'identifier': 'attendance_interfaces', 'progress': 'build'}
+[3.839744] (attendance_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', '--', '-j8', '-l8'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[3.906782] (-) TimerEvent: {}
+[3.908545] (attendance_interfaces) StdoutLine: {'line': b'[  2%] Generating Rust code for ROS interfaces\n'}
+[3.908753] (attendance_interfaces) StdoutLine: {'line': b'[  2%] Generating type hashes for ROS interfaces\n'}
+[3.919885] (attendance_interfaces) StdoutLine: {'line': b'[  2%] Built target ament_cmake_python_symlink_attendance_interfaces\n'}
+[4.006911] (-) TimerEvent: {}
+[4.107124] (-) TimerEvent: {}
+[4.161346] (attendance_interfaces) StdoutLine: {'line': b'running egg_info\n'}
+[4.162114] (attendance_interfaces) StdoutLine: {'line': b'creating attendance_interfaces.egg-info\n'}
+[4.182560] (attendance_interfaces) StdoutLine: {'line': b'writing attendance_interfaces.egg-info/PKG-INFO\n'}
+[4.183038] (attendance_interfaces) StdoutLine: {'line': b'writing dependency_links to attendance_interfaces.egg-info/dependency_links.txt\n'}
+[4.183233] (attendance_interfaces) StdoutLine: {'line': b'writing top-level names to attendance_interfaces.egg-info/top_level.txt\n'}
+[4.183421] (attendance_interfaces) StdoutLine: {'line': b"writing manifest file 'attendance_interfaces.egg-info/SOURCES.txt'\n"}
+[4.207264] (-) TimerEvent: {}
+[4.243840] (attendance_interfaces) StdoutLine: {'line': b"reading manifest file 'attendance_interfaces.egg-info/SOURCES.txt'\n"}
+[4.244382] (attendance_interfaces) StdoutLine: {'line': b"writing manifest file 'attendance_interfaces.egg-info/SOURCES.txt'\n"}
+[4.297992] (attendance_interfaces) StdoutLine: {'line': b'[  2%] Built target ament_cmake_python_build_attendance_interfaces_egg\n'}
+[4.307394] (-) TimerEvent: {}
+[4.407616] (-) TimerEvent: {}
+[4.507849] (-) TimerEvent: {}
+[4.608097] (-) TimerEvent: {}
+[4.708381] (-) TimerEvent: {}
+[4.808626] (-) TimerEvent: {}
+[4.908865] (-) TimerEvent: {}
+[5.009129] (-) TimerEvent: {}
+[5.035410] (attendance_interfaces) StdoutLine: {'line': b'[  2%] Built target attendance_interfaces__rosidl_generator_type_description\n'}
+[5.049921] (attendance_interfaces) StdoutLine: {'line': b'[  3%] Generating C code for ROS interfaces\n'}
+[5.065432] (attendance_interfaces) StdoutLine: {'line': b'[  3%] Generating C++ code for ROS interfaces\n'}
+[5.109278] (-) TimerEvent: {}
+[5.181701] (attendance_interfaces) StdoutLine: {'line': b'[  3%] Built target attendance_interfaces__rs\n'}
+[5.209408] (-) TimerEvent: {}
+[5.309630] (-) TimerEvent: {}
+[5.409847] (-) TimerEvent: {}
+[5.510054] (-) TimerEvent: {}
+[5.610275] (-) TimerEvent: {}
+[5.710503] (-) TimerEvent: {}
+[5.810743] (-) TimerEvent: {}
+[5.910971] (-) TimerEvent: {}
+[6.011212] (-) TimerEvent: {}
+[6.111432] (-) TimerEvent: {}
+[6.211647] (-) TimerEvent: {}
+[6.311865] (-) TimerEvent: {}
+[6.412087] (-) TimerEvent: {}
+[6.512277] (-) TimerEvent: {}
+[6.612499] (-) TimerEvent: {}
+[6.712714] (-) TimerEvent: {}
+[6.812930] (-) TimerEvent: {}
+[6.913173] (-) TimerEvent: {}
+[7.014294] (-) TimerEvent: {}
+[7.114531] (-) TimerEvent: {}
+[7.130651] (attendance_interfaces) StdoutLine: {'line': b'[  3%] Built target attendance_interfaces__cpp\n'}
+[7.214676] (-) TimerEvent: {}
+[7.315399] (-) TimerEvent: {}
+[7.401799] (attendance_interfaces) StdoutLine: {'line': b'[  4%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/camera_metadata__functions.c.o\n'}
+[7.402062] (attendance_interfaces) StdoutLine: {'line': b'[  4%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/capture_status__functions.c.o\n'}
+[7.402345] (attendance_interfaces) StdoutLine: {'line': b'[  5%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/capture_status__type_support.c.o\n'}
+[7.402746] (attendance_interfaces) StdoutLine: {'line': b'[  8%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/capture_status__description.c.o\n'}
+[7.402895] (attendance_interfaces) StdoutLine: {'line': b'[  8%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/servo_state__description.c.o\n'}
+[7.402987] (attendance_interfaces) StdoutLine: {'line': b'[  8%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/camera_metadata__description.c.o\n'}
+[7.403106] (attendance_interfaces) StdoutLine: {'line': b'[  8%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/servo_state__functions.c.o\n'}
+[7.404772] (attendance_interfaces) StdoutLine: {'line': b'[  9%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/camera_metadata__type_support.c.o\n'}
+[7.415548] (-) TimerEvent: {}
+[7.466062] (attendance_interfaces) StdoutLine: {'line': b'[  9%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/servo_state__type_support.c.o\n'}
+[7.466916] (attendance_interfaces) StdoutLine: {'line': b'[ 10%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/frame_manifest__description.c.o\n'}
+[7.470509] (attendance_interfaces) StdoutLine: {'line': b'[ 11%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/frame_manifest__functions.c.o\n'}
+[7.472423] (attendance_interfaces) StdoutLine: {'line': b'[ 12%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/msg/detail/frame_manifest__type_support.c.o\n'}
+[7.475577] (attendance_interfaces) StdoutLine: {'line': b'[ 13%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/capture_still__functions.c.o\n'}
+[7.480991] (attendance_interfaces) StdoutLine: {'line': b'[ 13%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/capture_still__description.c.o\n'}
+[7.488739] (attendance_interfaces) StdoutLine: {'line': b'[ 14%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/capture_still__type_support.c.o\n'}
+[7.504343] (attendance_interfaces) StdoutLine: {'line': b'[ 15%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/get_calibration__description.c.o\n'}
+[7.514230] (attendance_interfaces) StdoutLine: {'line': b'[ 15%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/get_calibration__functions.c.o\n'}
+[7.515697] (-) TimerEvent: {}
+[7.543485] (attendance_interfaces) StdoutLine: {'line': b'[ 16%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/get_calibration__type_support.c.o\n'}
+[7.564717] (attendance_interfaces) StdoutLine: {'line': b'[ 17%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_calibration__description.c.o\n'}
+[7.566312] (attendance_interfaces) StdoutLine: {'line': b'[ 18%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_calibration__functions.c.o\n'}
+[7.566771] (attendance_interfaces) StdoutLine: {'line': b'[ 18%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_calibration__type_support.c.o\n'}
+[7.591297] (attendance_interfaces) StdoutLine: {'line': b'[ 19%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_zoom__description.c.o\n'}
+[7.591601] (attendance_interfaces) StdoutLine: {'line': b'[ 20%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_zoom__functions.c.o\n'}
+[7.601538] (attendance_interfaces) StdoutLine: {'line': b'[ 21%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/srv/detail/set_zoom__type_support.c.o\n'}
+[7.611804] (attendance_interfaces) StdoutLine: {'line': b'[ 21%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/go_to_angle__description.c.o\n'}
+[7.618312] (-) TimerEvent: {}
+[7.647963] (attendance_interfaces) StdoutLine: {'line': b'[ 22%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/go_to_angle__functions.c.o\n'}
+[7.653596] (attendance_interfaces) StdoutLine: {'line': b'[ 23%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/go_to_angle__type_support.c.o\n'}
+[7.677997] (attendance_interfaces) StdoutLine: {'line': b'[ 24%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/run_scan_sequence__description.c.o\n'}
+[7.678354] (attendance_interfaces) StdoutLine: {'line': b'[ 24%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/run_scan_sequence__functions.c.o\n'}
+[7.687999] (attendance_interfaces) StdoutLine: {'line': b'[ 25%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/run_scan_sequence__type_support.c.o\n'}
+[7.712865] (attendance_interfaces) StdoutLine: {'line': b'[ 26%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/home__description.c.o\n'}
+[7.717440] (attendance_interfaces) StdoutLine: {'line': b'[ 26%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/home__functions.c.o\n'}
+[7.718477] (-) TimerEvent: {}
+[7.749356] (attendance_interfaces) StdoutLine: {'line': b'[ 27%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_c.dir/rosidl_generator_c/attendance_interfaces/action/detail/home__type_support.c.o\n'}
+[7.818626] (-) TimerEvent: {}
+[7.899701] (attendance_interfaces) StdoutLine: {'line': b'[ 28%] Linking C shared library libattendance_interfaces__rosidl_generator_c.so\n'}
+[7.918771] (-) TimerEvent: {}
+[7.960621] (attendance_interfaces) StdoutLine: {'line': b'[ 28%] Built target attendance_interfaces__rosidl_generator_c\n'}
+[7.975482] (attendance_interfaces) StdoutLine: {'line': b'[ 31%] Generating C++ introspection for ROS interfaces\n'}
+[7.975725] (attendance_interfaces) StdoutLine: {'line': b'[ 31%] Generating C type support dispatch for ROS interfaces\n'}
+[7.975829] (attendance_interfaces) StdoutLine: {'line': b'[ 31%] Generating C++ type support for eProsima Fast-RTPS\n'}
+[7.975917] (attendance_interfaces) StdoutLine: {'line': b'[ 31%] Generating C introspection for ROS interfaces\n'}
+[7.976004] (attendance_interfaces) StdoutLine: {'line': b'[ 31%] Generating C type support for eProsima Fast-RTPS\n'}
+[7.977595] (attendance_interfaces) StdoutLine: {'line': b'[ 32%] Generating C++ type support dispatch for ROS interfaces\n'}
+[8.018921] (-) TimerEvent: {}
+[8.119145] (-) TimerEvent: {}
+[8.219412] (-) TimerEvent: {}
+[8.319676] (-) TimerEvent: {}
+[8.420492] (-) TimerEvent: {}
+[8.520714] (-) TimerEvent: {}
+[8.620959] (-) TimerEvent: {}
+[8.721231] (-) TimerEvent: {}
+[8.821464] (-) TimerEvent: {}
+[8.921699] (-) TimerEvent: {}
+[9.023521] (-) TimerEvent: {}
+[9.123750] (-) TimerEvent: {}
+[9.223992] (-) TimerEvent: {}
+[9.324246] (-) TimerEvent: {}
+[9.424507] (-) TimerEvent: {}
+[9.524769] (-) TimerEvent: {}
+[9.625275] (-) TimerEvent: {}
+[9.725494] (-) TimerEvent: {}
+[9.825723] (-) TimerEvent: {}
+[9.925970] (-) TimerEvent: {}
+[10.030414] (-) TimerEvent: {}
+[10.119491] (attendance_interfaces) StdoutLine: {'line': b'[ 33%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/msg/detail/camera_metadata__type_support.c.o\n'}
+[10.119749] (attendance_interfaces) StdoutLine: {'line': b'[ 33%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/msg/detail/capture_status__type_support.c.o\n'}
+[10.127336] (attendance_interfaces) StdoutLine: {'line': b'[ 34%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/msg/detail/servo_state__type_support.c.o\n'}
+[10.130767] (-) TimerEvent: {}
+[10.197732] (attendance_interfaces) StdoutLine: {'line': b'[ 35%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/msg/detail/frame_manifest__type_support.c.o\n'}
+[10.200023] (attendance_interfaces) StdoutLine: {'line': b'[ 36%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/srv/detail/capture_still__type_support.c.o\n'}
+[10.202279] (attendance_interfaces) StdoutLine: {'line': b'[ 36%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/srv/detail/get_calibration__type_support.c.o\n'}
+[10.230909] (-) TimerEvent: {}
+[10.287968] (attendance_interfaces) StdoutLine: {'line': b'[ 37%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/srv/detail/set_calibration__type_support.c.o\n'}
+[10.290293] (attendance_interfaces) StdoutLine: {'line': b'[ 38%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/srv/detail/set_zoom__type_support.c.o\n'}
+[10.296655] (attendance_interfaces) StdoutLine: {'line': b'[ 38%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/action/detail/go_to_angle__type_support.c.o\n'}
+[10.331054] (-) TimerEvent: {}
+[10.382891] (attendance_interfaces) StdoutLine: {'line': b'[ 39%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/action/detail/run_scan_sequence__type_support.c.o\n'}
+[10.383801] (attendance_interfaces) StdoutLine: {'line': b'[ 40%] Building C object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/attendance_interfaces/action/detail/home__type_support.c.o\n'}
+[10.431222] (-) TimerEvent: {}
+[10.495619] (attendance_interfaces) StdoutLine: {'line': b'[ 41%] Linking C shared library libattendance_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[10.524298] (attendance_interfaces) StdoutLine: {'line': b'[ 42%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/msg/capture_status__type_support.cpp.o\n'}
+[10.528185] (attendance_interfaces) StdoutLine: {'line': b'[ 43%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/msg/camera_metadata__type_support.cpp.o\n'}
+[10.531337] (-) TimerEvent: {}
+[10.534552] (attendance_interfaces) StdoutLine: {'line': b'[ 44%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/msg/servo_state__type_support.cpp.o\n'}
+[10.556620] (attendance_interfaces) StdoutLine: {'line': b'[ 45%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/msg/camera_metadata__type_support.cpp.o\n'}
+[10.579476] (attendance_interfaces) StdoutLine: {'line': b'[ 45%] Built target attendance_interfaces__rosidl_typesupport_introspection_c\n'}
+[10.599924] (attendance_interfaces) StdoutLine: {'line': b'[ 45%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/msg/capture_status__type_support.cpp.o\n'}
+[10.600253] (attendance_interfaces) StdoutLine: {'line': b'[ 45%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/msg/frame_manifest__type_support.cpp.o\n'}
+[10.602097] (attendance_interfaces) StdoutLine: {'line': b'[ 46%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/msg/servo_state__type_support.cpp.o\n'}
+[10.615022] (attendance_interfaces) StdoutLine: {'line': b'[ 47%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/srv/capture_still__type_support.cpp.o\n'}
+[10.631468] (-) TimerEvent: {}
+[10.692977] (attendance_interfaces) StdoutLine: {'line': b'[ 48%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/srv/get_calibration__type_support.cpp.o\n'}
+[10.714721] (attendance_interfaces) StdoutLine: {'line': b'[ 49%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/msg/frame_manifest__type_support.cpp.o\n'}
+[10.731848] (-) TimerEvent: {}
+[10.799223] (attendance_interfaces) StdoutLine: {'line': b'[ 49%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/srv/set_calibration__type_support.cpp.o\n'}
+[10.832295] (-) TimerEvent: {}
+[10.892048] (attendance_interfaces) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/srv/set_zoom__type_support.cpp.o\n'}
+[10.932450] (-) TimerEvent: {}
+[11.014226] (attendance_interfaces) StdoutLine: {'line': b'[ 51%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/action/go_to_angle__type_support.cpp.o\n'}
+[11.033285] (-) TimerEvent: {}
+[11.041301] (attendance_interfaces) StdoutLine: {'line': b'[ 52%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/srv/capture_still__type_support.cpp.o\n'}
+[11.128868] (attendance_interfaces) StdoutLine: {'line': b'[ 53%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/action/run_scan_sequence__type_support.cpp.o\n'}
+[11.136351] (-) TimerEvent: {}
+[11.138709] (attendance_interfaces) StdoutLine: {'line': b'[ 53%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/srv/get_calibration__type_support.cpp.o\n'}
+[11.165852] (attendance_interfaces) StdoutLine: {'line': b'[ 53%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/attendance_interfaces/action/home__type_support.cpp.o\n'}
+[11.236496] (-) TimerEvent: {}
+[11.245136] (attendance_interfaces) StdoutLine: {'line': b'[ 54%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/srv/set_calibration__type_support.cpp.o\n'}
+[11.262256] (attendance_interfaces) StdoutLine: {'line': b'[ 55%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/msg/detail/camera_metadata__type_support.cpp.o\n'}
+[11.286497] (attendance_interfaces) StdoutLine: {'line': b'[ 56%] Linking CXX shared library libattendance_interfaces__rosidl_typesupport_c.so\n'}
+[11.294255] (attendance_interfaces) StdoutLine: {'line': b'[ 57%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/srv/set_zoom__type_support.cpp.o\n'}
+[11.337347] (-) TimerEvent: {}
+[11.411926] (attendance_interfaces) StdoutLine: {'line': b'[ 57%] Built target attendance_interfaces__rosidl_typesupport_c\n'}
+[11.435238] (attendance_interfaces) StdoutLine: {'line': b'[ 58%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/msg/detail/capture_status__type_support.cpp.o\n'}
+[11.437590] (-) TimerEvent: {}
+[11.489599] (attendance_interfaces) StdoutLine: {'line': b'[ 58%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/msg/detail/camera_metadata__type_support_c.cpp.o\n'}
+[11.537740] (-) TimerEvent: {}
+[11.638551] (-) TimerEvent: {}
+[11.738814] (-) TimerEvent: {}
+[11.802332] (attendance_interfaces) StdoutLine: {'line': b'[ 59%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/msg/detail/capture_status__type_support_c.cpp.o\n'}
+[11.839008] (-) TimerEvent: {}
+[11.879840] (attendance_interfaces) StdoutLine: {'line': b'[ 60%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/msg/detail/servo_state__type_support_c.cpp.o\n'}
+[11.939179] (-) TimerEvent: {}
+[11.971873] (attendance_interfaces) StdoutLine: {'line': b'[ 61%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/msg/detail/servo_state__type_support.cpp.o\n'}
+[11.984168] (attendance_interfaces) StdoutLine: {'line': b'[ 62%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/msg/detail/frame_manifest__type_support_c.cpp.o\n'}
+[11.989448] (attendance_interfaces) StdoutLine: {'line': b'[ 63%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/action/go_to_angle__type_support.cpp.o\n'}
+[12.017603] (attendance_interfaces) StdoutLine: {'line': b'[ 63%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/msg/detail/frame_manifest__type_support.cpp.o\n'}
+[12.039312] (-) TimerEvent: {}
+[12.139578] (-) TimerEvent: {}
+[12.205733] (attendance_interfaces) StdoutLine: {'line': b'[ 64%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/msg/detail/dds_fastrtps/camera_metadata__type_support.cpp.o\n'}
+[12.239758] (-) TimerEvent: {}
+[12.340030] (-) TimerEvent: {}
+[12.440330] (-) TimerEvent: {}
+[12.454811] (attendance_interfaces) StdoutLine: {'line': b'[ 64%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/action/run_scan_sequence__type_support.cpp.o\n'}
+[12.540507] (-) TimerEvent: {}
+[12.553315] (attendance_interfaces) StdoutLine: {'line': b'[ 65%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/srv/detail/capture_still__type_support.cpp.o\n'}
+[12.591699] (attendance_interfaces) StdoutLine: {'line': b'[ 66%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/msg/detail/dds_fastrtps/capture_status__type_support.cpp.o\n'}
+[12.641314] (-) TimerEvent: {}
+[12.668897] (attendance_interfaces) StdoutLine: {'line': b'[ 67%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/attendance_interfaces/action/home__type_support.cpp.o\n'}
+[12.727599] (attendance_interfaces) StdoutLine: {'line': b'[ 68%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/srv/detail/get_calibration__type_support.cpp.o\n'}
+[12.742326] (-) TimerEvent: {}
+[12.842609] (-) TimerEvent: {}
+[12.848654] (attendance_interfaces) StdoutLine: {'line': b'[ 68%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/srv/detail/capture_still__type_support_c.cpp.o\n'}
+[12.942805] (-) TimerEvent: {}
+[13.043322] (-) TimerEvent: {}
+[13.143612] (-) TimerEvent: {}
+[13.170808] (attendance_interfaces) StdoutLine: {'line': b'[ 69%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/srv/detail/set_calibration__type_support.cpp.o\n'}
+[13.244318] (-) TimerEvent: {}
+[13.280679] (attendance_interfaces) StdoutLine: {'line': b'[ 70%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/srv/detail/get_calibration__type_support_c.cpp.o\n'}
+[13.344452] (-) TimerEvent: {}
+[13.445333] (-) TimerEvent: {}
+[13.478573] (attendance_interfaces) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/srv/detail/set_calibration__type_support_c.cpp.o\n'}
+[13.545486] (-) TimerEvent: {}
+[13.573306] (attendance_interfaces) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/msg/detail/dds_fastrtps/servo_state__type_support.cpp.o\n'}
+[13.647336] (-) TimerEvent: {}
+[13.696431] (attendance_interfaces) StdoutLine: {'line': b'[ 71%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/srv/detail/set_zoom__type_support.cpp.o\n'}
+[13.747513] (-) TimerEvent: {}
+[13.750410] (attendance_interfaces) StdoutLine: {'line': b'[ 72%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/msg/detail/dds_fastrtps/frame_manifest__type_support.cpp.o\n'}
+[13.847675] (-) TimerEvent: {}
+[13.876593] (attendance_interfaces) StdoutLine: {'line': b'[ 73%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/action/detail/go_to_angle__type_support.cpp.o\n'}
+[13.948311] (-) TimerEvent: {}
+[14.008390] (attendance_interfaces) StdoutLine: {'line': b'[ 74%] Linking CXX shared library libattendance_interfaces__rosidl_typesupport_cpp.so\n'}
+[14.048481] (-) TimerEvent: {}
+[14.142494] (attendance_interfaces) StdoutLine: {'line': b'[ 74%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/srv/detail/set_zoom__type_support_c.cpp.o\n'}
+[14.148895] (-) TimerEvent: {}
+[14.225809] (attendance_interfaces) StdoutLine: {'line': b'[ 75%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/srv/detail/dds_fastrtps/capture_still__type_support.cpp.o\n'}
+[14.249324] (-) TimerEvent: {}
+[14.280132] (attendance_interfaces) StdoutLine: {'line': b'[ 75%] Built target attendance_interfaces__rosidl_typesupport_cpp\n'}
+[14.309312] (attendance_interfaces) StdoutLine: {'line': b'[ 76%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/action/detail/run_scan_sequence__type_support.cpp.o\n'}
+[14.349494] (-) TimerEvent: {}
+[14.431311] (attendance_interfaces) StdoutLine: {'line': b'[ 77%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/action/detail/go_to_angle__type_support_c.cpp.o\n'}
+[14.450347] (-) TimerEvent: {}
+[14.463338] (attendance_interfaces) StdoutLine: {'line': b'[ 78%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/attendance_interfaces/action/detail/home__type_support.cpp.o\n'}
+[14.531776] (attendance_interfaces) StdoutLine: {'line': b'[ 79%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/action/detail/run_scan_sequence__type_support_c.cpp.o\n'}
+[14.550510] (-) TimerEvent: {}
+[14.623918] (attendance_interfaces) StdoutLine: {'line': b'[ 80%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/attendance_interfaces/action/detail/home__type_support_c.cpp.o\n'}
+[14.650688] (-) TimerEvent: {}
+[14.750980] (-) TimerEvent: {}
+[14.851293] (-) TimerEvent: {}
+[14.951566] (-) TimerEvent: {}
+[15.053593] (-) TimerEvent: {}
+[15.077541] (attendance_interfaces) StdoutLine: {'line': b'[ 81%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/srv/detail/dds_fastrtps/get_calibration__type_support.cpp.o\n'}
+[15.153768] (-) TimerEvent: {}
+[15.254081] (-) TimerEvent: {}
+[15.302710] (attendance_interfaces) StdoutLine: {'line': b'[ 81%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/srv/detail/dds_fastrtps/set_calibration__type_support.cpp.o\n'}
+[15.354275] (-) TimerEvent: {}
+[15.454560] (-) TimerEvent: {}
+[15.521786] (attendance_interfaces) StdoutLine: {'line': b'[ 82%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/srv/detail/dds_fastrtps/set_zoom__type_support.cpp.o\n'}
+[15.544325] (attendance_interfaces) StdoutLine: {'line': b'[ 83%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/action/detail/dds_fastrtps/go_to_angle__type_support.cpp.o\n'}
+[15.554729] (-) TimerEvent: {}
+[15.589320] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/action/detail/dds_fastrtps/run_scan_sequence__type_support.cpp.o\n'}
+[15.654903] (-) TimerEvent: {}
+[15.714313] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Linking CXX shared library libattendance_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[15.755311] (-) TimerEvent: {}
+[15.830090] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Building CXX object CMakeFiles/attendance_interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/attendance_interfaces/action/detail/dds_fastrtps/home__type_support.cpp.o\n'}
+[15.845065] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Linking CXX shared library libattendance_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[15.855480] (-) TimerEvent: {}
+[15.931551] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Built target attendance_interfaces__rosidl_typesupport_fastrtps_c\n'}
+[15.955650] (-) TimerEvent: {}
+[16.055930] (-) TimerEvent: {}
+[16.110223] (attendance_interfaces) StdoutLine: {'line': b'[ 84%] Built target attendance_interfaces__rosidl_typesupport_introspection_cpp\n'}
+[16.156112] (-) TimerEvent: {}
+[16.256424] (-) TimerEvent: {}
+[16.356691] (-) TimerEvent: {}
+[16.456991] (-) TimerEvent: {}
+[16.557301] (-) TimerEvent: {}
+[16.657566] (-) TimerEvent: {}
+[16.757799] (-) TimerEvent: {}
+[16.858043] (-) TimerEvent: {}
+[16.958288] (-) TimerEvent: {}
+[17.058517] (-) TimerEvent: {}
+[17.113636] (attendance_interfaces) StdoutLine: {'line': b'[ 85%] Linking CXX shared library libattendance_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[17.158655] (-) TimerEvent: {}
+[17.258889] (-) TimerEvent: {}
+[17.263173] (attendance_interfaces) StdoutLine: {'line': b'[ 85%] Built target attendance_interfaces__rosidl_typesupport_fastrtps_cpp\n'}
+[17.290057] (attendance_interfaces) StdoutLine: {'line': b'[ 85%] Built target attendance_interfaces\n'}
+[17.318590] (attendance_interfaces) StdoutLine: {'line': b'[ 86%] Generating Python code for ROS interfaces\n'}
+[17.359021] (-) TimerEvent: {}
+[17.459266] (-) TimerEvent: {}
+[17.559530] (-) TimerEvent: {}
+[17.659754] (-) TimerEvent: {}
+[17.760001] (-) TimerEvent: {}
+[17.860271] (-) TimerEvent: {}
+[17.960490] (-) TimerEvent: {}
+[18.060735] (-) TimerEvent: {}
+[18.160951] (-) TimerEvent: {}
+[18.261231] (-) TimerEvent: {}
+[18.361471] (-) TimerEvent: {}
+[18.461734] (-) TimerEvent: {}
+[18.561992] (-) TimerEvent: {}
+[18.662249] (-) TimerEvent: {}
+[18.762505] (-) TimerEvent: {}
+[18.862718] (-) TimerEvent: {}
+[18.962936] (-) TimerEvent: {}
+[19.063142] (-) TimerEvent: {}
+[19.163369] (-) TimerEvent: {}
+[19.263598] (-) TimerEvent: {}
+[19.363840] (-) TimerEvent: {}
+[19.464074] (-) TimerEvent: {}
+[19.564318] (-) TimerEvent: {}
+[19.664560] (-) TimerEvent: {}
+[19.764812] (-) TimerEvent: {}
+[19.865039] (-) TimerEvent: {}
+[19.965283] (-) TimerEvent: {}
+[20.065690] (-) TimerEvent: {}
+[20.165951] (-) TimerEvent: {}
+[20.266224] (-) TimerEvent: {}
+[20.366462] (-) TimerEvent: {}
+[20.466692] (-) TimerEvent: {}
+[20.566939] (-) TimerEvent: {}
+[20.667151] (-) TimerEvent: {}
+[20.767392] (-) TimerEvent: {}
+[20.867619] (-) TimerEvent: {}
+[20.967893] (-) TimerEvent: {}
+[21.058663] (attendance_interfaces) StdoutLine: {'line': b'[ 86%] Built target attendance_interfaces__py\n'}
+[21.068022] (-) TimerEvent: {}
+[21.091764] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/srv/_set_zoom_s.c.o\n'}
+[21.092046] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/srv/_capture_still_s.c.o\n'}
+[21.092143] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/msg/_capture_status_s.c.o\n'}
+[21.092262] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/srv/_get_calibration_s.c.o\n'}
+[21.092339] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/msg/_frame_manifest_s.c.o\n'}
+[21.092410] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/msg/_camera_metadata_s.c.o\n'}
+[21.092679] (attendance_interfaces) StdoutLine: {'line': b'[ 92%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/srv/_set_calibration_s.c.o\n'}
+[21.092818] (attendance_interfaces) StdoutLine: {'line': b'[ 91%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/msg/_servo_state_s.c.o\n'}
+[21.177302] (-) TimerEvent: {}
+[21.277583] (-) TimerEvent: {}
+[21.329835] (attendance_interfaces) StdoutLine: {'line': b'[ 92%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/action/_run_scan_sequence_s.c.o\n'}
+[21.331271] (attendance_interfaces) StdoutLine: {'line': b'[ 93%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/action/_go_to_angle_s.c.o\n'}
+[21.339583] (attendance_interfaces) StdoutLine: {'line': b'[ 94%] Building C object CMakeFiles/attendance_interfaces__rosidl_generator_py.dir/rosidl_generator_py/attendance_interfaces/action/_home_s.c.o\n'}
+[21.377725] (-) TimerEvent: {}
+[21.477960] (-) TimerEvent: {}
+[21.580438] (attendance_interfaces) StdoutLine: {'line': b'[ 95%] Linking C shared library libattendance_interfaces__rosidl_generator_py.so\n'}
+[21.580751] (-) TimerEvent: {}
+[21.644665] (attendance_interfaces) StdoutLine: {'line': b'[ 95%] Built target attendance_interfaces__rosidl_generator_py\n'}
+[21.672239] (attendance_interfaces) StdoutLine: {'line': b'[ 97%] Building C object CMakeFiles/attendance_interfaces_s__rosidl_typesupport_c.dir/rosidl_generator_py/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_c.c.o\n'}
+[21.672461] (attendance_interfaces) StdoutLine: {'line': b'[ 97%] Building C object CMakeFiles/attendance_interfaces_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o\n'}
+[21.672553] (attendance_interfaces) StdoutLine: {'line': b'[ 97%] Building C object CMakeFiles/attendance_interfaces_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o\n'}
+[21.680914] (-) TimerEvent: {}
+[21.781220] (-) TimerEvent: {}
+[21.881494] (-) TimerEvent: {}
+[21.913047] (attendance_interfaces) StdoutLine: {'line': b'[ 98%] Linking C shared module rosidl_generator_py/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_introspection_c.so\n'}
+[21.917502] (attendance_interfaces) StdoutLine: {'line': b'[ 99%] Linking C shared module rosidl_generator_py/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_c.so\n'}
+[21.925951] (attendance_interfaces) StdoutLine: {'line': b'[100%] Linking C shared module rosidl_generator_py/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_fastrtps_c.so\n'}
+[21.959157] (attendance_interfaces) StdoutLine: {'line': b'[100%] Built target attendance_interfaces_s__rosidl_typesupport_introspection_c\n'}
+[21.960957] (attendance_interfaces) StdoutLine: {'line': b'[100%] Built target attendance_interfaces_s__rosidl_typesupport_c\n'}
+[21.971735] (attendance_interfaces) StdoutLine: {'line': b'[100%] Built target attendance_interfaces_s__rosidl_typesupport_fastrtps_c\n'}
+[21.981635] (-) TimerEvent: {}
+[21.989334] (attendance_interfaces) CommandEnded: {'returncode': 0}
+[21.989966] (attendance_interfaces) JobProgress: {'identifier': 'attendance_interfaces', 'progress': 'install'}
+[22.000912] (attendance_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[22.010343] (attendance_interfaces) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[22.011237] (attendance_interfaces) StdoutLine: {'line': b'-- Execute custom install script\n'}
+[22.011338] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/ament_index/resource_index/rosidl_interfaces/attendance_interfaces\n'}
+[22.022017] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CameraMetadata.json\n'}
+[22.033177] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CaptureStatus.json\n'}
+[22.043322] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/ServoState.json\n'}
+[22.054186] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/FrameManifest.json\n'}
+[22.064872] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/CaptureStill.json\n'}
+[22.075483] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/GetCalibration.json\n'}
+[22.081783] (-) TimerEvent: {}
+[22.086017] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetCalibration.json\n'}
+[22.097004] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetZoom.json\n'}
+[22.107463] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/GoToAngle.json\n'}
+[22.118414] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/RunScanSequence.json\n'}
+[22.129025] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/Home.json\n'}
+[22.141639] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__functions.h\n'}
+[22.151974] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__struct.h\n'}
+[22.162353] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__type_support.h\n'}
+[22.173071] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__functions.h\n'}
+[22.181947] (-) TimerEvent: {}
+[22.183649] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__struct.h\n'}
+[22.193900] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__type_support.h\n'}
+[22.204116] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__functions.h\n'}
+[22.214756] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__struct.h\n'}
+[22.226175] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__type_support.h\n'}
+[22.236029] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/go_to_angle.h\n'}
+[22.246401] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/home.h\n'}
+[22.257326] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/run_scan_sequence.h\n'}
+[22.267914] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/camera_metadata.h\n'}
+[22.278794] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/capture_status.h\n'}
+[22.282080] (-) TimerEvent: {}
+[22.289357] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__functions.h\n'}
+[22.299720] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__struct.h\n'}
+[22.310183] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__type_support.h\n'}
+[22.320740] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__functions.h\n'}
+[22.331168] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__struct.h\n'}
+[22.341347] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__type_support.h\n'}
+[22.352006] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__functions.h\n'}
+[22.362594] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__struct.h\n'}
+[22.373153] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__type_support.h\n'}
+[22.382204] (-) TimerEvent: {}
+[22.383296] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__functions.h\n'}
+[22.394815] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__struct.h\n'}
+[22.405371] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__type_support.h\n'}
+[22.415913] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/frame_manifest.h\n'}
+[22.426030] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/rosidl_generator_c__visibility_control.h\n'}
+[22.436745] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/servo_state.h\n'}
+[22.447183] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/capture_still.h\n'}
+[22.458003] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__functions.h\n'}
+[22.468558] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__struct.h\n'}
+[22.479271] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__type_support.h\n'}
+[22.482284] (-) TimerEvent: {}
+[22.490038] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__functions.h\n'}
+[22.501228] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__struct.h\n'}
+[22.511829] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__type_support.h\n'}
+[22.522009] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__functions.h\n'}
+[22.533026] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__struct.h\n'}
+[22.544017] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__type_support.h\n'}
+[22.554211] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__functions.h\n'}
+[22.564273] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__struct.h\n'}
+[22.575032] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__type_support.h\n'}
+[22.582412] (-) TimerEvent: {}
+[22.585411] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/get_calibration.h\n'}
+[22.596147] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/set_calibration.h\n'}
+[22.606336] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/set_zoom.h\n'}
+[22.617077] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/library_path.sh\n'}
+[22.627550] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/library_path.dsv\n'}
+[22.640225] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__rosidl_typesupport_fastrtps_c.h\n'}
+[22.650574] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__rosidl_typesupport_fastrtps_c.h\n'}
+[22.661482] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__rosidl_typesupport_fastrtps_c.h\n'}
+[22.672074] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__rosidl_typesupport_fastrtps_c.h\n'}
+[22.682492] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__rosidl_typesupport_fastrtps_c.h\n'}
+[22.682791] (-) TimerEvent: {}
+[22.692741] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__rosidl_typesupport_fastrtps_c.h\n'}
+[22.703400] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__rosidl_typesupport_fastrtps_c.h\n'}
+[22.714071] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[22.724949] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__rosidl_typesupport_fastrtps_c.h\n'}
+[22.735259] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__rosidl_typesupport_fastrtps_c.h\n'}
+[22.745354] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__rosidl_typesupport_fastrtps_c.h\n'}
+[22.756410] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__rosidl_typesupport_fastrtps_c.h\n'}
+[22.767319] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__rosidl_typesupport_introspection_c.h\n'}
+[22.777768] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__rosidl_typesupport_introspection_c.h\n'}
+[22.782970] (-) TimerEvent: {}
+[22.788224] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__rosidl_typesupport_introspection_c.h\n'}
+[22.798698] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__rosidl_typesupport_introspection_c.h\n'}
+[22.809062] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__rosidl_typesupport_introspection_c.h\n'}
+[22.819668] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__rosidl_typesupport_introspection_c.h\n'}
+[22.830111] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__rosidl_typesupport_introspection_c.h\n'}
+[22.840749] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[22.851275] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__rosidl_typesupport_introspection_c.h\n'}
+[22.861842] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__rosidl_typesupport_introspection_c.h\n'}
+[22.872277] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__rosidl_typesupport_introspection_c.h\n'}
+[22.882657] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__rosidl_typesupport_introspection_c.h\n'}
+[22.883041] (-) TimerEvent: {}
+[22.894759] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__builder.hpp\n'}
+[22.905569] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__struct.hpp\n'}
+[22.915774] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__traits.hpp\n'}
+[22.926439] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__type_support.hpp\n'}
+[22.936971] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__builder.hpp\n'}
+[22.947941] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__struct.hpp\n'}
+[22.958415] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__traits.hpp\n'}
+[22.968549] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__type_support.hpp\n'}
+[22.979500] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__builder.hpp\n'}
+[22.983209] (-) TimerEvent: {}
+[22.991060] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__struct.hpp\n'}
+[23.001719] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__traits.hpp\n'}
+[23.012351] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__type_support.hpp\n'}
+[23.023459] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/go_to_angle.hpp\n'}
+[23.034075] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/home.hpp\n'}
+[23.044672] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/run_scan_sequence.hpp\n'}
+[23.054934] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/camera_metadata.hpp\n'}
+[23.065570] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/capture_status.hpp\n'}
+[23.075980] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__builder.hpp\n'}
+[23.083302] (-) TimerEvent: {}
+[23.086732] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__struct.hpp\n'}
+[23.097339] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__traits.hpp\n'}
+[23.108019] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__type_support.hpp\n'}
+[23.118612] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__builder.hpp\n'}
+[23.129383] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__struct.hpp\n'}
+[23.140054] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__traits.hpp\n'}
+[23.150269] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__type_support.hpp\n'}
+[23.160913] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__builder.hpp\n'}
+[23.171400] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__struct.hpp\n'}
+[23.182080] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__traits.hpp\n'}
+[23.183411] (-) TimerEvent: {}
+[23.192311] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__type_support.hpp\n'}
+[23.203189] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__builder.hpp\n'}
+[23.213659] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__struct.hpp\n'}
+[23.224305] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__traits.hpp\n'}
+[23.234279] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__type_support.hpp\n'}
+[23.244930] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/frame_manifest.hpp\n'}
+[23.255284] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/rosidl_generator_cpp__visibility_control.hpp\n'}
+[23.266327] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/servo_state.hpp\n'}
+[23.276696] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/capture_still.hpp\n'}
+[23.283566] (-) TimerEvent: {}
+[23.287432] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__builder.hpp\n'}
+[23.297988] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__struct.hpp\n'}
+[23.308643] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__traits.hpp\n'}
+[23.319187] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__type_support.hpp\n'}
+[23.329824] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__builder.hpp\n'}
+[23.340343] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__struct.hpp\n'}
+[23.350972] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__traits.hpp\n'}
+[23.361383] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__type_support.hpp\n'}
+[23.372492] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__builder.hpp\n'}
+[23.383360] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__struct.hpp\n'}
+[23.383550] (-) TimerEvent: {}
+[23.394252] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__traits.hpp\n'}
+[23.404526] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__type_support.hpp\n'}
+[23.414855] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__builder.hpp\n'}
+[23.425564] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__struct.hpp\n'}
+[23.436082] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__traits.hpp\n'}
+[23.447112] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__type_support.hpp\n'}
+[23.457828] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/get_calibration.hpp\n'}
+[23.468747] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/set_calibration.hpp\n'}
+[23.479217] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/set_zoom.hpp\n'}
+[23.483703] (-) TimerEvent: {}
+[23.491270] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.501844] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.512894] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.523434] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.534218] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.544678] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.555325] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.565993] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[23.576562] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.583823] (-) TimerEvent: {}
+[23.587576] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.598078] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.608724] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[23.620523] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/go_to_angle__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.630993] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/home__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.641361] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/action/detail/run_scan_sequence__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.652478] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/camera_metadata__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.663144] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/capture_status__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.673798] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/frame_manifest__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.684079] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/msg/detail/servo_state__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.684377] (-) TimerEvent: {}
+[23.694982] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/capture_still__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.705732] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/get_calibration__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.716410] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_calibration__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.726085] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/include/attendance_interfaces/attendance_interfaces/srv/detail/set_zoom__rosidl_typesupport_introspection_cpp.hpp\n'}
+[23.737100] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/pythonpath.sh\n'}
+[23.747415] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/pythonpath.dsv\n'}
+[23.758539] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces-2.0.0-py3.12.egg-info/PKG-INFO\n'}
+[23.768795] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces-2.0.0-py3.12.egg-info/SOURCES.txt\n'}
+[23.779675] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces-2.0.0-py3.12.egg-info/dependency_links.txt\n'}
+[23.784552] (-) TimerEvent: {}
+[23.790186] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces-2.0.0-py3.12.egg-info/top_level.txt\n'}
+[23.802078] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/__init__.py\n'}
+[23.812722] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_c.c\n'}
+[23.823850] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c\n'}
+[23.834316] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/_attendance_interfaces_s.ep.rosidl_typesupport_introspection_c.c\n'}
+[23.845051] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/__init__.py\n'}
+[23.855242] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_go_to_angle.py\n'}
+[23.865437] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_go_to_angle_s.c\n'}
+[23.876859] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_home.py\n'}
+[23.884679] (-) TimerEvent: {}
+[23.887811] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_home_s.c\n'}
+[23.898330] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_run_scan_sequence.py\n'}
+[23.908501] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_run_scan_sequence_s.c\n'}
+[23.919006] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_c.so\n'}
+[23.929523] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_fastrtps_c.so\n'}
+[23.939987] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_introspection_c.so\n'}
+[23.950268] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/__init__.py\n'}
+[23.961222] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_camera_metadata.py\n'}
+[23.971541] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_camera_metadata_s.c\n'}
+[23.982330] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_capture_status.py\n'}
+[23.984798] (-) TimerEvent: {}
+[23.992716] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_capture_status_s.c\n'}
+[24.003493] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_frame_manifest.py\n'}
+[24.014076] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_frame_manifest_s.c\n'}
+[24.024973] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_servo_state.py\n'}
+[24.035397] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_servo_state_s.c\n'}
+[24.045609] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/__init__.py\n'}
+[24.056032] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_capture_still.py\n'}
+[24.066580] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_capture_still_s.c\n'}
+[24.076867] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_get_calibration.py\n'}
+[24.084921] (-) TimerEvent: {}
+[24.087169] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_get_calibration_s.c\n'}
+[24.097974] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_calibration.py\n'}
+[24.108272] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_calibration_s.c\n'}
+[24.119047] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_zoom.py\n'}
+[24.128942] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_zoom_s.c\n'}
+[24.140059] (attendance_interfaces) StdoutLine: {'line': b'-- Up-to-date symlink: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_fastrtps_c.so\n'}
+[24.140379] (attendance_interfaces) StdoutLine: {'line': b'-- Up-to-date symlink: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_introspection_c.so\n'}
+[24.140551] (attendance_interfaces) StdoutLine: {'line': b'-- Up-to-date symlink: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/attendance_interfaces_s__rosidl_typesupport_c.so\n'}
+[24.140873] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/Cargo.toml\n'}
+[24.151431] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/build.rs\n'}
+[24.161445] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/action.rs\n'}
+[24.171719] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/action/rmw.rs\n'}
+[24.181926] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/lib.rs\n'}
+[24.185050] (-) TimerEvent: {}
+[24.192540] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/msg.rs\n'}
+[24.203177] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/msg/rmw.rs\n'}
+[24.213430] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/srv.rs\n'}
+[24.223526] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/rust/src/srv/rmw.rs\n'}
+[24.234488] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CameraMetadata.idl\n'}
+[24.245909] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CaptureStatus.idl\n'}
+[24.256256] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/ServoState.idl\n'}
+[24.266441] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/FrameManifest.idl\n'}
+[24.277162] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/CaptureStill.idl\n'}
+[24.285177] (-) TimerEvent: {}
+[24.288153] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/GetCalibration.idl\n'}
+[24.298486] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetCalibration.idl\n'}
+[24.308863] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetZoom.idl\n'}
+[24.320174] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/GoToAngle.idl\n'}
+[24.331109] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/RunScanSequence.idl\n'}
+[24.341351] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/Home.idl\n'}
+[24.351882] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CameraMetadata.msg\n'}
+[24.362703] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/CaptureStatus.msg\n'}
+[24.373149] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/ServoState.msg\n'}
+[24.383820] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/msg/FrameManifest.msg\n'}
+[24.385239] (-) TimerEvent: {}
+[24.394515] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/CaptureStill.srv\n'}
+[24.404870] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/GetCalibration.srv\n'}
+[24.415530] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetCalibration.srv\n'}
+[24.426398] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/srv/SetZoom.srv\n'}
+[24.436617] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/GoToAngle.action\n'}
+[24.446987] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/RunScanSequence.action\n'}
+[24.458001] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/action/Home.action\n'}
+[24.468831] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/ament_index/resource_index/package_run_dependencies/attendance_interfaces\n'}
+[24.479593] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/ament_index/resource_index/parent_prefix_path/attendance_interfaces\n'}
+[24.485392] (-) TimerEvent: {}
+[24.489956] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/ament_prefix_path.sh\n'}
+[24.501029] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/ament_prefix_path.dsv\n'}
+[24.511670] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/path.sh\n'}
+[24.522211] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/environment/path.dsv\n'}
+[24.532161] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/local_setup.bash\n'}
+[24.543258] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/local_setup.sh\n'}
+[24.553548] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/local_setup.zsh\n'}
+[24.564225] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/local_setup.dsv\n'}
+[24.574769] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.dsv\n'}
+[24.585524] (-) TimerEvent: {}
+[24.585706] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/ament_index/resource_index/packages/attendance_interfaces\n'}
+[24.596217] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/rosidl_cmake-extras.cmake\n'}
+[24.607143] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[24.617820] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[24.628369] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[24.639799] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[24.651153] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[24.661767] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[24.672244] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/rosidl_cmake_aggregate_target-extras.cmake\n'}
+[24.683168] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfacesConfig.cmake\n'}
+[24.685639] (-) TimerEvent: {}
+[24.694527] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfacesConfig-version.cmake\n'}
+[24.705612] (attendance_interfaces) StdoutLine: {'line': b'-- Symlinking: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.xml\n'}
+[24.716013] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_generator_c.so\n'}
+[24.716991] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_generator_c.so" to ""\n'}
+[24.717267] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_fastrtps_c.so\n'}
+[24.717967] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[24.718270] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_introspection_c.so\n'}
+[24.718978] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_introspection_c.so" to ""\n'}
+[24.719159] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_c.so\n'}
+[24.719758] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_c.so" to ""\n'}
+[24.720022] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_fastrtps_cpp.so\n'}
+[24.721544] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[24.721767] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_introspection_cpp.so\n'}
+[24.723157] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[24.723397] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_cpp.so\n'}
+[24.724380] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_typesupport_cpp.so" to ""\n'}
+[24.785774] (-) TimerEvent: {}
+[24.817998] (attendance_interfaces) StdoutLine: {'line': b"Listing '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces'...\n"}
+[24.818288] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/__init__.py'...\n"}
+[24.818368] (attendance_interfaces) StdoutLine: {'line': b"Listing '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action'...\n"}
+[24.818438] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/__init__.py'...\n"}
+[24.818509] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_go_to_angle.py'...\n"}
+[24.818579] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_home.py'...\n"}
+[24.818649] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/action/_run_scan_sequence.py'...\n"}
+[24.818719] (attendance_interfaces) StdoutLine: {'line': b"Listing '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg'...\n"}
+[24.818787] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/__init__.py'...\n"}
+[24.818858] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_camera_metadata.py'...\n"}
+[24.818925] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_capture_status.py'...\n"}
+[24.818993] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_frame_manifest.py'...\n"}
+[24.819062] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/msg/_servo_state.py'...\n"}
+[24.819129] (attendance_interfaces) StdoutLine: {'line': b"Listing '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv'...\n"}
+[24.819208] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/__init__.py'...\n"}
+[24.819300] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_capture_still.py'...\n"}
+[24.819401] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_get_calibration.py'...\n"}
+[24.819471] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_calibration.py'...\n"}
+[24.819544] (attendance_interfaces) StdoutLine: {'line': b"Compiling '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages/attendance_interfaces/srv/_set_zoom.py'...\n"}
+[24.826020] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_generator_py.so\n'}
+[24.826962] (attendance_interfaces) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/libattendance_interfaces__rosidl_generator_py.so" to ""\n'}
+[24.827268] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_generator_cExport.cmake\n'}
+[24.827472] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_generator_cExport-noconfig.cmake\n'}
+[24.827580] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_typesupport_fastrtps_cExport.cmake\n'}
+[24.827722] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake\n'}
+[24.827873] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_introspection_cExport.cmake\n'}
+[24.828039] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[24.828141] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_cExport.cmake\n'}
+[24.828332] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[24.828444] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_generator_cppExport.cmake\n'}
+[24.828607] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake\n'}
+[24.828715] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake\n'}
+[24.828877] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[24.828982] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[24.829176] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_cppExport.cmake\n'}
+[24.829299] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/attendance_interfaces__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[24.829482] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_generator_pyExport.cmake\n'}
+[24.829581] (attendance_interfaces) StdoutLine: {'line': b'-- Installing: /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/cmake/export_attendance_interfaces__rosidl_generator_pyExport-noconfig.cmake\n'}
+[24.832445] (attendance_interfaces) CommandEnded: {'returncode': 0}
+[24.860448] (attendance_interfaces) JobEnded: {'identifier': 'attendance_interfaces', 'rc': 0}
+[24.861214] (servo_controller) JobStarted: {'identifier': 'servo_controller'}
+[24.885897] (-) TimerEvent: {}
+[24.986134] (-) TimerEvent: {}
+[25.086369] (-) TimerEvent: {}
+[25.186575] (-) TimerEvent: {}
+[25.286782] (-) TimerEvent: {}
+[25.387029] (-) TimerEvent: {}
+[25.487284] (-) TimerEvent: {}
+[25.587538] (-) TimerEvent: {}
+[25.687752] (-) TimerEvent: {}
+[25.787981] (-) TimerEvent: {}
+[25.888233] (-) TimerEvent: {}
+[25.988460] (-) TimerEvent: {}
+[26.061798] (servo_controller) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/build', '--no-deps', 'symlink_data'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor'}), 'shell': False}
+[26.088578] (-) TimerEvent: {}
+[26.188777] (-) TimerEvent: {}
+[26.289021] (-) TimerEvent: {}
+[26.389234] (-) TimerEvent: {}
+[26.390680] (servo_controller) StdoutLine: {'line': b'running develop\n'}
+[26.489345] (-) TimerEvent: {}
+[26.589584] (-) TimerEvent: {}
+[26.589790] (servo_controller) StdoutLine: {'line': b'running egg_info\n'}
+[26.590030] (servo_controller) StdoutLine: {'line': b'creating servo_controller.egg-info\n'}
+[26.608458] (servo_controller) StdoutLine: {'line': b'writing servo_controller.egg-info/PKG-INFO\n'}
+[26.608726] (servo_controller) StdoutLine: {'line': b'writing dependency_links to servo_controller.egg-info/dependency_links.txt\n'}
+[26.609032] (servo_controller) StdoutLine: {'line': b'writing entry points to servo_controller.egg-info/entry_points.txt\n'}
+[26.609260] (servo_controller) StdoutLine: {'line': b'writing requirements to servo_controller.egg-info/requires.txt\n'}
+[26.609363] (servo_controller) StdoutLine: {'line': b'writing top-level names to servo_controller.egg-info/top_level.txt\n'}
+[26.609432] (servo_controller) StdoutLine: {'line': b"writing manifest file 'servo_controller.egg-info/SOURCES.txt'\n"}
+[26.648771] (servo_controller) StdoutLine: {'line': b"reading manifest file 'servo_controller.egg-info/SOURCES.txt'\n"}
+[26.649233] (servo_controller) StdoutLine: {'line': b"writing manifest file 'servo_controller.egg-info/SOURCES.txt'\n"}
+[26.670307] (servo_controller) StdoutLine: {'line': b'running build_ext\n'}
+[26.670582] (servo_controller) StdoutLine: {'line': b'Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages/servo-controller.egg-link (link to .)\n'}
+[26.670928] (servo_controller) StdoutLine: {'line': b'Installing servo_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/servo_controller\n'}
+[26.671299] (servo_controller) StdoutLine: {'line': b'\n'}
+[26.671400] (servo_controller) StdoutLine: {'line': b'Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller\n'}
+[26.671475] (servo_controller) StdoutLine: {'line': b'running symlink_data\n'}
+[26.671686] (servo_controller) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/ament_index\n'}
+[26.671782] (servo_controller) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/ament_index/resource_index\n'}
+[26.671854] (servo_controller) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/ament_index/resource_index/packages\n'}
+[26.671926] (servo_controller) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/resource/servo_controller -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/ament_index/resource_index/packages\n'}
+[26.672000] (servo_controller) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/package.xml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller\n'}
+[26.672074] (servo_controller) StdoutLine: {'line': b'creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/config\n'}
+[26.672209] (servo_controller) StdoutLine: {'line': b'symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/config/default.yaml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/config\n'}
+[26.689741] (-) TimerEvent: {}
+[26.729121] (servo_controller) CommandEnded: {'returncode': 0}
+[26.736048] (servo_controller) JobEnded: {'identifier': 'servo_controller', 'rc': 0}
+[26.736545] (-) EventReactorShutdown: {}

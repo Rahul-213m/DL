@@ -1,0 +1,19 @@
+[1.972s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/build --no-deps symlink_data
+[2.424s] running develop
+[2.681s] running egg_info
+[2.708s] writing attendance_robot.egg-info/PKG-INFO
+[2.708s] writing dependency_links to attendance_robot.egg-info/dependency_links.txt
+[2.708s] writing entry points to attendance_robot.egg-info/entry_points.txt
+[2.708s] writing requirements to attendance_robot.egg-info/requires.txt
+[2.709s] writing top-level names to attendance_robot.egg-info/top_level.txt
+[2.764s] reading manifest file 'attendance_robot.egg-info/SOURCES.txt'
+[2.765s] writing manifest file 'attendance_robot.egg-info/SOURCES.txt'
+[2.793s] running build_ext
+[2.794s] Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages/attendance-robot.egg-link (link to .)
+[2.794s] Installing camera_interface script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+[2.796s] Installing motor_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+[2.796s] Installing scan_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+[2.796s] 
+[2.796s] Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot
+[2.796s] running symlink_data
+[2.910s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot' returned '0': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/build --no-deps symlink_data

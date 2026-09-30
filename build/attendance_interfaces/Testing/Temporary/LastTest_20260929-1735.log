@@ -1,0 +1,53 @@
+Start testing: Sep 29 23:05 IST
+----------------------------------------------------------
+1/2 Testing: lint_cmake
+1/2 Test: lint_cmake
+Command: "/usr/bin/python3" "-u" "/opt/ros/jazzy/share/ament_cmake_test/cmake/run_test.py" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml" "--package-name" "attendance_interfaces" "--output-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/jazzy/bin/ament_lint_cmake" "--xunit-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml"
+Directory: /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces
+"lint_cmake" start time: Sep 29 23:05 IST
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces':
+ - /opt/ros/jazzy/bin/ament_lint_cmake --xunit-file /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml'
+<end of output>
+Test time =   0.22 sec
+----------------------------------------------------------
+Test Passed.
+"lint_cmake" end time: Sep 29 23:05 IST
+"lint_cmake" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/2 Testing: xmllint
+2/2 Test: xmllint
+Command: "/usr/bin/python3" "-u" "/opt/ros/jazzy/share/ament_cmake_test/cmake/run_test.py" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml" "--package-name" "attendance_interfaces" "--output-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/ament_xmllint/xmllint.txt" "--command" "/opt/ros/jazzy/bin/ament_xmllint" "--xunit-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml"
+Directory: /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces
+"xmllint" start time: Sep 29 23:05 IST
+Output:
+----------------------------------------------------------
+-- run_test.py: invoking following command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces':
+ - /opt/ros/jazzy/bin/ament_xmllint --xunit-file /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml
+File 'package.xml' is valid
+
+No problems found
+-- run_test.py: return code 0
+-- run_test.py: verify result file '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml'
+<end of output>
+Test time =   2.09 sec
+----------------------------------------------------------
+Test Passed.
+"xmllint" end time: Sep 29 23:05 IST
+"xmllint" time elapsed: 00:00:02
+----------------------------------------------------------
+
+End testing: Sep 29 23:05 IST
+
+lint_cmake =   0.22 sec*proc
+
+linter =   2.31 sec*proc
+
+xmllint =   2.09 sec*proc
+

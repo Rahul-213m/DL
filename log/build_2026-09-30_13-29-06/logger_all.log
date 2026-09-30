@@ -1,0 +1,540 @@
+[0.134s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install', '--cmake-args', '-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']
+[0.134s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7983db2bb080>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7983db22ebd0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7983db22ebd0>>, mixin_verb=('build',))
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.174s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.174s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/rahul/Documents/DL_PROJECT/ros_ws'
+[0.174s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.174s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.174s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.201s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.201s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.201s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.201s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.201s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.202s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extensions ['ignore', 'ignore_ament_install']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extension 'ignore'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extension 'ignore_ament_install'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extensions ['colcon_pkg']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extension 'colcon_pkg'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extensions ['colcon_meta']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extension 'colcon_meta'
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extensions ['ros']
+[0.203s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_bringup) by extension 'ros'
+[0.206s] DEBUG:colcon.colcon_core.package_identification:Package 'src/attendance_bringup' with type 'ros.ament_cmake' and name 'attendance_bringup'
+[0.206s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.206s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extension 'ignore'
+[0.206s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extension 'ignore_ament_install'
+[0.206s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extensions ['colcon_pkg']
+[0.206s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extension 'colcon_pkg'
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extensions ['colcon_meta']
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extension 'colcon_meta'
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extensions ['ros']
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_interfaces) by extension 'ros'
+[0.207s] DEBUG:colcon.colcon_core.package_identification:Package 'src/attendance_interfaces' with type 'ros.ament_cmake' and name 'attendance_interfaces'
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extensions ['ignore', 'ignore_ament_install']
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extension 'ignore'
+[0.207s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extension 'ignore_ament_install'
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extensions ['colcon_pkg']
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extension 'colcon_pkg'
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extensions ['colcon_meta']
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extension 'colcon_meta'
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extensions ['ros']
+[0.208s] Level 1:colcon.colcon_core.package_identification:_identify(src/attendance_mocks) by extension 'ros'
+[0.209s] DEBUG:colcon.colcon_core.package_identification:Package 'src/attendance_mocks' with type 'ros.ament_python' and name 'attendance_robot'
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extensions ['ignore', 'ignore_ament_install']
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extension 'ignore'
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extension 'ignore_ament_install'
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extensions ['colcon_pkg']
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extension 'colcon_pkg'
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extensions ['colcon_meta']
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extension 'colcon_meta'
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extensions ['ros']
+[0.209s] Level 1:colcon.colcon_core.package_identification:_identify(src/camera_bridge) by extension 'ros'
+[0.210s] DEBUG:colcon.colcon_core.package_identification:Package 'src/camera_bridge' with type 'ros.ament_python' and name 'camera_bridge'
+[0.210s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extensions ['ignore', 'ignore_ament_install']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extension 'ignore'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extension 'ignore_ament_install'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extensions ['colcon_pkg']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extension 'colcon_pkg'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extensions ['colcon_meta']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extension 'colcon_meta'
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extensions ['ros']
+[0.211s] Level 1:colcon.colcon_core.package_identification:_identify(src/edge_uploader) by extension 'ros'
+[0.212s] DEBUG:colcon.colcon_core.package_identification:Package 'src/edge_uploader' with type 'ros.ament_python' and name 'edge_uploader'
+[0.212s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extensions ['ignore', 'ignore_ament_install']
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extension 'ignore'
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extension 'ignore_ament_install'
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extensions ['colcon_pkg']
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extension 'colcon_pkg'
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extensions ['colcon_meta']
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extension 'colcon_meta'
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extensions ['ros']
+[0.213s] Level 1:colcon.colcon_core.package_identification:_identify(src/scan_planner) by extension 'ros'
+[0.214s] DEBUG:colcon.colcon_core.package_identification:Package 'src/scan_planner' with type 'ros.ament_python' and name 'scan_planner'
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extensions ['ignore', 'ignore_ament_install']
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extension 'ignore'
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extension 'ignore_ament_install'
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extensions ['colcon_pkg']
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extension 'colcon_pkg'
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extensions ['colcon_meta']
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extension 'colcon_meta'
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extensions ['ros']
+[0.214s] Level 1:colcon.colcon_core.package_identification:_identify(src/servo_controller) by extension 'ros'
+[0.215s] DEBUG:colcon.colcon_core.package_identification:Package 'src/servo_controller' with type 'ros.ament_python' and name 'servo_controller'
+[0.215s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['ignore', 'ignore_ament_install']
+[0.215s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'ignore'
+[0.215s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'ignore_ament_install'
+[0.215s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['colcon_pkg']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'colcon_pkg'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['colcon_meta']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'colcon_meta'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['ros']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'ros'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['cmake', 'python']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'cmake'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'python'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extensions ['python_setup_py']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests) by extension 'python_setup_py'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['ignore', 'ignore_ament_install']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'ignore'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'ignore_ament_install'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['colcon_pkg']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'colcon_pkg'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['colcon_meta']
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'colcon_meta'
+[0.216s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['ros']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'ros'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['cmake', 'python']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'cmake'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'python'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extensions ['python_setup_py']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration) by extension 'python_setup_py'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['ignore', 'ignore_ament_install']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'ignore'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'ignore_ament_install'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['colcon_pkg']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'colcon_pkg'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['colcon_meta']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'colcon_meta'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['ros']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'ros'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['cmake', 'python']
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'cmake'
+[0.217s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'python'
+[0.218s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extensions ['python_setup_py']
+[0.218s] Level 1:colcon.colcon_core.package_identification:_identify(tests/integration/__pycache__) by extension 'python_setup_py'
+[0.218s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.218s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.218s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.218s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.218s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.238s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.240s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 291 installed packages in /opt/ros/jazzy
+[0.242s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.279s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_target' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_clean_cache' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_clean_first' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'cmake_force_configure' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'ament_cmake_args' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'catkin_cmake_args' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_interfaces' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.280s] DEBUG:colcon.colcon_core.verb:Building package 'attendance_interfaces' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces', 'symlink_install': True, 'test_result_base': None}
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_target' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_clean_cache' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_clean_first' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'cmake_force_configure' from command line to 'False'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'ament_cmake_args' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'catkin_cmake_args' from command line to 'None'
+[0.280s] Level 5:colcon.colcon_core.verb:set package 'attendance_robot' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.280s] DEBUG:colcon.colcon_core.verb:Building package 'attendance_robot' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_mocks', 'symlink_install': True, 'test_result_base': None}
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_target' from command line to 'None'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_clean_cache' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_clean_first' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'cmake_force_configure' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'ament_cmake_args' from command line to 'None'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'catkin_cmake_args' from command line to 'None'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'edge_uploader' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.281s] DEBUG:colcon.colcon_core.verb:Building package 'edge_uploader' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/edge_uploader', 'symlink_install': True, 'test_result_base': None}
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_target' from command line to 'None'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_clean_cache' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_clean_first' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'cmake_force_configure' from command line to 'False'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'ament_cmake_args' from command line to 'None'
+[0.281s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'catkin_cmake_args' from command line to 'None'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'servo_controller' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.282s] DEBUG:colcon.colcon_core.verb:Building package 'servo_controller' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/servo_controller', 'symlink_install': True, 'test_result_base': None}
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_target' from command line to 'None'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_clean_cache' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_clean_first' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'cmake_force_configure' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'ament_cmake_args' from command line to 'None'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'catkin_cmake_args' from command line to 'None'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'camera_bridge' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.282s] DEBUG:colcon.colcon_core.verb:Building package 'camera_bridge' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/camera_bridge', 'symlink_install': True, 'test_result_base': None}
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_target' from command line to 'None'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_clean_cache' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_clean_first' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'cmake_force_configure' from command line to 'False'
+[0.282s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'ament_cmake_args' from command line to 'None'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'catkin_cmake_args' from command line to 'None'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'scan_planner' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.283s] DEBUG:colcon.colcon_core.verb:Building package 'scan_planner' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/scan_planner', 'symlink_install': True, 'test_result_base': None}
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_args' from command line to '['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3']'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_target' from command line to 'None'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_clean_cache' from command line to 'False'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_clean_first' from command line to 'False'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'cmake_force_configure' from command line to 'False'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'ament_cmake_args' from command line to 'None'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'catkin_cmake_args' from command line to 'None'
+[0.283s] Level 5:colcon.colcon_core.verb:set package 'attendance_bringup' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.283s] DEBUG:colcon.colcon_core.verb:Building package 'attendance_bringup' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DPython3_EXECUTABLE=/usr/bin/python3', '-DPYTHON_EXECUTABLE=/usr/bin/python3'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup', 'merge_install': False, 'path': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup', 'symlink_install': True, 'test_result_base': None}
+[0.283s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.284s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.284s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces' with build type 'ament_cmake'
+[0.285s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces'
+[0.287s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.287s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.287s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.291s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_mocks' with build type 'ament_python'
+[0.291s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_robot', 'ament_prefix_path')
+[0.292s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/ament_prefix_path.ps1'
+[0.293s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/ament_prefix_path.dsv'
+[0.293s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/ament_prefix_path.sh'
+[0.294s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.294s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.305s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces -- -j8 -l8
+[0.665s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_mocks'
+[0.666s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.666s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.002s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces -- -j8 -l8
+[1.022s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces
+[1.275s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(attendance_interfaces)
+[1.278s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces
+[1.280s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces' for CMake module files
+[1.281s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces' for CMake config files
+[1.284s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'cmake_prefix_path')
+[1.285s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.ps1'
+[1.287s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.dsv'
+[1.288s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.sh'
+[1.290s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib'
+[1.290s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'ld_library_path_lib')
+[1.291s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.ps1'
+[1.291s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.dsv'
+[1.292s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.sh'
+[1.293s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/bin'
+[1.294s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/pkgconfig/attendance_interfaces.pc'
+[1.294s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages'
+[1.294s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'pythonpath')
+[1.294s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.ps1'
+[1.295s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.dsv'
+[1.296s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.sh'
+[1.297s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/bin'
+[1.297s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.ps1'
+[1.299s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.dsv'
+[1.300s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.sh'
+[1.301s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.bash'
+[1.302s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.zsh'
+[1.304s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/colcon-core/packages/attendance_interfaces)
+[1.305s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(attendance_interfaces)
+[1.305s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces' for CMake module files
+[1.307s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces' for CMake config files
+[1.310s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'cmake_prefix_path')
+[1.311s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.ps1'
+[1.312s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.dsv'
+[1.313s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/cmake_prefix_path.sh'
+[1.314s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib'
+[1.314s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'ld_library_path_lib')
+[1.315s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.ps1'
+[1.316s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.dsv'
+[1.316s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/ld_library_path_lib.sh'
+[1.317s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/bin'
+[1.317s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/pkgconfig/attendance_interfaces.pc'
+[1.318s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages'
+[1.318s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_interfaces', 'pythonpath')
+[1.319s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.ps1'
+[1.321s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.dsv'
+[1.322s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/hook/pythonpath.sh'
+[1.324s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/bin'
+[1.325s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.ps1'
+[1.326s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.dsv'
+[1.328s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.sh'
+[1.329s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.bash'
+[1.330s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/attendance_interfaces/package.zsh'
+[1.331s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/share/colcon-core/packages/attendance_interfaces)
+[1.334s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/edge_uploader' with build type 'ament_python'
+[1.334s] Level 1:colcon.colcon_core.shell:create_environment_hook('edge_uploader', 'ament_prefix_path')
+[1.335s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/ament_prefix_path.ps1'
+[1.337s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/ament_prefix_path.dsv'
+[1.338s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/ament_prefix_path.sh'
+[1.339s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.340s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[1.349s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/servo_controller' with build type 'ament_python'
+[1.349s] Level 1:colcon.colcon_core.shell:create_environment_hook('servo_controller', 'ament_prefix_path')
+[1.350s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/ament_prefix_path.ps1'
+[1.351s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/ament_prefix_path.dsv'
+[1.353s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/ament_prefix_path.sh'
+[1.355s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.355s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.006s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/edge_uploader'
+[2.009s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.009s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.595s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/servo_controller'
+[2.596s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.596s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.601s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: install_headers, bdist_dumb, build_ext, upload_docs, install_scripts, develop, install_egg_info, easy_install, alias, upload, bdist, dist_info, install_data, install_lib, sdist, register, check, build_py, init_catalog, editable_wheel, egg_info, bdist_egg, rotate, bdist_wheel, extract_messages, test, compile_catalog, bdist_rpm, install, build_clib, saveopts, update_catalog, setopt, symlink_data, build_scripts, clean, build
+[3.464s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --index-url, --egg-path, --allow-hosts, --help, --no-find-links, --find-links, --editable, --uninstall, --no-user-cfg, --script-dir, --version, --always-unzip, --upgrade, --exclude-scripts, --force-installation-into-system-dir, --multi-version, --local-snapshots-ok, --no-deps, --verbose, --prefix, --quiet, --install-dir, --dry-run, --site-dirs, --zip-ok, --optimize, --install-layout, --build-directory, --user, --always-copy, --record
+[3.473s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/build --no-deps symlink_data
+[4.033s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: install_headers, bdist_dumb, build_ext, upload_docs, install_scripts, develop, install_egg_info, easy_install, alias, upload, bdist, dist_info, install_data, install_lib, sdist, register, check, build_py, init_catalog, editable_wheel, egg_info, bdist_egg, rotate, bdist_wheel, extract_messages, test, compile_catalog, bdist_rpm, install, build_clib, saveopts, update_catalog, setopt, symlink_data, build_scripts, clean, build
+[4.186s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: install_headers, bdist_dumb, build_ext, upload_docs, install_scripts, develop, install_egg_info, easy_install, alias, upload, bdist, dist_info, install_data, install_lib, sdist, register, check, build_py, init_catalog, editable_wheel, egg_info, bdist_egg, rotate, bdist_wheel, extract_messages, test, compile_catalog, bdist_rpm, install, build_clib, saveopts, update_catalog, setopt, symlink_data, build_scripts, clean, build
+[4.763s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --index-url, --egg-path, --allow-hosts, --help, --no-find-links, --find-links, --editable, --uninstall, --no-user-cfg, --script-dir, --version, --always-unzip, --upgrade, --exclude-scripts, --force-installation-into-system-dir, --multi-version, --local-snapshots-ok, --no-deps, --verbose, --prefix, --quiet, --install-dir, --dry-run, --site-dirs, --zip-ok, --optimize, --install-layout, --build-directory, --user, --always-copy, --record
+[4.777s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/build --no-deps symlink_data
+[4.907s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_robot', 'pythonpath_develop')
+[4.908s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.ps1'
+[4.910s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.dsv'
+[4.910s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.sh'
+[4.908s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot' returned '0': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/build --no-deps symlink_data
+[4.912s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot' for CMake module files
+[4.913s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot' for CMake config files
+[4.914s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib'
+[4.915s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/bin'
+[4.915s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/pkgconfig/attendance_robot.pc'
+[4.916s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages'
+[4.916s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_robot', 'pythonpath')
+[4.917s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/pythonpath.ps1'
+[4.918s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/pythonpath.dsv'
+[4.919s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/hook/pythonpath.sh'
+[4.921s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/bin'
+[4.922s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(attendance_robot)
+[4.923s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/package.ps1'
+[4.925s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/package.dsv'
+[4.926s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/package.sh'
+[4.927s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/package.bash'
+[4.928s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/attendance_robot/package.zsh'
+[4.930s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/share/colcon-core/packages/attendance_robot)
+[4.960s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --index-url, --egg-path, --allow-hosts, --help, --no-find-links, --find-links, --editable, --uninstall, --no-user-cfg, --script-dir, --version, --always-unzip, --upgrade, --exclude-scripts, --force-installation-into-system-dir, --multi-version, --local-snapshots-ok, --no-deps, --verbose, --prefix, --quiet, --install-dir, --dry-run, --site-dirs, --zip-ok, --optimize, --install-layout, --build-directory, --user, --always-copy, --record
+[4.963s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/build --no-deps symlink_data
+[6.165s] Level 1:colcon.colcon_core.shell:create_environment_hook('servo_controller', 'pythonpath_develop')
+[6.165s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/share/servo_controller/hook/pythonpath_develop.ps1'
+[6.166s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/build --no-deps symlink_data
+[6.167s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/share/servo_controller/hook/pythonpath_develop.dsv'
+[6.167s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/share/servo_controller/hook/pythonpath_develop.sh'
+[6.168s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller' for CMake module files
+[6.169s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller' for CMake config files
+[6.170s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib'
+[6.170s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/bin'
+[6.170s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/pkgconfig/servo_controller.pc'
+[6.171s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages'
+[6.171s] Level 1:colcon.colcon_core.shell:create_environment_hook('servo_controller', 'pythonpath')
+[6.171s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/pythonpath.ps1'
+[6.174s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/pythonpath.dsv'
+[6.175s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/hook/pythonpath.sh'
+[6.177s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/bin'
+[6.177s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(servo_controller)
+[6.177s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/package.ps1'
+[6.178s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/package.dsv'
+[6.179s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/package.sh'
+[6.181s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/package.bash'
+[6.182s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/servo_controller/package.zsh'
+[6.184s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/share/colcon-core/packages/servo_controller)
+[6.322s] Level 1:colcon.colcon_core.shell:create_environment_hook('edge_uploader', 'pythonpath_develop')
+[6.322s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.ps1'
+[6.324s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.dsv'
+[6.325s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/build --no-deps symlink_data
+[6.327s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.sh'
+[6.328s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader' for CMake module files
+[6.329s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader' for CMake config files
+[6.330s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib'
+[6.330s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/bin'
+[6.330s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/pkgconfig/edge_uploader.pc'
+[6.330s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages'
+[6.331s] Level 1:colcon.colcon_core.shell:create_environment_hook('edge_uploader', 'pythonpath')
+[6.331s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/pythonpath.ps1'
+[6.332s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/pythonpath.dsv'
+[6.332s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/hook/pythonpath.sh'
+[6.333s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/bin'
+[6.334s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(edge_uploader)
+[6.334s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/package.ps1'
+[6.335s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/package.dsv'
+[6.336s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/package.sh'
+[6.337s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/package.bash'
+[6.338s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/edge_uploader/package.zsh'
+[6.339s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/share/colcon-core/packages/edge_uploader)
+[6.340s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/camera_bridge' with build type 'ament_python'
+[6.340s] Level 1:colcon.colcon_core.shell:create_environment_hook('camera_bridge', 'ament_prefix_path')
+[6.341s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/ament_prefix_path.ps1'
+[6.343s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/ament_prefix_path.dsv'
+[6.344s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/ament_prefix_path.sh'
+[6.345s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[6.345s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[6.718s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/camera_bridge'
+[6.718s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[6.719s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[7.598s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: install_headers, bdist_dumb, build_ext, upload_docs, install_scripts, develop, install_egg_info, easy_install, alias, upload, bdist, dist_info, install_data, install_lib, sdist, register, check, build_py, init_catalog, editable_wheel, egg_info, bdist_egg, rotate, bdist_wheel, extract_messages, test, compile_catalog, bdist_rpm, install, build_clib, saveopts, update_catalog, setopt, symlink_data, build_scripts, clean, build
+[8.153s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --index-url, --egg-path, --allow-hosts, --help, --no-find-links, --find-links, --editable, --uninstall, --no-user-cfg, --script-dir, --version, --always-unzip, --upgrade, --exclude-scripts, --force-installation-into-system-dir, --multi-version, --local-snapshots-ok, --no-deps, --verbose, --prefix, --quiet, --install-dir, --dry-run, --site-dirs, --zip-ok, --optimize, --install-layout, --build-directory, --user, --always-copy, --record
+[8.159s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/build --no-deps symlink_data
+[9.255s] Level 1:colcon.colcon_core.shell:create_environment_hook('camera_bridge', 'pythonpath_develop')
+[9.255s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/share/camera_bridge/hook/pythonpath_develop.ps1'
+[9.256s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/build --no-deps symlink_data
+[9.256s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/share/camera_bridge/hook/pythonpath_develop.dsv'
+[9.257s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/share/camera_bridge/hook/pythonpath_develop.sh'
+[9.258s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge' for CMake module files
+[9.259s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge' for CMake config files
+[9.259s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib'
+[9.259s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/bin'
+[9.259s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/pkgconfig/camera_bridge.pc'
+[9.260s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages'
+[9.260s] Level 1:colcon.colcon_core.shell:create_environment_hook('camera_bridge', 'pythonpath')
+[9.260s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/pythonpath.ps1'
+[9.261s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/pythonpath.dsv'
+[9.261s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/hook/pythonpath.sh'
+[9.262s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/bin'
+[9.262s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(camera_bridge)
+[9.263s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/package.ps1'
+[9.264s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/package.dsv'
+[9.264s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/package.sh'
+[9.265s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/package.bash'
+[9.265s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/package.zsh'
+[9.265s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/colcon-core/packages/camera_bridge)
+[9.266s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/scan_planner' with build type 'ament_python'
+[9.266s] Level 1:colcon.colcon_core.shell:create_environment_hook('scan_planner', 'ament_prefix_path')
+[9.266s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/ament_prefix_path.ps1'
+[9.267s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/ament_prefix_path.dsv'
+[9.268s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/ament_prefix_path.sh'
+[9.269s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.269s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[9.537s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/scan_planner'
+[9.537s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[9.537s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[10.348s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools commands: install_headers, bdist_dumb, build_ext, upload_docs, install_scripts, develop, install_egg_info, easy_install, alias, upload, bdist, dist_info, install_data, install_lib, sdist, register, check, build_py, init_catalog, editable_wheel, egg_info, bdist_egg, rotate, bdist_wheel, extract_messages, test, compile_catalog, bdist_rpm, install, build_clib, saveopts, update_catalog, setopt, symlink_data, build_scripts, clean, build
+[10.889s] DEBUG:colcon.colcon_core.task.python.build:Available setuptools 'develop' options: --index-url, --egg-path, --allow-hosts, --help, --no-find-links, --find-links, --editable, --uninstall, --no-user-cfg, --script-dir, --version, --always-unzip, --upgrade, --exclude-scripts, --force-installation-into-system-dir, --multi-version, --local-snapshots-ok, --no-deps, --verbose, --prefix, --quiet, --install-dir, --dry-run, --site-dirs, --zip-ok, --optimize, --install-layout, --build-directory, --user, --always-copy, --record
+[10.898s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/build --no-deps symlink_data
+[11.859s] Level 1:colcon.colcon_core.shell:create_environment_hook('scan_planner', 'pythonpath_develop')
+[11.859s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/share/scan_planner/hook/pythonpath_develop.ps1'
+[11.860s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/build --no-deps symlink_data
+[11.860s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/share/scan_planner/hook/pythonpath_develop.dsv'
+[11.861s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner/share/scan_planner/hook/pythonpath_develop.sh'
+[11.861s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner' for CMake module files
+[11.862s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner' for CMake config files
+[11.862s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib'
+[11.862s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/bin'
+[11.862s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/pkgconfig/scan_planner.pc'
+[11.862s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages'
+[11.862s] Level 1:colcon.colcon_core.shell:create_environment_hook('scan_planner', 'pythonpath')
+[11.863s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/pythonpath.ps1'
+[11.863s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/pythonpath.dsv'
+[11.863s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/hook/pythonpath.sh'
+[11.864s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/bin'
+[11.864s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(scan_planner)
+[11.864s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/package.ps1'
+[11.865s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/package.dsv'
+[11.865s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/package.sh'
+[11.866s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/package.bash'
+[11.866s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/scan_planner/package.zsh'
+[11.866s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/share/colcon-core/packages/scan_planner)
+[11.867s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup' with build type 'ament_cmake'
+[11.867s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup'
+[11.867s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[11.867s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[11.887s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup -- -j8 -l8
+[11.941s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --build /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup -- -j8 -l8
+[11.942s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup
+[11.970s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(attendance_bringup)
+[11.971s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup' for CMake module files
+[11.971s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/cmake --install /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup
+[11.972s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup' for CMake config files
+[11.972s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_bringup', 'cmake_prefix_path')
+[11.972s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.ps1'
+[11.973s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.dsv'
+[11.974s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.sh'
+[11.974s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/bin'
+[11.975s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/lib/pkgconfig/attendance_bringup.pc'
+[11.975s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/lib/python3.12/site-packages'
+[11.975s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/bin'
+[11.976s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.ps1'
+[11.977s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.dsv'
+[11.977s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.sh'
+[11.978s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.bash'
+[11.979s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.zsh'
+[11.979s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/colcon-core/packages/attendance_bringup)
+[11.980s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(attendance_bringup)
+[11.981s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup' for CMake module files
+[11.981s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup' for CMake config files
+[11.982s] Level 1:colcon.colcon_core.shell:create_environment_hook('attendance_bringup', 'cmake_prefix_path')
+[11.982s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.ps1'
+[11.983s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.dsv'
+[11.983s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/hook/cmake_prefix_path.sh'
+[11.984s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/bin'
+[11.984s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/lib/pkgconfig/attendance_bringup.pc'
+[11.985s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/lib/python3.12/site-packages'
+[11.985s] Level 1:colcon.colcon_core.environment:checking '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/bin'
+[11.985s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.ps1'
+[11.986s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.dsv'
+[11.987s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.sh'
+[11.987s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.bash'
+[11.988s] INFO:colcon.colcon_core.shell:Creating package script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/attendance_bringup/package.zsh'
+[11.988s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup/share/colcon-core/packages/attendance_bringup)
+[11.988s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[11.989s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[11.989s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[11.990s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[11.998s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[11.999s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[11.999s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[12.016s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[12.017s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/local_setup.ps1'
+[12.019s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rahul/Documents/DL_PROJECT/ros_ws/install/_local_setup_util_ps1.py'
+[12.021s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/setup.ps1'
+[12.023s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/local_setup.sh'
+[12.024s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rahul/Documents/DL_PROJECT/ros_ws/install/_local_setup_util_sh.py'
+[12.025s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/setup.sh'
+[12.027s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/local_setup.bash'
+[12.027s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/setup.bash'
+[12.028s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/local_setup.zsh'
+[12.029s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rahul/Documents/DL_PROJECT/ros_ws/install/setup.zsh'

@@ -1,0 +1,24 @@
+{
+  "package_name": "attendance_interfaces",
+  "output_dir": "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_generator_type_description/attendance_interfaces",
+  "idl_tuples": [
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:msg/CameraMetadata.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:msg/CaptureStatus.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:msg/ServoState.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:msg/FrameManifest.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:srv/CaptureStill.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:srv/GetCalibration.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:srv/SetCalibration.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:srv/SetZoom.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:action/GoToAngle.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:action/RunScanSequence.idl",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces:action/Home.idl"
+  ],
+  "include_paths": [
+    "std_msgs:/opt/ros/jazzy/share/std_msgs",
+    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces",
+    "service_msgs:/opt/ros/jazzy/share/service_msgs",
+    "action_msgs:/opt/ros/jazzy/share/action_msgs",
+    "unique_identifier_msgs:/opt/ros/jazzy/share/unique_identifier_msgs"
+  ]
+}

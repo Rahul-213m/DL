@@ -1,0 +1,17 @@
+[2.107s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/build --no-deps symlink_data
+[2.493s] running develop
+[2.722s] running egg_info
+[2.744s] writing servo_controller.egg-info/PKG-INFO
+[2.744s] writing dependency_links to servo_controller.egg-info/dependency_links.txt
+[2.744s] writing entry points to servo_controller.egg-info/entry_points.txt
+[2.745s] writing requirements to servo_controller.egg-info/requires.txt
+[2.745s] writing top-level names to servo_controller.egg-info/top_level.txt
+[2.792s] reading manifest file 'servo_controller.egg-info/SOURCES.txt'
+[2.793s] writing manifest file 'servo_controller.egg-info/SOURCES.txt'
+[2.818s] running build_ext
+[2.818s] Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages/servo-controller.egg-link (link to .)
+[2.819s] Installing servo_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/servo_controller
+[2.819s] 
+[2.820s] Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller
+[2.820s] running symlink_data
+[3.188s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/build --no-deps symlink_data

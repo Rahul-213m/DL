@@ -1,0 +1,24 @@
+running develop
+running egg_info
+creating camera_bridge.egg-info
+writing camera_bridge.egg-info/PKG-INFO
+writing dependency_links to camera_bridge.egg-info/dependency_links.txt
+writing entry points to camera_bridge.egg-info/entry_points.txt
+writing requirements to camera_bridge.egg-info/requires.txt
+writing top-level names to camera_bridge.egg-info/top_level.txt
+writing manifest file 'camera_bridge.egg-info/SOURCES.txt'
+reading manifest file 'camera_bridge.egg-info/SOURCES.txt'
+writing manifest file 'camera_bridge.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages/camera-bridge.egg-link (link to .)
+Installing camera_bridge script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/camera_bridge
+
+Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge
+running symlink_data
+creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index
+creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index
+creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index/packages
+symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/resource/camera_bridge -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index/packages
+symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/package.xml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge
+creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/config
+symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/config/default.yaml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/config

@@ -1,0 +1,65 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from attendance_interfaces/msg/ServoState.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module attendance_interfaces {
+  module msg {
+    module ServoState_Constants {
+      @verbatim (language="comment", text=
+        "uint8 IDLE=0, MOVING=1, HOMING=2, STALLED=3, ESTOP=4, ERROR=5")
+      const uint8 IDLE = 0;
+      const uint8 MOVING = 1;
+      const uint8 HOMING = 2;
+      const uint8 STALLED = 3;
+      const uint8 ESTOP = 4;
+      const uint8 ERROR = 5;
+    };
+    @verbatim (language="comment", text=
+      "Full state of the pan/tilt mechanism." "\n"
+      "" "\n"
+      "Published on every state change AND at a low fixed rate, so a consumer that" "\n"
+      "starts late still has a correct picture. A topic that only publishes on" "\n"
+      "change is useless to a node that was just launched.")
+    struct ServoState {
+      std_msgs::msg::Header header;
+
+      uint8 state;
+
+      @verbatim (language="comment", text=
+        "Commanded and achieved position, in degrees.")
+      double target_angle_deg;
+
+      double current_angle_deg;
+
+      @verbatim (language="comment", text=
+        "Homing reference. Angles are relative to this once homed; before homing they" "\n"
+        "are raw counts from the power-on position, which is unknown.")
+      boolean homed;
+
+      double home_angle_deg;
+
+      @verbatim (language="comment", text=
+        "Motion limits actually enforced, echoed back so an operator can see what" "\n"
+        "the software believes the safe range is.")
+      double min_angle_deg;
+
+      double max_angle_deg;
+
+      double max_speed_deg_per_s;
+
+      double max_accel_deg_per_s2;
+
+      @verbatim (language="comment", text=
+        "Fault detail. Empty unless state is STALLED or ERROR.")
+      string fault_code;
+
+      string fault_message;
+
+      @verbatim (language="comment", text=
+        "True when the driver has lost contact with the controller.")
+      boolean controller_online;
+    };
+  };
+};

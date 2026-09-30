@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: camera-bridge
+Version: 2.0.0
+Summary: Phone camera access with stills, zoom, reconnect and heartbeat.
+Maintainer: Attendance Platform Team
+Maintainer-email: eng@example.invalid
+License: Apache-2.0

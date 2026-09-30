@@ -1,0 +1,31 @@
+# Run the homing routine and establish the zero reference.
+#
+# Required before any calibrated move. A pan with no home has an arbitrary
+# zero that drifts with temperature and power cycles, so "visit 37 degrees"
+# means nothing.
+#
+# On a hobby servo with no feedback switch this performs a BUSY GESTURE at the
+# configured endstop and assumes that position is the reference. That is not
+# homing; it is a guess, and `has_position_feedback` says so, so no downstream
+# code can pretend otherwise.
+float64 timeout_s
+---
+bool success
+string error_message
+bool homed
+float64 home_angle_deg
+# False for a busy-gesture pseudo-home on a servo with no limit switch.
+bool has_position_feedback
+string fault_code
+---
+# uint8 phase
+uint8 APPROACHING=0
+uint8 CONTACT=1
+uint8 BACKING_OFF=2
+uint8 SETTLING=3
+uint8 DONE=4
+uint8 FAILED=5
+uint8 phase
+# 0.0 to 1.0
+float32 progress
+float64 current_angle_deg

@@ -1,0 +1,17 @@
+running develop
+running egg_info
+writing attendance_robot.egg-info/PKG-INFO
+writing dependency_links to attendance_robot.egg-info/dependency_links.txt
+writing entry points to attendance_robot.egg-info/entry_points.txt
+writing requirements to attendance_robot.egg-info/requires.txt
+writing top-level names to attendance_robot.egg-info/top_level.txt
+reading manifest file 'attendance_robot.egg-info/SOURCES.txt'
+writing manifest file 'attendance_robot.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages/attendance-robot.egg-link (link to .)
+Installing camera_interface script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+Installing motor_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+Installing scan_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/attendance_robot
+
+Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot
+running symlink_data

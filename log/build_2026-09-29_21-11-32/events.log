@@ -1,0 +1,83 @@
+[0.000000] (-) TimerEvent: {}
+[0.000780] (attendance_interfaces) JobQueued: {'identifier': 'attendance_interfaces', 'dependencies': OrderedDict()}
+[0.000823] (attendance_robot) JobQueued: {'identifier': 'attendance_robot', 'dependencies': OrderedDict()}
+[0.000849] (camera_bridge) JobQueued: {'identifier': 'camera_bridge', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces'})}
+[0.000878] (edge_uploader) JobQueued: {'identifier': 'edge_uploader', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces'})}
+[0.000903] (servo_controller) JobQueued: {'identifier': 'servo_controller', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces'})}
+[0.000928] (scan_planner) JobQueued: {'identifier': 'scan_planner', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'camera_bridge': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge'})}
+[0.000954] (attendance_bringup) JobQueued: {'identifier': 'attendance_bringup', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'camera_bridge': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge', 'edge_uploader': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader', 'servo_controller': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller', 'scan_planner': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner'})}
+[0.000992] (attendance_interfaces) JobStarted: {'identifier': 'attendance_interfaces'}
+[0.005843] (attendance_robot) JobStarted: {'identifier': 'attendance_robot'}
+[0.012341] (attendance_interfaces) JobProgress: {'identifier': 'attendance_interfaces', 'progress': 'cmake'}
+[0.013783] (attendance_interfaces) JobProgress: {'identifier': 'attendance_interfaces', 'progress': 'build'}
+[0.014035] (attendance_interfaces) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', '--', '-j8', '-l8'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'USER': 'rahul', 'AGENT': '1', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '3', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/rahul', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT/ros_ws', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'SYSTEMD_EXEC_PID': '3119', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'WINDOWPATH': '2', 'OPENCODE': '1', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/3088,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/3088', 'PYTHON_EXECUTABLE': '/usr/bin/python3', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/95b3a2a7_e9e6_4761_9781_4b309360f22b', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'OPENCODE_PID': '5454', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.105', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.099733] (-) TimerEvent: {}
+[0.199931] (-) TimerEvent: {}
+[0.300125] (-) TimerEvent: {}
+[0.303397] (attendance_interfaces) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[0.303744] (attendance_interfaces) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.303822] (attendance_interfaces) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.6.1 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)\n'}
+[0.303888] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.303952] (attendance_interfaces) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.304017] (attendance_interfaces) StdoutLine: {'line': b'-- Found rosidl_adapter: 4.6.9 (/opt/ros/jazzy/share/rosidl_adapter/cmake)\n'}
+[0.304081] (attendance_interfaces) StdoutLine: {'line': b'-- Found std_msgs: 5.3.8 (/opt/ros/jazzy/share/std_msgs/cmake)\n'}
+[0.400251] (-) TimerEvent: {}
+[0.500454] (-) TimerEvent: {}
+[0.594752] (attendance_interfaces) StderrLine: {'line': b'CMake Error at /opt/ros/jazzy/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:57 (message):\n'}
+[0.594999] (attendance_interfaces) StderrLine: {'line': b'  execute_process(/usr/bin/python3 -m rosidl_adapter --package-name\n'}
+[0.595080] (attendance_interfaces) StderrLine: {'line': b'  attendance_interfaces --arguments-file\n'}
+[0.595151] (attendance_interfaces) StderrLine: {'line': b'  /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter__arguments__attendance_interfaces.json\n'}
+[0.595221] (attendance_interfaces) StderrLine: {'line': b'  --output-dir\n'}
+[0.595291] (attendance_interfaces) StderrLine: {'line': b'  /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces\n'}
+[0.595565] (attendance_interfaces) StderrLine: {'line': b'  --output-file\n'}
+[0.595673] (attendance_interfaces) StderrLine: {'line': b'  /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces.idls)\n'}
+[0.595773] (attendance_interfaces) StderrLine: {'line': b'  returned error code 1:\n'}
+[0.595848] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.595923] (attendance_interfaces) StderrLine: {'line': b'  Traceback (most recent call last):\n'}
+[0.595999] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.596074] (attendance_interfaces) StderrLine: {'line': b'    File "<frozen runpy>", line 198, in _run_module_as_main\n'}
+[0.596148] (attendance_interfaces) StderrLine: {'line': b'    File "<frozen runpy>", line 88, in _run_code\n'}
+[0.596222] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__main__.py", line 19, in <module>\n'}
+[0.596296] (attendance_interfaces) StderrLine: {'line': b'      sys.exit(main())\n'}
+[0.596371] (attendance_interfaces) StderrLine: {'line': b'               ^^^^^^\n'}
+[0.596442] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/main.py", line 53, in main\n'}
+[0.596519] (attendance_interfaces) StderrLine: {'line': b'      abs_idl_file = convert_to_idl(\n'}
+[0.596593] (attendance_interfaces) StderrLine: {'line': b'                     ^^^^^^^^^^^^^^^\n'}
+[0.596667] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__init__.py", line 29, in convert_to_idl\n'}
+[0.596764] (attendance_interfaces) StderrLine: {'line': b'      return convert_action_to_idl(\n'}
+[0.596842] (attendance_interfaces) StderrLine: {'line': b'             ^^^^^^^^^^^^^^^^^^^^^^\n'}
+[0.596910] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/action/__init__.py", line 28, in convert_action_to_idl\n'}
+[0.597006] (attendance_interfaces) StderrLine: {'line': b'      action = parse_action_string(package_name, input_file.stem, content)\n'}
+[0.597078] (attendance_interfaces) StderrLine: {'line': b'               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'}
+[0.597149] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 905, in parse_action_string\n'}
+[0.597223] (attendance_interfaces) StderrLine: {'line': b'      result_message = parse_message_string(\n'}
+[0.597296] (attendance_interfaces) StderrLine: {'line': b'                       ^^^^^^^^^^^^^^^^^^^^^\n'}
+[0.597369] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 545, in parse_message_string\n'}
+[0.597441] (attendance_interfaces) StderrLine: {'line': b'      msg = MessageSpecification(pkg_name, msg_name, fields, constants)\n'}
+[0.597510] (attendance_interfaces) StderrLine: {'line': b'            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'}
+[0.597597] (attendance_interfaces) StderrLine: {'line': b'    File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 404, in __init__\n'}
+[0.597683] (attendance_interfaces) StderrLine: {'line': b'      raise ValueError(\n'}
+[0.597790] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.597869] (attendance_interfaces) StderrLine: {'line': b'  ValueError: the fields iterable contains duplicate names: error_message\n'}
+[0.597945] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.598020] (attendance_interfaces) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[0.598092] (attendance_interfaces) StderrLine: {'line': b'  /opt/ros/jazzy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:132 (rosidl_adapt_interfaces)\n'}
+[0.598167] (attendance_interfaces) StderrLine: {'line': b'  CMakeLists.txt:13 (rosidl_generate_interfaces)\n'}
+[0.598242] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.598325] (attendance_interfaces) StderrLine: {'line': b'\n'}
+[0.598398] (attendance_interfaces) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[0.600564] (-) TimerEvent: {}
+[0.605629] (attendance_interfaces) StderrLine: {'line': b'gmake: *** [Makefile:3529: cmake_check_build_system] Error 1\n'}
+[0.608966] (attendance_interfaces) CommandEnded: {'returncode': 2}
+[0.628568] (attendance_interfaces) JobEnded: {'identifier': 'attendance_interfaces', 'rc': 2}
+[0.700703] (-) TimerEvent: {}
+[0.800966] (-) TimerEvent: {}
+[0.901186] (-) TimerEvent: {}
+[1.001429] (-) TimerEvent: {}
+[1.004467] (attendance_robot) JobEnded: {'identifier': 'attendance_robot', 'rc': 'SIGINT'}
+[1.015364] (camera_bridge) JobSkipped: {'identifier': 'camera_bridge'}
+[1.015484] (edge_uploader) JobSkipped: {'identifier': 'edge_uploader'}
+[1.015538] (servo_controller) JobSkipped: {'identifier': 'servo_controller'}
+[1.015587] (scan_planner) JobSkipped: {'identifier': 'scan_planner'}
+[1.015635] (attendance_bringup) JobSkipped: {'identifier': 'attendance_bringup'}
+[1.015687] (-) EventReactorShutdown: {}

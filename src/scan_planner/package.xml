@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>scan_planner</name>
+  <version>2.0.0</version>
+  <description>
+    Turns a room's dimensions and a camera's field of view into a sweep: how
+    many pan steps, which need optical zoom, what each step is expected to
+    resolve, and whether the result fits the time budget.
+  </description>
+  <maintainer email="eng@example.invalid">Attendance Platform Team</maintainer>
+  <license>Apache-2.0</license>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>attendance_interfaces</depend>
+  <depend>camera_bridge</depend>
+  <depend>python3-numpy</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export><build_type>ament_python</build_type></export>
+</package>

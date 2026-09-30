@@ -1,0 +1,93 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from attendance_interfaces/action/RunScanSequence.action
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module action {
+    @verbatim (language="comment", text=
+      "Execute a full classroom sweep." "\n"
+      "" "\n"
+      "Replaces the legacy std_srvs/Trigger scan with an action, because the" "\n"
+      "interesting behaviour of a sweep is not \"start\" and \"finish\" but everything" "\n"
+      "in between: which angle, which zoom, whether the frame was sharp enough, and" "\n"
+      "whether a region needs re-visiting. An operator watching a live sweep needs" "\n"
+      "that, and an operator debugging a bad attendance report needs it afterwards.")
+    struct RunScanSequence_Goal {
+      uint8 structure_needs_at_least_one_member;
+    };
+    @verbatim (language="comment", text=
+      "Every action result in this package carries success, error_message and" "\n"
+      "fault_code. `success` was COMMENTED OUT here, so the handler's" "\n"
+      "`result.success = False` raised AttributeError inside the action server," "\n"
+      "which ABORTED the goal and substituted a DEFAULT result: no message, no" "\n"
+      "fault code, nothing to diagnose. Fourth instance of the same defect." "\n"
+      "error_message and fault_code are declared further down, where their" "\n"
+      "rationale is recorded.")
+    struct RunScanSequence_Result {
+      boolean success;
+
+      string scan_id;
+
+      @verbatim (language="comment", text=
+        "Frames the sweep attempted and frames it accepted. A gap between them is a" "\n"
+        "coverage problem and must be visible, not silently absorbed.")
+      uint32 frames_attempted;
+
+      uint32 frames_captured;
+
+      uint32 frames_rejected;
+
+      @verbatim (language="comment", text=
+        "Regions re-visited because faces were too small or too blurry.")
+      uint32 recapture_regions;
+
+      double duration_s;
+
+      string fault_code;
+
+      @verbatim (language="comment", text=
+        "Why. A bare fault code is not actionable to an operator standing in front" "\n"
+        "of a classroom: \"plan_error\" tells them nothing about which room parameter" "\n"
+        "is wrong.")
+      string error_message;
+    };
+    module RunScanSequence_Feedback_Constants {
+      const uint8 PREPARING = 0;
+      const uint8 MOVING = 1;
+      const uint8 SETTLING = 2;
+      const uint8 CAPTURING = 3;
+      const uint8 REVISITING = 4;
+      const uint8 COMPLETE = 5;
+      const uint8 FAILED = 6;
+    };
+    @verbatim (language="comment", text=
+      "uint8 phase")
+    struct RunScanSequence_Feedback {
+      uint8 phase;
+
+      uint32 step;
+
+      uint32 total_steps;
+
+      string step_label;
+
+      double pan_angle_deg;
+
+      double zoom;
+
+      string region_name;
+
+      @verbatim (language="comment", text=
+        "Sharpness of the last captured frame, so the planner can decide on a retake" "\n"
+        "without the operator watching the screen.")
+      float last_sharpness;
+
+      @verbatim (language="comment", text=
+        "Non-empty when the last frame was rejected and is being retaken.")
+      string reject_reason;
+
+      uint32 recapture_requested;
+    };
+  };
+};

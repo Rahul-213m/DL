@@ -1,0 +1,14 @@
+[0.013s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup -DCMAKE_INSTALL_PREFIX=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup
+[0.026s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.263s] CMake Error: File /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup/package.xml does not exist.
+[0.264s] CMake Error at /opt/ros/jazzy/share/ament_cmake_core/cmake/core/stamp.cmake:24 (configure_file):
+[0.264s]   configure_file Problem configuring file
+[0.264s] Call Stack (most recent call first):
+[0.264s]   /opt/ros/jazzy/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:73 (stamp)
+[0.264s]   /opt/ros/jazzy/share/ament_cmake_core/cmake/core/ament_package_xml.cmake:49 (_ament_package_xml)
+[0.264s]   /opt/ros/jazzy/share/ament_cmake_core/cmake/core/ament_package.cmake:63 (ament_package_xml)
+[0.264s]   CMakeLists.txt:10 (ament_package)
+[0.265s] 
+[0.265s] 
+[0.265s] -- Configuring incomplete, errors occurred!
+[0.270s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_bringup' returned '1': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_bringup -DCMAKE_INSTALL_PREFIX=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup

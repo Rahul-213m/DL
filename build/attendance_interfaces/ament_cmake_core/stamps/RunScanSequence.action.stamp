@@ -1,0 +1,58 @@
+# Execute a full classroom sweep.
+#
+# Replaces the legacy std_srvs/Trigger scan with an action, because the
+# interesting behaviour of a sweep is not "start" and "finish" but everything
+# in between: which angle, which zoom, whether the frame was sharp enough, and
+# whether a region needs re-visiting. An operator watching a live sweep needs
+# that, and an operator debugging a bad attendance report needs it afterwards.
+
+# Empty request: the sequence comes from the node's parameters, so the
+# behaviour is reviewable in a YAML file rather than in a request.
+---
+# Every action result in this package carries success, error_message and
+# fault_code. `success` was COMMENTED OUT here, so the handler's
+# `result.success = False` raised AttributeError inside the action server,
+# which ABORTED the goal and substituted a DEFAULT result: no message, no
+# fault code, nothing to diagnose. Fourth instance of the same defect.
+# error_message and fault_code are declared further down, where their
+# rationale is recorded.
+bool success
+string scan_id
+# Frames the sweep attempted and frames it accepted. A gap between them is a
+# coverage problem and must be visible, not silently absorbed.
+uint32 frames_attempted
+uint32 frames_captured
+uint32 frames_rejected
+# Regions re-visited because faces were too small or too blurry.
+uint32 recapture_regions
+float64 duration_s
+string fault_code
+# Why. A bare fault code is not actionable to an operator standing in front
+# of a classroom: "plan_error" tells them nothing about which room parameter
+# is wrong.
+string error_message
+---
+# uint8 phase
+uint8 PREPARING=0
+uint8 MOVING=1
+uint8 SETTLING=2
+uint8 CAPTURING=3
+uint8 REVISITING=4
+uint8 COMPLETE=5
+uint8 FAILED=6
+uint8 phase
+
+uint32 step
+uint32 total_steps
+string step_label
+
+float64 pan_angle_deg
+float64 zoom
+string region_name
+
+# Sharpness of the last captured frame, so the planner can decide on a retake
+# without the operator watching the screen.
+float32 last_sharpness
+# Non-empty when the last frame was rejected and is being retaken.
+string reject_reason
+uint32 recapture_requested

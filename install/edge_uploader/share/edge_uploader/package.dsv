@@ -1,0 +1,9 @@
+source;share/edge_uploader/hook/pythonpath.ps1
+source;share/edge_uploader/hook/pythonpath.dsv
+source;share/edge_uploader/hook/pythonpath.sh
+source;share/edge_uploader/hook/ament_prefix_path.ps1
+source;share/edge_uploader/hook/ament_prefix_path.dsv
+source;share/edge_uploader/hook/ament_prefix_path.sh
+source;../../build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.ps1
+source;../../build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.dsv
+source;../../build/edge_uploader/share/edge_uploader/hook/pythonpath_develop.sh

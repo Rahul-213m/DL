@@ -1,0 +1,52 @@
+[0.015s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces -DPYTHON_EXECUTABLE=/usr/bin/python3 -DCMAKE_INSTALL_PREFIX=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces
+[0.030s] -- Found ament_cmake: 2.5.6 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.167s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.174s] -- Found rosidl_default_generators: 1.6.1 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[0.176s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.219s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.254s] -- Found rosidl_adapter: 4.6.9 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[0.256s] -- Found std_msgs: 5.3.8 (/opt/ros/jazzy/share/std_msgs/cmake)
+[0.555s] CMake Error at /opt/ros/jazzy/share/rosidl_adapter/cmake/rosidl_adapt_interfaces.cmake:57 (message):
+[0.555s]   execute_process(/usr/bin/python3 -m rosidl_adapter --package-name
+[0.555s]   attendance_interfaces --arguments-file
+[0.555s]   /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter__arguments__attendance_interfaces.json
+[0.555s]   --output-dir
+[0.555s]   /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces
+[0.556s]   --output-file
+[0.556s]   /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_adapter/attendance_interfaces.idls)
+[0.556s]   returned error code 1:
+[0.556s] 
+[0.556s]   Traceback (most recent call last):
+[0.556s] 
+[0.556s]     File "<frozen runpy>", line 198, in _run_module_as_main
+[0.556s]     File "<frozen runpy>", line 88, in _run_code
+[0.556s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__main__.py", line 19, in <module>
+[0.556s]       sys.exit(main())
+[0.556s]                ^^^^^^
+[0.556s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/main.py", line 53, in main
+[0.556s]       abs_idl_file = convert_to_idl(
+[0.556s]                      ^^^^^^^^^^^^^^^
+[0.556s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/__init__.py", line 29, in convert_to_idl
+[0.557s]       return convert_action_to_idl(
+[0.557s]              ^^^^^^^^^^^^^^^^^^^^^^
+[0.557s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/action/__init__.py", line 28, in convert_action_to_idl
+[0.557s]       action = parse_action_string(package_name, input_file.stem, content)
+[0.557s]                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[0.557s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 905, in parse_action_string
+[0.557s]       result_message = parse_message_string(
+[0.557s]                        ^^^^^^^^^^^^^^^^^^^^^
+[0.557s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 545, in parse_message_string
+[0.557s]       msg = MessageSpecification(pkg_name, msg_name, fields, constants)
+[0.558s]             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[0.558s]     File "/opt/ros/jazzy/lib/python3.12/site-packages/rosidl_adapter/parser.py", line 404, in __init__
+[0.558s]       raise ValueError(
+[0.558s] 
+[0.558s]   ValueError: the fields iterable contains duplicate names: error_message
+[0.558s] 
+[0.558s] Call Stack (most recent call first):
+[0.559s]   /opt/ros/jazzy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:132 (rosidl_adapt_interfaces)
+[0.559s]   CMakeLists.txt:13 (rosidl_generate_interfaces)
+[0.559s] 
+[0.559s] 
+[0.559s] -- Configuring incomplete, errors occurred!
+[0.566s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces -DPYTHON_EXECUTABLE=/usr/bin/python3 -DCMAKE_INSTALL_PREFIX=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces

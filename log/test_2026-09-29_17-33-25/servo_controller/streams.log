@@ -1,0 +1,14 @@
+[0.242s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/servo_controller': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/pytest.xml --junit-prefix=servo_controller -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest
+[0.651s] ============================= test session starts ==============================
+[0.651s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[0.651s] rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws
+[0.651s] configfile: pytest.ini
+[0.651s] plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3
+[0.651s] collected 55 items
+[0.651s] 
+[0.683s] test/test_servo_controller.py .......................................... [ 76%]
+[3.378s] .............                                                            [100%]
+[3.379s] 
+[3.379s] - generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/pytest.xml -
+[3.379s] ============================== 55 passed in 2.82s ==============================
+[3.622s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/servo_controller' returned '0': CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/pytest.xml --junit-prefix=servo_controller -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/python3 -m pytest

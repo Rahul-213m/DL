@@ -1,0 +1,45 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from attendance_interfaces/srv/GetCalibration.srv
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module srv {
+    @verbatim (language="comment", text=
+      "Return the installed classroom calibration." "\n"
+      "" "\n"
+      "Deliberately request-less. The service exists so an operator tool and a" "\n"
+      "health check can read what the software believes the room's geometry is," "\n"
+      "which is the first thing to check when a scan visits the wrong seats.")
+    struct GetCalibration_Request {
+      uint8 structure_needs_at_least_one_member;
+    };
+    struct GetCalibration_Response {
+      double pan_min_deg;
+
+      double pan_max_deg;
+
+      double tilt_min_deg;
+
+      double tilt_max_deg;
+
+      double max_speed_deg_per_s;
+
+      double max_accel_deg_per_s2;
+
+      double home_angle_deg;
+
+      sequence<string> region_angles;
+
+      sequence<string> region_names;
+
+      boolean has_position_feedback;
+
+      boolean homed;
+
+      string calibration_version;
+
+      string loaded_at;
+    };
+  };
+};

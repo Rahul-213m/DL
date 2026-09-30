@@ -1,0 +1,1 @@
+/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/rosidl_generator_c/attendance_interfaces/msg/detail/camera_metadata__type_support.h

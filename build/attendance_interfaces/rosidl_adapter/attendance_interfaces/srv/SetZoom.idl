@@ -1,0 +1,29 @@
+// generated from rosidl_adapter/resource/srv.idl.em
+// with input from attendance_interfaces/srv/SetZoom.srv
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module srv {
+    @verbatim (language="comment", text=
+      "Set optical zoom and optionally lock it." "\n"
+      "" "\n"
+      "Kept separate from CaptureStill so the scan planner can change zoom once per" "\n"
+      "region rather than once per frame, which on a phone with a motorised lens is" "\n"
+      "seconds of latency per frame.")
+    struct SetZoom_Request {
+      double zoom;
+
+      boolean lock;
+    };
+    struct SetZoom_Response {
+      boolean success;
+
+      string error_message;
+
+      double applied_zoom;
+
+      double settle_time_s;
+    };
+  };
+};

@@ -1,0 +1,41 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from attendance_interfaces/msg/CaptureStatus.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+
+module attendance_interfaces {
+  module msg {
+    module CaptureStatus_Constants {
+      const uint8 UNAVAILABLE = 0;
+      const uint8 CONNECTING = 1;
+      const uint8 READY = 2;
+      const uint8 CAPTURING = 3;
+      const uint8 ERROR = 4;
+      @verbatim (language="comment", text=
+        "Up and answering, but only after repeated failures. Distinct from CONNECTING" "\n"        "because an operator needs to see a warning BEFORE a scan fails outright.")
+      const uint8 DEGRADED = 5;
+    };
+    @verbatim (language="comment", text=
+      "Health of the camera bridge, published on a timer and on every change." "\n"
+      "" "\n"
+      "uint8 states")
+    struct CaptureStatus {
+      uint8 state;
+
+      string detail;
+
+      float heartbeat_hz;
+
+      uint32 capture_count;
+
+      uint32 consecutive_failures;
+
+      builtin_interfaces::msg::Time last_capture_at;
+
+      @verbatim (language="comment", text=
+        "Seconds until an automatic retry. Zero when no retry is scheduled.")
+      float retry_in_s;
+    };
+  };
+};

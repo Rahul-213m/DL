@@ -1,0 +1,93 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from attendance_interfaces/action/GoToAngle.action
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module action {
+    @verbatim (language="comment", text=
+      "Move the pan (and optionally tilt) axis to an angle." "\n"
+      "" "\n"
+      "An ACTION, not a service, because a classroom scan needs three things a" "\n"
+      "service cannot give: progress feedback so the operator console can show a" "\n"
+      "sweep in progress, cancellation so a scan can be aborted safely, and an" "\n"
+      "explicit STALLED result rather than a timeout that looks like success." "\n"
+      "" "\n"
+      "The legacy std_srvs/Trigger interface had none of these, which is why the" "\n"
+      "audit could not find stall detection or an emergency stop in the codebase:" "\n"
+      "there was nowhere to report one.")
+    struct GoToAngle_Goal {
+      @verbatim (language="comment", text=
+        "Where to go. Clamped to the calibrated limits; the clamp is reported in" "\n"
+        "feedback so the operator is never told it reached an angle it did not.")
+      double pan_angle_deg;
+
+      double tilt_angle_deg;
+
+      boolean move_tilt;
+
+      @verbatim (language="comment", text=
+        "Speed policy. speed_deg_per_s <= 0 means \"use the calibrated maximum\"." "\n"
+        "Acceleration ramping is always applied: an instant velocity step is what" "\n"
+        "makes a hobby servo shudder and the capture blur.")
+      double speed_deg_per_s;
+
+      double accel_deg_per_s2;
+
+      @verbatim (language="comment", text=
+        "Give up after this long. A stall is reported as a STALLED result, which is" "\n"
+        "distinct from a TIMEOUT: the first means the mechanism is jammed, the second" "\n"
+        "means it is slow or the controller is unreachable.")
+      double timeout_s;
+
+      @verbatim (language="comment", text=
+        "Set before moving. A pan with no homing reference has no meaningful zero.")
+      boolean require_homed;
+    };
+    struct GoToAngle_Result {
+      boolean success;
+
+      string error_message;
+
+      double reached_pan_deg;
+
+      double reached_tilt_deg;
+
+      @verbatim (language="comment", text=
+        "True when the request was clamped to a calibrated limit.")
+      boolean clamped;
+
+      @verbatim (language="comment", text=
+        "Milliseconds from motion start to arrival.")
+      double duration_ms;
+
+      @verbatim (language="comment", text=
+        "String error code; empty on success.")
+      string fault_code;
+    };
+    module GoToAngle_Feedback_Constants {
+      const uint8 MOVING = 0;
+      const uint8 ARRIVED = 1;
+      const uint8 CLAMPED = 2;
+      const uint8 STALLED = 3;
+      const uint8 CANCELLED = 4;
+    };
+    @verbatim (language="comment", text=
+      "uint8 phase")
+    struct GoToAngle_Feedback {
+      uint8 phase;
+
+      double pan_angle_deg;
+
+      double tilt_angle_deg;
+
+      double progress;
+
+      @verbatim (language="comment", text=
+        "True when the controller stopped reporting progress before the target.")
+      boolean stalled;
+
+      string fault_code;
+    };
+  };
+};

@@ -1,0 +1,26 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "attendance_interfaces/action/Home_Goal",
+      "fields": [
+        {
+          "name": "timeout_s",
+          "type": {
+            "type_id": 11,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "attendance_interfaces/action/Home_Goal",
+      "hash_string": "RIHS01_ab088f42ba3556120fba1b69d82d6637d3531e624eb64d60b5bc500050d43a7e"
+    }
+  ]
+}

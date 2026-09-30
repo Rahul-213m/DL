@@ -1,0 +1,16 @@
+{
+  "package_name": "attendance_interfaces",
+  "non_idl_tuples": [
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:msg/CameraMetadata.msg",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:msg/CaptureStatus.msg",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:msg/ServoState.msg",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:msg/FrameManifest.msg",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:srv/CaptureStill.srv",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:srv/GetCalibration.srv",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:srv/SetCalibration.srv",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:srv/SetZoom.srv",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:action/GoToAngle.action",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:action/RunScanSequence.action",
+    "/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces:action/Home.action"
+  ]
+}

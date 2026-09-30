@@ -1,0 +1,3 @@
+[console_scripts]
+scan_planner = scan_planner.scan_node:main
+show_face_sizes = scan_planner.show_face_sizes:main

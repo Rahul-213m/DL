@@ -1,0 +1,39 @@
+# camera_bridge parameters.
+camera_bridge:
+  ros__parameters:
+    # "simulated" (CI, and the one-command demo) or "ip_webcam" (real phone).
+    driver: simulated
+
+    # --- IP Webcam connection -----------------------------------------
+    # The phone must be on the SAME network as this computer, and its IP must
+    # be static or in a DHCP reservation: the app shows it on its own screen.
+    ip_webcam_host: "192.168.1.100"
+    ip_webcam_port: 8080
+
+    # --- Capture -------------------------------------------------------
+    # A slow capture is its own failure: a phone that needs 30s per still is
+    # unusable for a sweep. Budget for the slowest device on the fleet.
+    capture_timeout_s: 10.0
+    lock_focus: true
+    lock_exposure: true
+    default_zoom: 1.0
+
+    # --- Reconnect -----------------------------------------------------
+    # 0 = retry forever, which is what a classroom wants: the phone will come
+    # back, and a silently dead camera is the worst outcome.
+    max_reconnect_attempts: 0
+    # Exponential with jitter. Jitter matters: without it every node in a
+    # building retries on the same schedule after a shared AP restart, and
+    # the thundering herd is what keeps the AP down.
+    reconnect_base_delay_s: 0.5
+    reconnect_max_delay_s: 30.0
+    degraded_after_failures: 3
+
+    # --- Quality -------------------------------------------------------
+    # Variance-of-Laplacian floor for a frame to be accepted. UNVERIFIED for
+    # any specific camera: run scripts/calibrate_quality.py on the real
+    # device. Deliberately 0.0 (off) until then, because a wrong threshold
+    # rejects every frame and the scan produces nothing.
+    min_sharpness: 0.0
+
+    heartbeat_hz: 1.0

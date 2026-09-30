@@ -1,0 +1,4 @@
+[console_scripts]
+camera_interface = attendance_robot.camera_interface:main
+motor_controller = attendance_robot.motor_controller:main
+scan_controller = attendance_robot.scan_controller:main

@@ -1,0 +1,58 @@
+# Capture one full-resolution still.
+#
+# A SERVICE, not a Trigger, because the parameters matter: a still taken at
+# 1x zoom of the whole room is a different artefact from one at 4x of the back
+# row, and the scan planner needs to ask for both. The legacy
+# std_srvs/Trigger capture could not express the difference, which is why
+# "wide pass then zoom pass" was not implementable.
+
+# Optical zoom. 1.0 is wide. Clamped to the driver's supported range.
+float64 zoom
+bool set_zoom
+
+# Lock focus and exposure so the values are identical between the preview and
+# the capture. Without this a phone re-exposes per frame and the same student
+# is captured at different brightness in different angles, which wrecks the
+# embedding's consistency.
+bool lock_focus
+bool lock_exposure
+float32 focus_distance_m
+
+# Maximum time to wait. The bridge returns TIMEOUT rather than blocking
+# forever, because a wedged phone must not wedge the whole scan.
+float64 timeout_s
+
+# --- Scan context --------------------------------------------------------
+# The camera is the only node holding the image bytes, so the camera is the
+# only place the durable outbox record can be written. But it cannot know
+# which session, angle or region a frame belongs to: only the scan planner
+# does. These were missing, so the outbox record had no link back to the
+# sweep that produced it and no frame manifest could be built.
+#
+# A capture made outside a sweep (a manual operator capture) leaves these
+# empty, and the record says so rather than being filed under a fabricated
+# session.
+string session_id
+float64 pan_angle_deg
+string region_name
+---
+bool success
+# Empty on success; actionable on failure.
+string error_code
+string error_message
+
+# True when the image is held in the local outbox and not yet uploaded.
+bool queued_for_upload
+
+# --- What was captured -------------------------------------------------
+# These are RESPONSE fields because the caller needs them to build the frame
+# manifest: the cloud deduplicates on sha256, and the operator console needs
+# the metadata to explain a rejected frame. An earlier revision of this file
+# put them in the REQUEST, which meant the client had to invent the values it
+# was supposed to receive, and a SHA-256 could never be returned at all.
+CameraMetadata metadata
+builtin_interfaces/Time captured_at
+# Object-storage key, or empty while the image is only in the local outbox.
+string object_key
+string sha256
+uint64 size_bytes

@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: scan-planner
+Version: 2.0.0
+Summary: Room-aware scan planning with zoom strategy and a time budget.
+Maintainer: Attendance Platform Team
+Maintainer-email: eng@example.invalid
+License: Apache-2.0

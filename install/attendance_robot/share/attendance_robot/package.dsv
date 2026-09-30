@@ -1,0 +1,9 @@
+source;share/attendance_robot/hook/pythonpath.ps1
+source;share/attendance_robot/hook/pythonpath.dsv
+source;share/attendance_robot/hook/pythonpath.sh
+source;share/attendance_robot/hook/ament_prefix_path.ps1
+source;share/attendance_robot/hook/ament_prefix_path.dsv
+source;share/attendance_robot/hook/ament_prefix_path.sh
+source;../../build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.ps1
+source;../../build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.dsv
+source;../../build/attendance_robot/share/attendance_robot/hook/pythonpath_develop.sh

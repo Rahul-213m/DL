@@ -1,0 +1,52 @@
+# servo_controller parameters.
+#
+# Every value here is enforced in SOFTWARE. A servo driver board has no idea
+# where the wall is, so clamping here is what stops a miscalibrated scan from
+# driving the stand into it. See servo_controller/limits.py.
+
+servo_controller:
+  ros__parameters:
+    # Which driver to construct.
+    #   "simulated" - perfect, instant, never stalls. For CI and for
+    #                 `ros2 launch ... use_simulation:=true`.
+    #   "serial"    - real hardware over a checksummed serial protocol.
+    driver: simulated
+
+    # --- Travel limits (degrees) -------------------------------------
+    # A 180-degree arc is the sane default for a wall- or ceiling-mounted
+    # stand. If your room needs a full rotation, say so explicitly here AND
+    # provide a cable loop; a continuous-spinning mount needs slip rings.
+    pan_min_deg: -90.0
+    pan_max_deg: 90.0
+    tilt_min_deg: -30.0
+    tilt_max_deg: 45.0
+
+    # --- Motion ------------------------------------------------------
+    # Acceleration ramping is a CORRECTNESS property, not a refinement: an
+    # instant velocity step makes a hobby servo shudder and the capture that
+    # follows is blurred, and a blurred face still produces a confident-looking
+    # embedding. See servo_controller/limits.py.
+    max_speed_deg_per_s: 30.0
+    max_accel_deg_per_s2: 120.0
+    tolerance_deg: 0.5
+
+    # --- Feedback honesty --------------------------------------------
+    # MUST be false for a hobby servo with no feedback wire. When false the
+    # node reports commanded-vs-measured explicitly and CANNOT claim stall
+    # detection, because with no feedback a jam is indistinguishable from a
+    # miscounted step. See docs/hardware/pixels_per_face.md.
+    has_position_feedback: true
+
+    # --- Serial (driver: serial) ------------------------------------
+    serial_port: /dev/ttyUSB0
+    serial_baudrate: 115200
+    serial_read_timeout_s: 0.5
+
+    # --- State publishing --------------------------------------------
+    # Published on change AND at this rate, so a consumer that starts late
+    # still gets a correct picture.
+    state_publish_rate_hz: 10.0
+    # Consecutive ticks with no progress before a stall is declared.
+    stall_ticks_before_fault: 10
+    # A move that takes longer than this is a stall, not slowness.
+    move_timeout_s: 15.0

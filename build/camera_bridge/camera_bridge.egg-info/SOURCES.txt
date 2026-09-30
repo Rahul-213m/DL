@@ -1,0 +1,15 @@
+package.xml
+setup.cfg
+setup.py
+camera_bridge/__init__.py
+camera_bridge/camera_node.py
+camera_bridge/driver.py
+camera_bridge.egg-info/PKG-INFO
+camera_bridge.egg-info/SOURCES.txt
+camera_bridge.egg-info/dependency_links.txt
+camera_bridge.egg-info/entry_points.txt
+camera_bridge.egg-info/requires.txt
+camera_bridge.egg-info/top_level.txt
+camera_bridge.egg-info/zip-safe
+config/default.yaml
+resource/camera_bridge

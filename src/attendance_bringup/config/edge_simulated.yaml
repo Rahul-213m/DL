@@ -1,0 +1,81 @@
+# Simulated profile.
+#
+# Identical to edge.yaml except that the data root is writable by a normal
+# user. The installed profile uses /var/lib/attendance, which needs root --
+# fine on a classroom machine configured once, fatal in a demo or in CI.
+#
+# This is a separate file rather than a parameter override so that the
+# installed configuration is never quietly relaxed by a launch-time default.
+/**:
+  ros__parameters:
+    log_level: "info"
+
+servo_controller:
+  ros__parameters:
+    driver: simulated
+    baud_rate: 115200
+    pan_min_deg: -90.0
+    pan_max_deg: 90.0
+    max_speed_deg_per_s: 45.0
+    max_accel_deg_per_s2: 180.0
+    # The name MUST match declare_parameter in servo_node.py. ROS 2 silently
+    # ignores an undeclared parameter, so a typo here is invisible: the node
+    # falls back to its default and believes it has an encoder it does not.
+    has_position_feedback: false
+    stall_timeout_s: 2.0
+    watch_hdog: true
+    home_on_start: true
+
+camera_bridge:
+  ros__parameters:
+    driver: simulated
+    # SAME data_root as edge_uploader below. The camera writes the durable
+    # record; the uploader drains it. They are separate processes on purpose,
+    # so a uploader crash cannot lose a capture and a camera crash cannot stop
+    # an upload.
+    outbox_data_root: "/tmp/attendance-simulated"
+    tenant_id: "00000000-0000-0000-0000-000000000000"
+    device_id: "simulated-device"
+    capture_timeout_s: 10.0
+    lock_focus: true
+    lock_exposure: true
+    default_zoom: 1.0
+    max_reconnect_attempts: 0
+    reconnect_base_delay_s: 0.5
+    reconnect_max_delay_s: 30.0
+    degraded_after_failures: 3
+    min_sharpness: 0.0
+    heartbeat_hz: 1.0
+
+scan_planner:
+  ros__parameters:
+    depth_m: 12.0
+    width_m: 9.0
+    camera_height_m: 2.4
+    camera_offset_x_m: 0.0
+    seat_pitch_m: 0.9
+    frame_width_px: 4608
+    time_budget_s: 300.0
+    min_detect_face_px: 30.0
+    min_identify_face_px: 80.0
+    # Must match what servo_controller registers. A mismatch surfaces as
+    # "servo_unavailable" at the start of every sweep.
+    servo_action: "/stand/goto_angle"
+    capture_service: "/camera/capture"
+    zoom_service: "/camera/set_zoom"
+    max_retakes_per_step: 2
+
+edge_uploader:
+  ros__parameters:
+    # Writable without root. This is the only value that differs in a way
+    # that matters for correctness of the demo.
+    data_root: "/tmp/attendance-simulated"
+    base_url: "https://attendance.example.com"
+    # Unprovisioned on purpose: the server rejects it, which is much better
+    # than filing a demo's frames under a real tenant.
+    tenant_id: "00000000-0000-0000-0000-000000000000"
+    device_id: "simulated-device"
+    batch_size: 10
+    max_attempts: 5
+    upload_interval_s: 30.0
+    min_faces_to_upload: 1

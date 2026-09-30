@@ -1,0 +1,14 @@
+package.xml
+setup.cfg
+setup.py
+edge_uploader/__init__.py
+edge_uploader/outbox.py
+edge_uploader/uploader_node.py
+edge_uploader.egg-info/PKG-INFO
+edge_uploader.egg-info/SOURCES.txt
+edge_uploader.egg-info/dependency_links.txt
+edge_uploader.egg-info/entry_points.txt
+edge_uploader.egg-info/requires.txt
+edge_uploader.egg-info/top_level.txt
+edge_uploader.egg-info/zip-safe
+resource/edge_uploader

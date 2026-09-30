@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws
+configfile: pytest.ini
+plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3
+collected 57 items
+
+test/manual_test.py ....                                                 [  7%]
+test/test_angle_utils.py ............................................... [ 89%]
+
+=============================== warnings summary ===============================
+src/attendance_mocks/test/manual_test.py::test_angle_normalisation
+  Warning: Expected None, but src/attendance_mocks/test/manual_test.py::test_angle_normalisation returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+......                                                                   [100%]
+- generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/pytest.xml -
+================== 57 passed, 1 warning in 168.45s (0:02:48) ===================

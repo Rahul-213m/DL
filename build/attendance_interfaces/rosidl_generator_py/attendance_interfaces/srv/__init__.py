@@ -1,0 +1,16 @@
+from attendance_interfaces.srv._capture_still import CaptureStill  # noqa: F401
+from attendance_interfaces.srv._capture_still import CaptureStill_Event  # noqa: F401
+from attendance_interfaces.srv._capture_still import CaptureStill_Request  # noqa: F401
+from attendance_interfaces.srv._capture_still import CaptureStill_Response  # noqa: F401
+from attendance_interfaces.srv._get_calibration import GetCalibration  # noqa: F401
+from attendance_interfaces.srv._get_calibration import GetCalibration_Event  # noqa: F401
+from attendance_interfaces.srv._get_calibration import GetCalibration_Request  # noqa: F401
+from attendance_interfaces.srv._get_calibration import GetCalibration_Response  # noqa: F401
+from attendance_interfaces.srv._set_calibration import SetCalibration  # noqa: F401
+from attendance_interfaces.srv._set_calibration import SetCalibration_Event  # noqa: F401
+from attendance_interfaces.srv._set_calibration import SetCalibration_Request  # noqa: F401
+from attendance_interfaces.srv._set_calibration import SetCalibration_Response  # noqa: F401
+from attendance_interfaces.srv._set_zoom import SetZoom  # noqa: F401
+from attendance_interfaces.srv._set_zoom import SetZoom_Event  # noqa: F401
+from attendance_interfaces.srv._set_zoom import SetZoom_Request  # noqa: F401
+from attendance_interfaces.srv._set_zoom import SetZoom_Response  # noqa: F401

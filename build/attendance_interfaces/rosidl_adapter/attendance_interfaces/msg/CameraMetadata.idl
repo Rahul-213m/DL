@@ -1,0 +1,66 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from attendance_interfaces/msg/CameraMetadata.msg
+// generated code does not contain a copyright notice
+
+#include "builtin_interfaces/msg/Time.idl"
+#include "std_msgs/msg/Header.idl"
+
+module attendance_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "Everything known about a single captured frame." "\n"
+      "" "\n"
+      "Populated by camera_bridge and consumed by edge_uploader. Fields exist so a" "\n"
+      "downstream decision can be explained later: \"why was this frame taken at" "\n"
+      "1x zoom from 37 degrees?\" must be answerable from the record, not guessed.")
+    struct CameraMetadata {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "Device clock at exposure, NOT the node's clock. Attendance lateness is" "\n"
+        "computed from this, so a server-side timestamp would silently move every" "\n"
+        "late arrival. See docs/decisions/0003-edge-cloud-protocol.md.")
+      builtin_interfaces::msg::Time captured_at;
+
+      @verbatim (language="comment", text=
+        "The servo angle the frame was captured at, in degrees. Null when the" "\n"
+        "platform has no pan axis.")
+      double camera_angle_deg;
+
+      boolean has_camera_angle;
+
+      @verbatim (language="comment", text=
+        "Optical zoom actually applied. 1.0 is wide.")
+      double zoom;
+
+      double exposure_time_s;
+
+      double iso;
+
+      float focus_distance_m;
+
+      boolean focus_locked;
+
+      boolean exposure_locked;
+
+      uint32 width;
+
+      uint32 height;
+
+      @verbatim (language="comment", text=
+        "How the image was interpreted on ingest, recorded so a W2-class bug can" "\n"
+        "never be silent again. 'BGR' is the only supported value.")
+      string channel_order;
+
+      uint8 exif_orientation;
+
+      @verbatim (language="comment", text=
+        "Free-form key/value for driver-specific fields. Kept as a string map" "\n"
+        "rather than a message array so adding a driver field does not require a" "\n"
+        "version bump on every consumer.")
+      sequence<string> extra_keys;
+
+      sequence<string> extra_values;
+    };
+  };
+};

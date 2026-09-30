@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: attendance-robot
+Version: 1.0.0
+Summary: ROS 2 Autonomous Classroom Attendance Camera Stand simulation
+Maintainer: Attendance Robot Team
+Maintainer-email: student@college.edu
+License: Apache-2.0

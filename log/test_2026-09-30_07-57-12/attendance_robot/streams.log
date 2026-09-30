@@ -1,0 +1,20 @@
+[0.254s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_mocks': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot:${AMENT_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/pytest.xml --junit-prefix=attendance_robot -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -m pytest
+[0.985s] ============================= test session starts ==============================
+[0.985s] platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+[0.985s] rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws
+[0.985s] configfile: pytest.ini
+[0.985s] plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3
+[0.985s] collected 57 items
+[0.985s] 
+[165.990s] test/manual_test.py ....                                                 [  7%]
+[166.024s] test/test_angle_utils.py ............................................... [ 89%]
+[166.030s] 
+[166.030s] =============================== warnings summary ===============================
+[166.030s] src/attendance_mocks/test/manual_test.py::test_angle_normalisation
+[166.030s]   Warning: Expected None, but src/attendance_mocks/test/manual_test.py::test_angle_normalisation returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+[166.030s] 
+[166.031s] -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+[166.031s] ......                                                                   [100%]
+[166.031s] - generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/pytest.xml -
+[166.031s] ================== 57 passed, 1 warning in 165.41s (0:02:45) ===================
+[166.183s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_mocks' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot:${AMENT_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTEST_ADDOPTS=--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/pytest.xml --junit-prefix=attendance_robot -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/.pytest_cache PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -m pytest

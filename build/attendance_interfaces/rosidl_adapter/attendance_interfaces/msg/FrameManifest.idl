@@ -1,0 +1,71 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from attendance_interfaces/msg/FrameManifest.msg
+// generated code does not contain a copyright notice
+
+#include "attendance_interfaces/msg/CameraMetadata.idl"
+
+module attendance_interfaces {
+  module msg {
+    @verbatim (language="comment", text=
+      "Everything the cloud needs to ingest a frame, without the image bytes." "\n"
+      "" "\n"
+      "The image goes to object storage directly via a presigned URL; this manifest" "\n"
+      "is the only thing that touches the API. That is what makes the upload" "\n"
+      "resumable and the API cheap. See docs/decisions/0003-edge-cloud-protocol.md.")
+    struct FrameManifest {
+      @verbatim (language="comment", text=
+        "Client-generated UUIDv7. THE IDEMPOTENCY KEY. A redelivered manifest with" "\n"
+        "the same frame_id is a no-op, which is what turns at-least-once delivery" "\n"
+        "into effectively-once.")
+      string frame_id;
+
+      @verbatim (language="comment", text=
+        "Cloud-side session this frame belongs to, issued by the API.")
+      string session_id;
+
+      @verbatim (language="comment", text=
+        "Correlates every log line, metric and trace for this frame, from the edge" "\n"
+        "through the worker to the operator console.")
+      string correlation_id;
+
+      attendance_interfaces::msg::CameraMetadata metadata;
+
+      @verbatim (language="comment", text=
+        "Object-storage key and content hash of the uploaded image.")
+      string object_key;
+
+      string sha256;
+
+      uint64 size_bytes;
+
+      @verbatim (language="comment", text=
+        "Sequence within the scan, 1-based. Lets the cloud detect a missing frame.")
+      uint32 sequence;
+
+      string scan_id;
+
+      @verbatim (language="comment", text=
+        "--- What the edge did at this frame -----------------------------------" "\n"
+        "An operator debugging a bad attendance report needs to know where the camera" "\n"
+        "was pointing and why the frame was kept or dropped. Without these the" "\n"
+        "manifest says only that a frame existed, which is not enough to tell a" "\n"
+        "misaimed sweep from a blurry lens.")
+      uint32 step_index;
+
+      uint32 retake_count;
+
+      double pan_deg;
+
+      double zoom;
+
+      double distance_m;
+
+      @verbatim (language="comment", text=
+        "False when the edge discarded the frame. A rejected frame is still" "\n"
+        "published: a sweep that silently drops frames cannot be diagnosed.")
+      boolean kept;
+
+      string notes;
+    };
+  };
+};

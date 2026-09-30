@@ -1,0 +1,26 @@
+[2.225s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/build --no-deps symlink_data
+[2.626s] running develop
+[2.860s] running egg_info
+[2.860s] creating camera_bridge.egg-info
+[2.882s] writing camera_bridge.egg-info/PKG-INFO
+[2.883s] writing dependency_links to camera_bridge.egg-info/dependency_links.txt
+[2.883s] writing entry points to camera_bridge.egg-info/entry_points.txt
+[2.883s] writing requirements to camera_bridge.egg-info/requires.txt
+[2.883s] writing top-level names to camera_bridge.egg-info/top_level.txt
+[2.883s] writing manifest file 'camera_bridge.egg-info/SOURCES.txt'
+[2.930s] reading manifest file 'camera_bridge.egg-info/SOURCES.txt'
+[2.930s] writing manifest file 'camera_bridge.egg-info/SOURCES.txt'
+[2.956s] running build_ext
+[2.956s] Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages/camera-bridge.egg-link (link to .)
+[2.956s] Installing camera_bridge script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/camera_bridge
+[2.957s] 
+[2.957s] Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge
+[2.957s] running symlink_data
+[2.958s] creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index
+[2.958s] creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index
+[2.958s] creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index/packages
+[2.958s] symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/resource/camera_bridge -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/ament_index/resource_index/packages
+[2.958s] symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/package.xml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge
+[2.958s] creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/config
+[2.958s] symbolically linking /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/config/default.yaml -> /home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/share/camera_bridge/config
+[3.043s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge' returned '0': AMENT_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:${CMAKE_PREFIX_PATH} CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/build --no-deps symlink_data

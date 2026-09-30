@@ -1,0 +1,19 @@
+# Return the installed classroom calibration.
+#
+# Deliberately request-less. The service exists so an operator tool and a
+# health check can read what the software believes the room's geometry is,
+# which is the first thing to check when a scan visits the wrong seats.
+---
+float64 pan_min_deg
+float64 pan_max_deg
+float64 tilt_min_deg
+float64 tilt_max_deg
+float64 max_speed_deg_per_s
+float64 max_accel_deg_per_s2
+float64 home_angle_deg
+string[] region_angles
+string[] region_names
+bool has_position_feedback
+bool homed
+string calibration_version
+string loaded_at

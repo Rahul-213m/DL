@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: edge-uploader
+Version: 2.0.0
+Summary: Durable, bounded, idempotent offline upload outbox.
+Maintainer: Attendance Platform Team
+Maintainer-email: eng@example.invalid
+License: Apache-2.0

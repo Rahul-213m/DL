@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>attendance_robot</name>
+  <version>1.0.0</version>
+  <description>
+    ROS 2 Autonomous Classroom Attendance Camera Stand simulation.
+    Provides simulated motor control, camera capture interface, and
+    scan orchestration for a rotating phone-stand that photographs a
+    classroom to support automated attendance.
+
+    This package is STANDALONE and does not depend on any AI attendance
+    processing.  Face recognition and attendance calculation are handled
+    by a separate system.
+  </description>
+
+  <maintainer email="student@college.edu">Attendance Robot Team</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Build tool -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Core ROS 2 Python dependencies -->
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>geometry_msgs</depend>
+
+  <!-- URDF / Xacro / visualisation -->
+  <depend>xacro</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>joint_state_publisher_gui</depend>
+  <depend>rviz2</depend>
+
+  <!-- Custom interfaces (using std_srvs/Trigger for simplicity) -->
+  <!-- No custom .msg/.srv files needed; we use built-in types -->
+
+  <!-- Test dependencies -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

@@ -1,0 +1,15 @@
+running develop
+running egg_info
+writing servo_controller.egg-info/PKG-INFO
+writing dependency_links to servo_controller.egg-info/dependency_links.txt
+writing entry points to servo_controller.egg-info/entry_points.txt
+writing requirements to servo_controller.egg-info/requires.txt
+writing top-level names to servo_controller.egg-info/top_level.txt
+reading manifest file 'servo_controller.egg-info/SOURCES.txt'
+writing manifest file 'servo_controller.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages/servo-controller.egg-link (link to .)
+Installing servo_controller script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/servo_controller
+
+Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller
+running symlink_data

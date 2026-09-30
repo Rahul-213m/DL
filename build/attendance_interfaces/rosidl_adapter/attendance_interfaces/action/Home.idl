@@ -1,0 +1,57 @@
+// generated from rosidl_adapter/resource/action.idl.em
+// with input from attendance_interfaces/action/Home.action
+// generated code does not contain a copyright notice
+
+
+module attendance_interfaces {
+  module action {
+    @verbatim (language="comment", text=
+      "Run the homing routine and establish the zero reference." "\n"
+      "" "\n"
+      "Required before any calibrated move. A pan with no home has an arbitrary" "\n"
+      "zero that drifts with temperature and power cycles, so \"visit 37 degrees\"" "\n"
+      "means nothing." "\n"
+      "" "\n"
+      "On a hobby servo with no feedback switch this performs a BUSY GESTURE at the" "\n"
+      "configured endstop and assumes that position is the reference. That is not" "\n"
+      "homing; it is a guess, and `has_position_feedback` says so, so no downstream" "\n"
+      "code can pretend otherwise.")
+    struct Home_Goal {
+      double timeout_s;
+    };
+    struct Home_Result {
+      boolean success;
+
+      string error_message;
+
+      boolean homed;
+
+      double home_angle_deg;
+
+      @verbatim (language="comment", text=
+        "False for a busy-gesture pseudo-home on a servo with no limit switch.")
+      boolean has_position_feedback;
+
+      string fault_code;
+    };
+    module Home_Feedback_Constants {
+      const uint8 APPROACHING = 0;
+      const uint8 CONTACT = 1;
+      const uint8 BACKING_OFF = 2;
+      const uint8 SETTLING = 3;
+      const uint8 DONE = 4;
+      const uint8 FAILED = 5;
+    };
+    @verbatim (language="comment", text=
+      "uint8 phase")
+    struct Home_Feedback {
+      uint8 phase;
+
+      @verbatim (language="comment", text=
+        "0.0 to 1.0")
+      float progress;
+
+      double current_angle_deg;
+    };
+  };
+};

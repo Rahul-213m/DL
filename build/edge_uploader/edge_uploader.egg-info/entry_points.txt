@@ -1,0 +1,2 @@
+[console_scripts]
+edge_uploader = edge_uploader.uploader_node:main

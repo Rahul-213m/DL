@@ -1,0 +1,6 @@
+
+=============================== warnings summary ===============================
+src/attendance_mocks/test/manual_test.py::test_angle_normalisation
+  Warning: Expected None, but src/attendance_mocks/test/manual_test.py::test_angle_normalisation returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html

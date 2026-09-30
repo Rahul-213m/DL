@@ -1,0 +1,36 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "attendance_interfaces/srv/SetZoom_Request",
+      "fields": [
+        {
+          "name": "zoom",
+          "type": {
+            "type_id": 11,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        },
+        {
+          "name": "lock",
+          "type": {
+            "type_id": 15,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "attendance_interfaces/srv/SetZoom_Request",
+      "hash_string": "RIHS01_7a5e6619047906a12c8434ac9cfb2b8f34804f3c3fff7de5bcb424d0e80be678"
+    }
+  ]
+}

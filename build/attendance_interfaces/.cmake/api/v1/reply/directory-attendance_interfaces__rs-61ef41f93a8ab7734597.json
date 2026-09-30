@@ -1,0 +1,14 @@
+{
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : [],
+		"nodes" : []
+	},
+	"installers" : [],
+	"paths" : 
+	{
+		"build" : "attendance_interfaces__rs",
+		"source" : "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/attendance_interfaces__rs"
+	}
+}
