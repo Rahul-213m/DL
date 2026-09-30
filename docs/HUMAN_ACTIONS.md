@@ -118,7 +118,17 @@ our own on consented data. Slow, but it retires this question permanently.
 
 **Do not run this until you have confirmed the backup is good.** I have NOT run
 it. `.git` is 919 MB and still contains 535 face images, 850 MB of crops, a
-`DL_PROJECT.zip`, a `dl.zip`, and the `.env` API key.
+`DL_PROJECT.zip`, a `dl.zip`, the `.env` API key, and `attendance.db`.
+
+> **`attendance.db` is a gap that was easy to miss.** It is a 1.5 MB SQLite
+> binary holding **315 face-gallery embeddings** for students `R1`–`R4` plus 32
+> attendance events. Purging the image trees does **not** touch it: a face
+> template is biometric data on its own, and it is the part that cannot be
+> re-derived from a photo after the photo is deleted. It was tracked in git
+> from commit `7947205` through `d66363b`, and only untracked at the end of that
+> range. Because `origin` is a real remote
+> (`https://github.com/Rahul-213m/DL.git`), this is a **published** exposure, not
+> a local one.
 
 ### Step 1 — back up first
 
@@ -146,12 +156,19 @@ git filter-repo \
   --path .env \
   --path data \
   --path ENROLL_PHOTOS \
+  --path attendance.db \
   --path-glob '*.zip' \
   --path ui/session_history.json \
   --path-glob '*__pycache__*' \
   --invert-paths \
   --force
 ```
+
+> `--path attendance.db` removes the file from history. **Copy it out first** if
+> you still need the historical rows for the consent review in §4 — once
+> rewritten, the embeddings are gone from every clone and the original file on
+> disk is the only remaining copy.
+
 
 ### Step 4 — verify
 
@@ -160,6 +177,11 @@ git log --oneline | wc -l                 # commits are preserved, not dropped
 git ls-files | grep -cE 'data/|ENROLL_PHOTOS|\.env$|\.zip$'   # must print 0
 du -sh .git                               # should be far smaller than 919M
 git fsck --no-progress                     # repository must still be sound
+
+# The database is the one that is easy to believe is gone and is not. The
+# embeddings are inside a binary blob, so no grep will find them -- ask git.
+git log --all --oneline -- attendance.db   # must print nothing
+git rev-list --all --objects | grep attendance.db   # must print nothing
 ```
 
 ### Step 5 — every clone must be discarded, then force-push
@@ -206,7 +228,31 @@ test data. **But the photos are real photographs of real people.** If any
 enrolled face is an identifiable person who did not consent, that is a DPDP Act
 2023 issue independent of where the files live.
 
-**Tell me: real students, or test data? If real, is consent documented?**
+**What I have since verified** (2026-09-30), so you do not have to re-derive it:
+
+```bash
+sqlite3 attendance.db "select count(*) from face_gallery;"     # 315
+sqlite3 attendance.db "select count(*) from attendance_events;" # 32
+sqlite3 attendance.db "select roll_no, name from students;"     # R1..R4, name == roll_no
+```
+
+The names are placeholders, but a placeholder name says nothing about whether
+the *photographs* behind the 315 embeddings were of real people. `R1`–`R4` is
+consistent with either, and I cannot tell them apart from the database.
+
+**Answering this changes what must happen, so it is still the blocking
+question:**
+
+- **Test data** → §3's purge plus a re-seed is sufficient. No further obligation.
+- **Real students** → three things beyond the purge, and none of them are code
+  changes I can make:
+  1. A consent review per student (§4 is the trigger for it).
+  2. Treat the embeddings as **already disclosed** to every clone and to
+     GitHub. Purging history does not un-disclose them; for any identifiable
+     person this is a notifiable breach, and the notification clock is
+     independent of when you get round to the rewrite.
+  3. Write down the lawful basis and the retention period, which the current
+     schema does not have a place for.
 
 Also confirm your backup path — you said you backed the project up but did not
 give the location, and Step 1 above needs a known-good copy.
