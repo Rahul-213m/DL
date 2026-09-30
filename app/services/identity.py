@@ -395,11 +395,42 @@ def unknown_summary(resolution: SessionResolution) -> str:
     return " ".join(parts)
 
 
+def build_identity_engine(
+    index: VectorIndex | None = None,
+    policy: DecisionPolicy | None = None,
+    *,
+    min_exemplars_for_auto: int = DEFAULT_MIN_EXEMPLARS_FOR_AUTO,
+) -> IdentityEngine:
+    """Construct an engine over the live gallery index.
+
+    The index defaults to the process-wide
+    :data:`app.services.gallery.gallery_index`, which is rebuilt at startup and
+    after any gallery change. Importing it here rather than at module scope
+    keeps the import graph acyclic: ``gallery`` does not import ``identity``.
+
+    Every production caller should use this rather than constructing an
+    :class:`IdentityEngine` directly, so that the index, the thresholds and the
+    gallery-depth rule have exactly one definition. An engine built by hand
+    with a different index is the sort of thing that passes every test and
+    then silently matches nothing in production.
+    """
+    if index is None:
+        from app.services.gallery import gallery_index
+
+        index = gallery_index
+    return IdentityEngine(
+        index,
+        policy,
+        min_exemplars_for_auto=min_exemplars_for_auto,
+    )
+
+
 __all__ = [
     "DEFAULT_MIN_EXEMPLARS_FOR_AUTO",
     "FaceAssessment",
     "IdentityEngine",
     "SessionResolution",
+    "build_identity_engine",
     "resolve_session",
     "unknown_summary",
 ]

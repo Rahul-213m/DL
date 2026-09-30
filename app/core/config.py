@@ -241,6 +241,29 @@ class Settings(BaseSettings):
     otel_service_name: str = "attendance-cloud"
 
     # ------------------------------------------------------------------
+    # Multi-tenant bootstrap
+    # ------------------------------------------------------------------
+    #: Permit the single-tenant bootstrap API key. Off by default even in
+    #: production: a key that authenticates without naming a tenant is not
+    #: multi-tenant, and leaving it on "just for convenience" is how one
+    #: installation's key ends up reading another installation's rosters.
+    #: Turn it on only for first-run bring-up, then turn it off.
+    allow_bootstrap_api_key: bool = False
+
+    #: The ONE tenant the bootstrap key may act as. Combined with the flag
+    #: above this bounds a leaked key to a single organisation.
+    bootstrap_tenant_slug: str = "default"
+
+    #: Frontend origin allowed to call the API with a browser credential.
+    #: Needed for CORS when the operator console is served from a different
+    #: host than the API (which is the normal production topology).
+    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+
+    #: Serve the built operator console from the API process. Convenience for
+    #: small deployments; a large one serves the console from a CDN instead.
+    serve_operator_console: bool = True
+
+    # ------------------------------------------------------------------
     # Paths
     # ------------------------------------------------------------------
     migrations_dir: str = "alembic"

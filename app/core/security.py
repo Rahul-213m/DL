@@ -29,7 +29,7 @@ import secrets
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from enum import StrEnum
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from fastapi import Depends
 from fastapi.security import APIKeyHeader
@@ -199,6 +199,11 @@ CAPABILITIES: dict[str, Role] = {
     "review:read": Role.READONLY,
     "report:export": Role.TEACHER,
     # Operate
+    "session:write": Role.TEACHER,
+    #: Rooms, classes and rosters. Scheduling is an operator's job, not a
+    #: teacher's mid-lesson job, but a teacher must be able to fix a roster
+    #: omission without waiting for an admin.
+    "class:manage": Role.TEACHER,
     "review:resolve": Role.TEACHER,
     "attendance:override": Role.TEACHER,
     "session:close": Role.TEACHER,
@@ -299,6 +304,25 @@ class Actor:
     def is_device(self) -> bool:
         """Whether this is an edge node rather than a person."""
         return self.actor_type is ActorType.DEVICE
+
+    if TYPE_CHECKING:
+        from app.services.tenancy import TenantContext
+
+    def as_tenant_context(self) -> TenantContext:
+        """The verified tenant scope for this actor.
+
+        Returns:
+            :class:`app.services.tenancy.TenantContext`.
+
+        Imported lazily because ``tenancy`` imports this module; a top-level
+        import would be a cycle. The alternative -- passing ``tenant_id`` around
+        as a bare string -- is exactly the mistake that makes tenant isolation
+        optional, so the context object exists to make the safe path the short
+        one.
+        """
+        from app.services.tenancy import TenantContext
+
+        return TenantContext(tenant_id=self.tenant_id, actor=self)
 
 
 #: The only scope a device credential ever receives.

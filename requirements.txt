@@ -12,6 +12,10 @@ sqlalchemy==2.0.52
 alembic==1.19.2
 psycopg[binary]==3.3.5
 pydantic==2.13.5
+# Not optional. pydantic's EmailStr raises at import time without it, so the
+# dependency is easy to miss in a hand-built venv and only shows up as an
+# ImportError on the first signup request rather than at install time.
+email-validator==2.3.0
 pydantic-settings==2.15.0
 python-multipart==0.0.32
 pillow==12.3.0

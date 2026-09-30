@@ -207,12 +207,27 @@ def _rename_legacy_tables() -> None:
 def _create_tenancy_tables() -> None:
     """Create every tenant-scoped table from the ORM metadata.
 
-    Generating DDL from the models rather than hand-writing it is deliberate:
-    a hand-written copy drifts from the ORM, and the drift is invisible until
-    a query fails in production. ``Base.metadata.create_all`` is used here as
-    a *DDL generator only* for the NEW tables; the legacy tables are renamed,
-    never created, so this cannot silently skip a migration step the way the
-    original ``init_db()`` did (docs/00_audit.md 6.5).
+    ``Base.metadata.create_all`` is used here as a *DDL generator only* for the
+    NEW tables; the legacy tables are renamed, never created, so this cannot
+    silently skip a migration step the way the original ``init_db()`` did
+    (docs/00_audit.md 6.5).
+
+    WARNING: this makes the revision **not reproducible**. The DDL is whatever
+    ``app.models.tenancy`` says at the moment the migration runs, so applying
+    0002 to a fresh database today does not produce the schema that applying it
+    produced six months ago. Verified: ``class_members.uq_class_tenant_class``
+    and ``consent_records.uq_consent_tenant_student`` were still declared in the
+    ORM when this revision was written, and are no longer, so a fresh upgrade
+    chain today skips both. Revision 0003 corrects the databases that were
+    actually migrated at the time; it is a no-op on a fresh one.
+
+    That is tolerable here and unacceptable in general. A migration is supposed
+    to be a frozen record of a decision, and generating it from live metadata
+    means the decision is re-made silently on every fresh install. Do not copy
+    this pattern into 0004 onward: hand-write the DDL, or autogenerate it once
+    and commit the result. Do not edit this revision's DDL either -- an
+    environment that already applied it would then have a recorded revision
+    that no longer describes its schema.
     """
     from app.models.database import Base
 

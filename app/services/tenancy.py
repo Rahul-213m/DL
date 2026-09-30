@@ -305,12 +305,35 @@ def list_students(db: Session, tenant_id: str, *, active_only: bool = True) -> S
     return db.scalars(statement.order_by(Student.roll_no)).all()
 
 
+def consent_history(db: Session, tenant_id: str, student_id: str) -> list[ConsentRecord]:
+    """Every consent entry for one student, oldest first.
+
+    The ledger is append-only, so "current state" is the last row and the rows
+    before it are the history a regulator or a data subject is entitled to.
+    """
+    return list(
+        db.scalars(
+            select(ConsentRecord)
+            .where(
+                ConsentRecord.tenant_id == tenant_id, ConsentRecord.student_id == student_id
+            )
+            .order_by(ConsentRecord.created_at, ConsentRecord.consent_id)
+        ).all()
+    )
+
+
 def get_consent(db: Session, tenant_id: str, student_id: str) -> ConsentRecord | None:
-    """A student's consent record, if any."""
+    """A student's *current* consent, i.e. the newest entry, if any.
+
+    The newest row wins, not the first and not "any granted row": a withdrawal
+    must be able to override an earlier grant, which is the whole point of
+    allowing withdrawal at all.
+    """
     return db.scalar(
-        select(ConsentRecord).where(
-            ConsentRecord.tenant_id == tenant_id, ConsentRecord.student_id == student_id
-        )
+        select(ConsentRecord)
+        .where(ConsentRecord.tenant_id == tenant_id, ConsentRecord.student_id == student_id)
+        .order_by(ConsentRecord.created_at.desc(), ConsentRecord.consent_id.desc())
+        .limit(1)
     )
 
 
@@ -609,6 +632,7 @@ __all__ = [
     "append_audit",
     "append_feedback",
     "claim_jobs",
+    "consent_history",
     "create_session",
     "drop_class_member",
     "find_device_by_credential",

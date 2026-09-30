@@ -30,6 +30,8 @@ module so it can be reviewed on its own.
 
 from __future__ import annotations
 
+import json
+import logging
 import uuid
 from datetime import datetime
 
@@ -51,6 +53,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.database import Base, utcnow
 
+log = logging.getLogger(__name__)
+
 # ---------------------------------------------------------------------------
 # Enumerations
 # ---------------------------------------------------------------------------
@@ -69,6 +73,14 @@ DEVICE_PENDING = "pending"
 DEVICE_ACTIVE = "active"
 DEVICE_REVOKED = "revoked"
 DEVICE_STATES = (DEVICE_PENDING, DEVICE_ACTIVE, DEVICE_REVOKED)
+
+#: What an edge node may do unless an operator grants more. Upload-only, so a
+#: stolen camera credential cannot read the roster or export a register.
+DEFAULT_DEVICE_SCOPES = '["frames:upload"]'
+#: The full set of scopes a device may ever hold. Deliberately small: a device
+#: is not a person, and "device can also do X" is a design question, not a
+#: deployment detail.
+KNOWN_DEVICE_SCOPES = frozenset({"frames:upload", "frames:upload:high", "heartbeat:write"})
 
 MODEL_PENDING = "pending"
 MODEL_ACTIVE = "active"
@@ -183,6 +195,12 @@ class Device(Base):
     #: SHA-256 of the device secret. The plaintext is shown once, at
     #: provisioning, and is never stored or logged.
     credential_hash: Mapped[str] = mapped_column(String(128))
+    #: JSON array of granted scopes, e.g. ``["frames:upload"]``. Stored as text
+    #: rather than a join table because the list is tiny, read on every single
+    #: authenticated frame, and never queried by value across devices. A
+    #: device is upload-only by default; granting anything else is an explicit
+    #: act so that a compromised camera cannot read the roster.
+    scopes: Mapped[str] = mapped_column(Text, default=DEFAULT_DEVICE_SCOPES)
     status: Mapped[str] = mapped_column(String(20), default=DEVICE_PENDING)
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     #: Agent version, so a fleet can be audited after an update.
@@ -193,6 +211,29 @@ class Device(Base):
         UniqueConstraint("tenant_id", "name", name="uq_device_tenant_name"),
         CheckConstraint(f"status in {DEVICE_STATES}", name="ck_device_status"),
     )
+
+    def scopes_list(self) -> list[str]:
+        """The granted scopes, or upload-only if the column is corrupt.
+
+        A malformed value must not become an empty set that silently denies
+        every frame, nor an error that locks the classroom out mid-lesson, so
+        the fallback is the safe default and the parse failure is logged.
+        """
+        try:
+            parsed: object = json.loads(self.scopes or DEFAULT_DEVICE_SCOPES)
+        except (TypeError, ValueError):
+            log.warning(
+                "device scopes unparseable; defaulting to upload-only",
+                extra={"stage": "auth", "device_id": self.device_id},
+            )
+            return json.loads(DEFAULT_DEVICE_SCOPES)  # type: ignore[no-any-return]
+        if not isinstance(parsed, list) or not all(isinstance(s, str) for s in parsed):
+            log.warning(
+                "device scopes malformed; defaulting to upload-only",
+                extra={"stage": "auth", "device_id": self.device_id},
+            )
+            return json.loads(DEFAULT_DEVICE_SCOPES)  # type: ignore[no-any-return]
+        return parsed
 
 
 class Room(Base):
@@ -291,9 +332,12 @@ class ClassMember(Base):
     seat_label: Mapped[str | None] = mapped_column(String(32), nullable=True)
 
     __table_args__ = (
-        # The composite FKs below reference these column pairs, which the
-        # database therefore requires to be UNIQUE.
-        UniqueConstraint("tenant_id", "class_id", name="uq_class_tenant_class"),
+        # No unique constraint on (tenant_id, class_id) here, and the comment
+        # that used to claim otherwise was wrong: a composite FK needs its
+        # target columns unique on the *referenced* table, and ``classes``
+        # already declares that pair unique. Declaring it here as well capped
+        # every class at exactly one student. Membership uniqueness is the
+        # composite primary key above.
         # Composite FKs: a class member can never link a student from another
         # tenant, because the referenced rows themselves carry tenant_id.
         ForeignKeyConstraint(
@@ -571,7 +615,13 @@ class ConsentRecord(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
 
     __table_args__ = (
-        UniqueConstraint("tenant_id", "student_id", name="uq_consent_tenant_student"),
+        # Deliberately NOT unique on (tenant_id, student_id). Consent is a
+        # ledger, not a slot: withdrawing and re-granting must leave the
+        # earlier entries in place, because "this student consented on the
+        # 3rd, withdrew on the 9th, consented again on the 12th" is the only
+        # record that can answer a regulator's question. The current state is
+        # the newest row, resolved by created_at.
+        Index("ix_consent_tenant_student_created", "tenant_id", "student_id", "created_at"),
         CheckConstraint(f"state in {CONSENT_STATES}", name="ck_consent_state"),
     )
 
