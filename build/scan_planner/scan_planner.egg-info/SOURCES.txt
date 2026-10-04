@@ -3,6 +3,7 @@ setup.cfg
 setup.py
 resource/scan_planner
 scan_planner/__init__.py
+scan_planner/action_wait.py
 scan_planner/planner.py
 scan_planner/scan_node.py
 scan_planner/show_face_sizes.py

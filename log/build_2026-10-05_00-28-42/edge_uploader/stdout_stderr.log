@@ -1,0 +1,16 @@
+running develop
+running egg_info
+writing edge_uploader.egg-info/PKG-INFO
+writing dependency_links to edge_uploader.egg-info/dependency_links.txt
+writing entry points to edge_uploader.egg-info/entry_points.txt
+writing requirements to edge_uploader.egg-info/requires.txt
+writing top-level names to edge_uploader.egg-info/top_level.txt
+reading manifest file 'edge_uploader.egg-info/SOURCES.txt'
+writing manifest file 'edge_uploader.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages/edge-uploader.egg-link (link to .)
+Installing edge_requeue_failed script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/edge_uploader
+Installing edge_uploader script to /home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/edge_uploader
+
+Installed /home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader
+running symlink_data
