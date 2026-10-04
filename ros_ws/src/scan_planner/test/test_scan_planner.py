@@ -16,8 +16,11 @@ four bugs that were found by writing them:
 from __future__ import annotations
 
 import math
+import threading
+import time
 
 import pytest
+from scan_planner.action_wait import wait_for_action_result
 from scan_planner.planner import (
     DETECT_FACE_PX,
     IDENTIFY_FACE_PX,
@@ -32,6 +35,62 @@ from scan_planner.planner import (
     replace_reason,
     steps_for_coverage,
 )
+
+
+class TestActionCancellation:
+    def test_scan_cancel_is_forwarded_to_the_active_servo_goal(self):
+        cancelled = threading.Event()
+
+        class ResultFuture:
+            def done(self):
+                return cancelled.is_set()
+
+            def result(self):
+                return "cancelled-result"
+
+        class GoalHandle:
+            cancel_calls = 0
+
+            def cancel_goal_async(self):
+                self.cancel_calls += 1
+                cancelled.set()
+
+        goal_handle = GoalHandle()
+        result = wait_for_action_result(
+            ResultFuture(),
+            goal_handle,
+            is_cancelled=lambda: True,
+            timeout_s=1.0,
+            poll_interval_s=0.001,
+        )
+
+        assert result == "cancelled-result"
+        assert goal_handle.cancel_calls == 1
+
+    def test_timeout_requests_servo_cancellation(self):
+        class ResultFuture:
+            def done(self):
+                return False
+
+        class GoalHandle:
+            cancel_calls = 0
+
+            def cancel_goal_async(self):
+                self.cancel_calls += 1
+
+        goal_handle = GoalHandle()
+        started = time.monotonic()
+        result = wait_for_action_result(
+            ResultFuture(),
+            goal_handle,
+            is_cancelled=lambda: False,
+            timeout_s=0.005,
+            poll_interval_s=0.001,
+        )
+
+        assert result is None
+        assert goal_handle.cancel_calls == 1
+        assert time.monotonic() - started < 0.1
 
 
 class TestRoomValidation:

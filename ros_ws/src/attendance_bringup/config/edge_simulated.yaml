@@ -13,7 +13,7 @@
 servo_controller:
   ros__parameters:
     driver: simulated
-    baud_rate: 115200
+    serial_baudrate: 115200
     pan_min_deg: -90.0
     pan_max_deg: 90.0
     max_speed_deg_per_s: 45.0
@@ -22,9 +22,6 @@ servo_controller:
     # ignores an undeclared parameter, so a typo here is invisible: the node
     # falls back to its default and believes it has an encoder it does not.
     has_position_feedback: false
-    stall_timeout_s: 2.0
-    watch_hdog: true
-    home_on_start: true
 
 camera_bridge:
   ros__parameters:

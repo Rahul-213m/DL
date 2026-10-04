@@ -21,7 +21,7 @@ criteria and the interface the software expects.
 A hobby servo (SG90/MG996R) has **no position feedback**. It is told where to
 go and believed. Consequences the code handles explicitly:
 
-- `with_position_feedback: false` means the node will not claim to have
+- `has_position_feedback: false` means the node will not claim to have
   detected a stall. It publishes a warning at startup saying so.
 - The published `current_angle` is a value the node is *integrating from its
   own commands*, not a measurement. It is documented as that, because

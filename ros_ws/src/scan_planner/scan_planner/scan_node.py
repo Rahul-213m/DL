@@ -31,6 +31,7 @@ from rclpy.node import Node
 from attendance_interfaces.action import GoToAngle, RunScanSequence
 from attendance_interfaces.msg import CameraMetadata, FrameManifest, ServoState
 from attendance_interfaces.srv import CaptureStill, SetZoom
+from scan_planner.action_wait import wait_for_action_result
 from scan_planner.planner import (
     DETECT_FACE_PX,
     IDENTIFY_FACE_PX,
@@ -98,7 +99,7 @@ class ScanPlannerNode(Node):
             FrameManifest, "/scan/manifest", 10, callback_group=self._callbacks
         )
         self.create_subscription(
-            ServoState, "/servo/state", self._on_servo_state, 10, callback_group=self._callbacks
+            ServoState, "/stand/servo_state", self._on_servo_state, 10, callback_group=self._callbacks
         )
         self.create_subscription(
             CameraMetadata,
@@ -324,6 +325,7 @@ class ScanPlannerNode(Node):
                 )
 
         goal_handle.succeed()
+        result.success = True
         result.scan_id = self._scan_id
         result.duration_s = time.monotonic() - started
         self._publish(feedback, goal_handle, 5, plan.step_count - 1, plan, plan.steps[-1])
@@ -420,7 +422,15 @@ class ScanPlannerNode(Node):
             return False, "motion_goal_timeout"
         if not goal_handle.accepted:
             return False, "motion_goal_rejected"
-        wrapped = self._wait_future(goal_handle.get_result_async(), timeout)
+        if self._cancelled:
+            goal_handle.cancel_goal_async()
+            return False, "motion_cancelled"
+        wrapped = wait_for_action_result(
+            goal_handle.get_result_async(),
+            goal_handle,
+            is_cancelled=lambda: self._cancelled,
+            timeout_s=timeout,
+        )
 
         # STALLED is a distinct fault code, not a timeout that looks like
         # success: the mechanism is jammed, versus merely slow.
@@ -436,12 +446,11 @@ class ScanPlannerNode(Node):
         if motion.fault_code == "stalled":
             return False, "stalled"
         if motion.clamped:
-            # A clamp means the calibration and the plan disagree. Not fatal,
-            # but it must be visible: the sweep did not aim where it planned.
             self.get_logger().warn(
                 f"move to {step.pan_deg:.1f} deg was CLAMPED to {motion.reached_pan_deg:.1f} deg. "
-                "The pan calibration and the room description disagree."
+                "Aborting this sweep because the plan and mechanical limits disagree."
             )
+            return False, "motion_clamped"
 
         self._set_zoom(step.zoom)
         return True, ""

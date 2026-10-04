@@ -76,6 +76,8 @@ Edit only the `[INSTALL]` entries in `ros_ws/src/attendance_bringup/config/edge.
 - Set both camera and uploader `outbox_data_root`/`data_root` to the same persistent local filesystem path. Set matching local tenant/device parameters for clear local diagnostics; the API derives tenant authorization from the device secret, not these values.
 - Measure room dimensions, camera geometry, servo range, and optical zoom. Do not copy the sample room geometry or assume digital zoom provides detail.
 
+Homing is not automatic at startup. Before any movement, clear the mechanism's full travel envelope and deliberately home it with the servo action. Without position feedback, homing does not verify the true angle and stall detection is unavailable; an external, hard-wired power cut remains necessary for physical safety.
+
 Protect the edge OS account and disk: queued photographs are biometric data at rest. Use encrypted full-disk storage, disable unattended debug access, apply OS security updates, restrict `/var/lib/attendance` to the service account, and define local outbox deletion and device-retirement procedures.
 
 ## 5. Verify before a real scan

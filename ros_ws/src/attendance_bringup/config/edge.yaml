@@ -16,7 +16,7 @@ servo_controller:
   ros__parameters:
     driver: simulated              # [INSTALL] simulated | serial
     serial_port: "/dev/ttyACM0"    # [INSTALL]
-    baud_rate: 115200
+    serial_baudrate: 115200
 
     # Mechanical envelope. UNVERIFIED: these are conservative defaults, not
     # measurements of anyone's servo. See docs/hardware/servo_selection.md.
@@ -30,9 +30,6 @@ servo_controller:
     # ignores an undeclared parameter, so a typo here is invisible: the node
     # falls back to its default and believes it has an encoder it does not.
     has_position_feedback: false  # [INSTALL]
-    stall_timeout_s: 2.0
-    watch_hdog: true
-    home_on_start: true            # [INSTALL] false if the mechanism is manually positioned
 
 # --------------------------------------------------------------- camera ----
 camera_bridge:
