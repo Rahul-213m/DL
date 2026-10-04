@@ -1,24 +1,53 @@
 services:
   db:
     image: postgres:16-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: attendance
       POSTGRES_USER: attendance
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the deployment environment}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U attendance"]
       interval: 5s
       timeout: 5s
       retries: 10
-  api:
+  migrate:
     build: .
     environment:
       DATABASE_URL: postgresql+psycopg://attendance:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the deployment environment}@db:5432/attendance
-      STORAGE_ROOT: /app/data
-      ENVIRONMENT: production
-      API_KEY: ${API_KEY:?Set API_KEY to a long random secret in the deployment environment}
-    ports: ["8000:8000"]
-    volumes: ["./data:/app/data"]
+    command: ["alembic", "upgrade", "head"]
     depends_on:
       db:
         condition: service_healthy
+    restart: "no"
+  api:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://attendance:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the deployment environment}@db:5432/attendance
+      ENVIRONMENT: production
+      API_KEY: ${API_KEY:?Set API_KEY to a long random secret in the deployment environment}
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET to a separate long random secret}
+      STORAGE_BACKEND: s3
+      S3_BUCKET: ${S3_BUCKET:?Set S3_BUCKET to the private biometric-data bucket}
+      S3_REGION: ${S3_REGION:?Set S3_REGION to the bucket region}
+      S3_KMS_KEY_ID: ${S3_KMS_KEY_ID:?Set S3_KMS_KEY_ID to a customer-managed KMS key}
+      JOB_QUEUE_BACKEND: sqs
+      SQS_QUEUE_URL: ${SQS_QUEUE_URL:?Set SQS_QUEUE_URL to the configured queue}
+    ports: ["127.0.0.1:${API_PORT:-8000}:8000"]
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/ready', timeout=5)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+volumes:
+  postgres_data:

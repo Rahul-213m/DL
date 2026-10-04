@@ -85,6 +85,8 @@ edge_uploader:
   ros__parameters:
     data_root: "/var/lib/attendance"  # [INSTALL]
     base_url: "https://attendance.example.com"  # [INSTALL]
+    cloud_session_id: 0                 # [INSTALL] open numeric session from POST /v1/sessions
+    device_secret_file: "/etc/attendance/device-secret"  # [INSTALL] root-owned, mode 0600
     tenant_id: "00000000-0000-0000-0000-000000000000"  # [INSTALL] provisioned
     device_id: "unprovisioned"        # [INSTALL] provisioned
 

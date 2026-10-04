@@ -87,8 +87,8 @@ app = FastAPI(
     description=(
         "Cloud perception, identity resolution and operator console for autonomous "
         "classroom attendance. The `/v1` surface is multi-tenant and scoped by "
-        "verified credentials. The unprefixed surface is the legacy "
-        "single-tenant API, kept for the edge bring-up window."
+        "verified credentials. The unprefixed legacy single-tenant API is "
+        "available only in development and test environments."
     ),
     docs_url=None,
     lifespan=lifespan,
@@ -212,7 +212,8 @@ app.add_middleware(
 )
 
 app.include_router(v1_router)
-app.include_router(legacy_router)
+if settings.environment in {"development", "test"}:
+    app.include_router(legacy_router)
 
 
 @app.get("/docs", include_in_schema=False)

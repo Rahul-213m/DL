@@ -216,6 +216,8 @@ class CameraBridgeNode(Node):
                         # unknown, never as a fabricated 1.
                         face_count=0,
                         quality_score=0.0,
+                        camera_angle_deg=float(request.pan_angle_deg),
+                        zoom=float(request.zoom),
                     )
                     queued = True
                     response.object_key = record.image_path.name

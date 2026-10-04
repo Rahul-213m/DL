@@ -224,4 +224,7 @@ Run `python scripts/purge_old_frames.py` (e.g. daily via cron) to delete old ima
 
 For the verified fresh-clone startup and integration flow, see [docs/INTEGRATION.md](docs/INTEGRATION.md).
 
+For internet deployment, device provisioning, secure ROS-to-cloud frame uploads, session handoff,
+offline recovery, and production gates, see [docs/EDGE_CLOUD_DEPLOYMENT.md](docs/EDGE_CLOUD_DEPLOYMENT.md).
+
 ---

@@ -24,6 +24,7 @@ setup(
     entry_points={
         "console_scripts": [
             "edge_uploader = edge_uploader.uploader_node:main",
+            "edge_requeue_failed = edge_uploader.requeue_failed:main",
         ],
     },
 )

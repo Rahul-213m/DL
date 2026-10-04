@@ -20,6 +20,7 @@ from edge_uploader.outbox import (
     make_idempotency_key,
     sha256_file,
 )
+from edge_uploader.transport import build_frame_request, read_device_secret
 
 
 @pytest.fixture
@@ -193,6 +194,19 @@ class TestRecovery:
 
     def test_unknown_failure_is_survivable(self, outbox):
         outbox.mark_failed("no-such-id", "boom")
+
+    def test_separate_camera_and_uploader_instances_share_live_queue(self, tmp_path):
+        root = tmp_path / "shared-outbox"
+        camera = EdgeOutbox(root=root, tenant_id="t", device_id="d")
+        uploader = EdgeOutbox(root=root, tenant_id="t", device_id="d")
+
+        first = camera.enqueue(make_jpeg(1), session_id="s1")
+        assert [item.capture_id for item in uploader.next_batch()] == [first.capture_id]
+
+        second = camera.enqueue(make_jpeg(2), session_id="s1")
+        uploader.mark_uploaded(first.capture_id, "frame-1")
+
+        assert [item.capture_id for item in uploader.next_batch()] == [second.capture_id]
 
 
 class TestIdempotency:
@@ -382,3 +396,41 @@ class TestStats:
     def test_pending_count(self, outbox):
         outbox.enqueue(make_jpeg(1), session_id="s")
         assert outbox.pending_count() == 1
+
+
+class TestCloudTransport:
+    def test_request_matches_cloud_route_and_device_auth(self):
+        request = build_frame_request(
+            base_url="https://cloud.example.test/",
+            session_id=42,
+            device_id="edge-7",
+            device_secret="s" * 48,
+            frame_id="frame-12345678",
+            device_timestamp="2026-10-04T12:00:00Z",
+            correlation_id="corr-1",
+            camera_angle_deg=-15.0,
+            zoom=2.5,
+            image=b"jpeg-bytes",
+        )
+
+        assert request.full_url == "https://cloud.example.test/v1/sessions/42/frames"
+        assert request.get_header("X-device-id") == "edge-7"
+        assert request.get_header("X-device-secret") == "s" * 48
+        assert "multipart/form-data; boundary=" in request.get_header("Content-type")
+        assert b'name="meta"' in request.data
+        assert b'"frame_id":"frame-12345678"' in request.data
+        assert b'"camera_angle_deg":-15.0' in request.data
+        assert b'"zoom":2.5' in request.data
+        assert b'name="content"; filename="frame-12345678.jpg"' in request.data
+        assert request.data.endswith(b"jpeg-bytes\r\n--" + request.get_header("Content-type").split("boundary=")[1].encode() + b"--\r\n")
+
+    def test_device_secret_requires_restrictive_file_permissions(self, tmp_path):
+        path = tmp_path / "device-secret"
+        path.write_text("x" * 48, encoding="utf-8")
+        path.chmod(0o600)
+
+        assert read_device_secret(path) == "x" * 48
+
+        path.chmod(0o640)
+        with pytest.raises(ValueError, match="permissions"):
+            read_device_secret(path)

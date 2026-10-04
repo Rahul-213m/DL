@@ -2,6 +2,8 @@
 
 This document explains how to run the full classroom attendance system, what must be configured before startup, and which components are required for the cloud API and the ROS edge stack.
 
+For production internet connectivity, device credentials, cloud sessions, and outage recovery, use [docs/EDGE_CLOUD_DEPLOYMENT.md](docs/EDGE_CLOUD_DEPLOYMENT.md).
+
 ## 1. System overview
 
 The project has two main parts:
