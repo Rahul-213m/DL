@@ -1,0 +1,16 @@
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws
+configfile: pytest.ini
+plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3
+[1mcollecting ... [0m[1m
+collecting 0 items                                                             [0m[1m
+collected 57 items                                                             [0m
+
+test/manual_test.py [32m.[0m
+
+- generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot/pytest.xml -
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[1m[31m/usr/lib/python3.12/selectors.py[0m:415: KeyboardInterrupt
+[33m(to show a full traceback on KeyboardInterrupt use --full-trace)[0m
+[32m======================== [32m[1m1 passed[0m[32m in 155.59s (0:02:35)[0m[32m =========================[0m

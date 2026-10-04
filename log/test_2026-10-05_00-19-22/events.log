@@ -1,0 +1,338 @@
+[0.000000] (-) TimerEvent: {}
+[0.000846] (edge_uploader) JobQueued: {'identifier': 'edge_uploader', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'edge_uploader': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader'})}
+[0.001006] (camera_bridge) JobQueued: {'identifier': 'camera_bridge', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'edge_uploader': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader', 'camera_bridge': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge'})}
+[0.001132] (attendance_bringup) JobQueued: {'identifier': 'attendance_bringup', 'dependencies': OrderedDict({'attendance_interfaces': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces', 'edge_uploader': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader', 'servo_controller': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller', 'camera_bridge': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge', 'scan_planner': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner', 'attendance_bringup': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup'})}
+[0.001209] (edge_uploader) JobStarted: {'identifier': 'edge_uploader'}
+[0.099796] (-) TimerEvent: {}
+[0.200141] (-) TimerEvent: {}
+[0.300564] (-) TimerEvent: {}
+[0.311205] (edge_uploader) Command: {'cmd': ['/usr/bin/python3', '-m', 'pytest'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/edge_uploader', 'env': OrderedDict({'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'AI_AGENT': 'github_copilot_vscode_agent', 'USER': 'rahul', 'GIT_EDITOR': ':', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'GIT_ASKPASS': '/usr/share/code/resources/app/extensions/git/dist/askpass.sh', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'COPILOT_AGENT': '1', 'HOME': '/home/rahul', 'CHROME_DESKTOP': 'code.desktop', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT', 'TERM_PROGRAM_VERSION': '1.138.0', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/code.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'VSCODE_GIT_ASKPASS_MAIN': '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/usr/share/code/code', 'MANAGERPID': '6062', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'SYSTEMD_EXEC_PID': '6472', 'BUNDLED_DEBUGPY_PATH': '/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/libs/debugpy', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '64453', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'COLCON_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', 'JOURNAL_STREAM': '10:42586', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'FC_FONTATIONS': '1', 'HISTCONTROL': 'ignorespace', 'WINDOWPATH': '2', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/home/rahul/anaconda3/bin:/home/rahul/anaconda3/condabin:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/rahul/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/home/rahul/.codegpt/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/6427,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/6427', 'INVOCATION_ID': '9348fd468e1e422ba25ad44467d11a8c', 'XDG_MENU_PREFIX': 'gnome-', 'XDG_RUNTIME_DIR': '/run/user/1000', 'GDK_BACKEND': 'x11', 'DISPLAY': ':0', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/.noConfigDebugAdapterEndpoints/endpoint-72791946ce26abf8.txt', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'PYTHONSTARTUP': '/home/rahul/.config/Code/User/workspaceStorage/36601082301ce02f84c28c3948183dd9/ms-python.python/pythonrc.py', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-a7108ea42e.sock', 'TERM_PROGRAM': 'vscode', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/rahul/anaconda3/bin/python', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'GIT_PAGER': 'cat', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader', 'GIT_MERGE_AUTOEDIT': 'no', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'COPILOT_DEBUG_NONCE': '57e631014520ad8fc4f4daf774dce863', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'CMAKE_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor', 'PYTHONDONTWRITEBYTECODE': '1', 'PYTEST_ADDOPTS': '--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/pytest.xml --junit-prefix=edge_uploader -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/.pytest_cache'}), 'shell': False}
+[0.400688] (-) TimerEvent: {}
+[0.501085] (-) TimerEvent: {}
+[0.601490] (-) TimerEvent: {}
+[0.699522] (edge_uploader) StdoutLine: {'line': b'\x1b[1m============================= test session starts ==============================\x1b[0m\n'}
+[0.699883] (edge_uploader) StdoutLine: {'line': b'platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0\n'}
+[0.701599] (-) TimerEvent: {}
+[0.703756] (edge_uploader) StdoutLine: {'line': b'rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws\n'}
+[0.703983] (edge_uploader) StdoutLine: {'line': b'configfile: pytest.ini\n'}
+[0.704113] (edge_uploader) StdoutLine: {'line': b'plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3\n'}
+[0.801723] (-) TimerEvent: {}
+[0.810211] (edge_uploader) StdoutLine: {'line': b'\x1b[1mcollecting ... \x1b[0m\x1b[1m\n'}
+[0.810525] (edge_uploader) StdoutLine: {'line': b'collected 54 items                                                             \x1b[0m\n'}
+[0.811073] (edge_uploader) StdoutLine: {'line': b'\n'}
+[0.901846] (-) TimerEvent: {}
+[1.002325] (-) TimerEvent: {}
+[1.102777] (-) TimerEvent: {}
+[1.203119] (-) TimerEvent: {}
+[1.303500] (-) TimerEvent: {}
+[1.403944] (-) TimerEvent: {}
+[1.504303] (-) TimerEvent: {}
+[1.604702] (-) TimerEvent: {}
+[1.705222] (-) TimerEvent: {}
+[1.805534] (-) TimerEvent: {}
+[1.905961] (-) TimerEvent: {}
+[2.006499] (-) TimerEvent: {}
+[2.107019] (-) TimerEvent: {}
+[2.207479] (-) TimerEvent: {}
+[2.308001] (-) TimerEvent: {}
+[2.408736] (-) TimerEvent: {}
+[2.509339] (-) TimerEvent: {}
+[2.609798] (-) TimerEvent: {}
+[2.710158] (-) TimerEvent: {}
+[2.810529] (-) TimerEvent: {}
+[2.910907] (-) TimerEvent: {}
+[3.011289] (-) TimerEvent: {}
+[3.111722] (-) TimerEvent: {}
+[3.212113] (-) TimerEvent: {}
+[3.312506] (-) TimerEvent: {}
+[3.412904] (-) TimerEvent: {}
+[3.513278] (-) TimerEvent: {}
+[3.613678] (-) TimerEvent: {}
+[3.714056] (-) TimerEvent: {}
+[3.814448] (-) TimerEvent: {}
+[3.914806] (-) TimerEvent: {}
+[4.015191] (-) TimerEvent: {}
+[4.115715] (-) TimerEvent: {}
+[4.216276] (-) TimerEvent: {}
+[4.316805] (-) TimerEvent: {}
+[4.417331] (-) TimerEvent: {}
+[4.517884] (-) TimerEvent: {}
+[4.618324] (-) TimerEvent: {}
+[4.718863] (-) TimerEvent: {}
+[4.819435] (-) TimerEvent: {}
+[4.919832] (-) TimerEvent: {}
+[5.020267] (-) TimerEvent: {}
+[5.120787] (-) TimerEvent: {}
+[5.221224] (-) TimerEvent: {}
+[5.321763] (-) TimerEvent: {}
+[5.422199] (-) TimerEvent: {}
+[5.522592] (-) TimerEvent: {}
+[5.622999] (-) TimerEvent: {}
+[5.723477] (-) TimerEvent: {}
+[5.824056] (-) TimerEvent: {}
+[5.924611] (-) TimerEvent: {}
+[6.025095] (-) TimerEvent: {}
+[6.125550] (-) TimerEvent: {}
+[6.226209] (-) TimerEvent: {}
+[6.326830] (-) TimerEvent: {}
+[6.427449] (-) TimerEvent: {}
+[6.527982] (-) TimerEvent: {}
+[6.628507] (-) TimerEvent: {}
+[6.729118] (-) TimerEvent: {}
+[6.829583] (-) TimerEvent: {}
+[6.930009] (-) TimerEvent: {}
+[7.030390] (-) TimerEvent: {}
+[7.053900] (edge_uploader) StdoutLine: {'line': b'test/test_edge_uploader.py \x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m [ 83%]\n'}
+[7.130531] (-) TimerEvent: {}
+[7.230930] (-) TimerEvent: {}
+[7.331334] (-) TimerEvent: {}
+[7.431674] (-) TimerEvent: {}
+[7.532058] (-) TimerEvent: {}
+[7.617933] (edge_uploader) StdoutLine: {'line': b'\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m                                                                [100%]\x1b[0m\n'}
+[7.618490] (edge_uploader) StdoutLine: {'line': b'\n'}
+[7.618671] (edge_uploader) StdoutLine: {'line': b'- generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader/pytest.xml -\n'}
+[7.618806] (edge_uploader) StdoutLine: {'line': b'\x1b[32m============================== \x1b[32m\x1b[1m54 passed\x1b[0m\x1b[32m in 6.92s\x1b[0m\x1b[32m ==============================\x1b[0m\n'}
+[7.632206] (-) TimerEvent: {}
+[7.732585] (-) TimerEvent: {}
+[7.745448] (edge_uploader) CommandEnded: {'returncode': 0}
+[7.747157] (edge_uploader) JobEnded: {'identifier': 'edge_uploader', 'rc': 0}
+[7.747936] (camera_bridge) JobStarted: {'identifier': 'camera_bridge'}
+[7.832704] (-) TimerEvent: {}
+[7.933053] (-) TimerEvent: {}
+[8.033373] (-) TimerEvent: {}
+[8.052954] (camera_bridge) Command: {'cmd': ['/usr/bin/python3', '-m', 'pytest'], 'cwd': '/home/rahul/Documents/DL_PROJECT/ros_ws/src/camera_bridge', 'env': OrderedDict({'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'CONDA_PROMPT_MODIFIER': '(base)', '__EGL_VENDOR_LIBRARY_DIRS': '/home/rahul/anaconda3/share/glvnd/egl_vendor.d', 'AI_AGENT': 'github_copilot_vscode_agent', 'USER': 'rahul', 'GIT_EDITOR': ':', 'PT8HOME': '/opt/pt', 'XDG_SESSION_TYPE': 'x11', 'GIT_ASKPASS': '/usr/share/code/resources/app/extensions/git/dist/askpass.sh', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'COPILOT_AGENT': '1', 'HOME': '/home/rahul', 'CHROME_DESKTOP': 'code.desktop', 'CONDA_SHLVL': '1', 'OLDPWD': '/home/rahul/Documents/DL_PROJECT', 'TERM_PROGRAM_VERSION': '1.138.0', 'DESKTOP_SESSION': 'ubuntu-xorg', 'NVM_BIN': '/home/rahul/.nvm/versions/node/v22.23.2/bin', 'NVM_INC': '/home/rahul/.nvm/versions/node/v22.23.2/include/node', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/code.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'CYUSB_ROOT': '/usr/local/bin/EyeRIS', 'VSCODE_GIT_ASKPASS_MAIN': '/usr/share/code/resources/app/extensions/git/dist/askpass-main.js', 'VSCODE_GIT_ASKPASS_NODE': '/usr/share/code/code', 'MANAGERPID': '6062', 'PYDEVD_DISABLE_FILE_VALIDATION': '1', 'SYSTEMD_EXEC_PID': '6472', 'BUNDLED_DEBUGPY_PATH': '/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/libs/debugpy', 'VSCODE_PYTHON_AUTOACTIVATE_GUARD': '1', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', '_CE_M': '', '_CONDA_ROOT': '/home/rahul/anaconda3', 'LIBVIRT_DEFAULT_URI': 'qemu:///system', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '64453', 'NVM_DIR': '/home/rahul/.nvm', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'COLCON_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'rahul', 'JOURNAL_STREAM': '10:42586', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'rahul', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', '_CE_CONDA': '', 'FC_FONTATIONS': '1', 'HISTCONTROL': 'ignorespace', 'WINDOWPATH': '2', 'PATH': '/opt/ros/jazzy/bin:/home/rahul/.nvm/versions/node/v22.23.2/bin:/home/rahul/.opencode/bin:/home/rahul/Applications:/home/rahul/anaconda3/bin:/home/rahul/anaconda3/condabin:/usr/lib/jvm/java-17-openjdk-amd64/bin:/home/rahul/.config/Code/User/globalStorage/github.copilot-chat/debugCommand:/home/rahul/.config/Code/User/globalStorage/github.copilot-chat/copilotCli:/home/rahul/.codegpt/bin:/home/rahul/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/rahul/.local/bin:/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/bundled/scripts/noConfigScripts:/usr/local/platform-tools:/home/rahul/tor-browser/Browser:/home/rahul/.local/bin', 'SESSION_MANAGER': 'local/rahul-IdeaPad-Slim-3-15AMN8:@/tmp/.ICE-unix/6427,unix/rahul-IdeaPad-Slim-3-15AMN8:/tmp/.ICE-unix/6427', 'INVOCATION_ID': '9348fd468e1e422ba25ad44467d11a8c', 'XDG_MENU_PREFIX': 'gnome-', 'XDG_RUNTIME_DIR': '/run/user/1000', 'GDK_BACKEND': 'x11', 'DISPLAY': ':0', 'VSCODE_DEBUGPY_ADAPTER_ENDPOINTS': '/home/rahul/.vscode/extensions/ms-python.debugpy-2026.6.0-linux-x64/.noConfigDebugAdapterEndpoints/endpoint-72791946ce26abf8.txt', 'LD_PRELOAD': '/usr/lib/x86_64-linux-gnu/libstdc++.so.6', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'PYTHONSTARTUP': '/home/rahul/.config/Code/User/workspaceStorage/36601082301ce02f84c28c3948183dd9/ms-python.python/pythonrc.py', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu-xorg', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'VSCODE_GIT_IPC_HANDLE': '/run/user/1000/vscode-git-a7108ea42e.sock', 'TERM_PROGRAM': 'vscode', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'GSETTINGS_SCHEMA_DIR': '/home/rahul/anaconda3/share/glib-2.0/schemas', 'AMENT_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/opt/ros/jazzy', 'CONDA_PYTHON_EXE': '/home/rahul/anaconda3/bin/python', 'DEBIAN_FRONTEND': 'noninteractive', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu-xorg', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CONDA_DEFAULT_ENV': 'base', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', '_CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'VSCODE_GIT_ASKPASS_EXTRA_ARGS': '', 'GIT_PAGER': 'cat', 'QT_IM_MODULE': 'ibus', 'JAVA_HOME': '/usr/lib/jvm/java-17-openjdk-amd64', 'PWD': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge', 'GIT_MERGE_AUTOEDIT': 'no', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu-xorg:/etc/xdg', 'COPILOT_DEBUG_NONCE': '57e631014520ad8fc4f4daf774dce863', 'CONDA_EXE': '/home/rahul/anaconda3/bin/conda', 'NVM_CD_FLAGS': '', 'XDG_DATA_DIRS': '/usr/share/ubuntu-xorg:/usr/share/gnome:/home/rahul/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'QTWEBENGINE_DICTIONARIES_PATH': '/usr/share/hunspell-bdic/', 'PYTHONPATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages', 'CONDA_PREFIX': '/home/rahul/anaconda3', 'GSETTINGS_SCHEMA_DIR_CONDA_BACKUP': '', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'CMAKE_PREFIX_PATH': '/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor', 'PYTHONDONTWRITEBYTECODE': '1', 'PYTEST_ADDOPTS': '--tb=short --junit-xml=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/pytest.xml --junit-prefix=camera_bridge -o cache_dir=/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/.pytest_cache'}), 'shell': False}
+[8.133494] (-) TimerEvent: {}
+[8.233782] (-) TimerEvent: {}
+[8.334086] (-) TimerEvent: {}
+[8.434434] (-) TimerEvent: {}
+[8.444212] (camera_bridge) StdoutLine: {'line': b'\x1b[1m============================= test session starts ==============================\x1b[0m\n'}
+[8.444660] (camera_bridge) StdoutLine: {'line': b'platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0\n'}
+[8.450259] (camera_bridge) StdoutLine: {'line': b'rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws\n'}
+[8.450603] (camera_bridge) StdoutLine: {'line': b'configfile: pytest.ini\n'}
+[8.450800] (camera_bridge) StdoutLine: {'line': b'plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3\n'}
+[8.534582] (-) TimerEvent: {}
+[8.618235] (camera_bridge) StdoutLine: {'line': b'\x1b[1mcollecting ... \x1b[0m\x1b[1m\n'}
+[8.618594] (camera_bridge) StdoutLine: {'line': b'collected 38 items                                                             \x1b[0m\n'}
+[8.618862] (camera_bridge) StdoutLine: {'line': b'\n'}
+[8.634699] (-) TimerEvent: {}
+[8.735038] (-) TimerEvent: {}
+[8.835403] (-) TimerEvent: {}
+[8.935778] (-) TimerEvent: {}
+[9.036214] (-) TimerEvent: {}
+[9.136735] (-) TimerEvent: {}
+[9.237227] (-) TimerEvent: {}
+[9.337604] (-) TimerEvent: {}
+[9.437969] (-) TimerEvent: {}
+[9.538396] (-) TimerEvent: {}
+[9.638928] (-) TimerEvent: {}
+[9.739462] (-) TimerEvent: {}
+[9.839989] (-) TimerEvent: {}
+[9.940415] (-) TimerEvent: {}
+[10.041082] (-) TimerEvent: {}
+[10.141770] (-) TimerEvent: {}
+[10.242394] (-) TimerEvent: {}
+[10.342990] (-) TimerEvent: {}
+[10.443808] (-) TimerEvent: {}
+[10.544598] (-) TimerEvent: {}
+[10.645142] (-) TimerEvent: {}
+[10.745737] (-) TimerEvent: {}
+[10.846173] (-) TimerEvent: {}
+[10.946668] (-) TimerEvent: {}
+[11.047081] (-) TimerEvent: {}
+[11.147416] (-) TimerEvent: {}
+[11.247810] (-) TimerEvent: {}
+[11.348217] (-) TimerEvent: {}
+[11.448609] (-) TimerEvent: {}
+[11.548994] (-) TimerEvent: {}
+[11.649375] (-) TimerEvent: {}
+[11.749800] (-) TimerEvent: {}
+[11.850213] (-) TimerEvent: {}
+[11.950623] (-) TimerEvent: {}
+[12.051044] (-) TimerEvent: {}
+[12.151431] (-) TimerEvent: {}
+[12.251826] (-) TimerEvent: {}
+[12.352368] (-) TimerEvent: {}
+[12.452814] (-) TimerEvent: {}
+[12.553282] (-) TimerEvent: {}
+[12.653679] (-) TimerEvent: {}
+[12.754252] (-) TimerEvent: {}
+[12.854746] (-) TimerEvent: {}
+[12.955081] (-) TimerEvent: {}
+[13.055458] (-) TimerEvent: {}
+[13.155904] (-) TimerEvent: {}
+[13.256447] (-) TimerEvent: {}
+[13.357001] (-) TimerEvent: {}
+[13.457496] (-) TimerEvent: {}
+[13.557815] (-) TimerEvent: {}
+[13.658182] (-) TimerEvent: {}
+[13.758579] (-) TimerEvent: {}
+[13.858985] (-) TimerEvent: {}
+[13.959556] (-) TimerEvent: {}
+[14.060053] (-) TimerEvent: {}
+[14.160558] (-) TimerEvent: {}
+[14.260967] (-) TimerEvent: {}
+[14.361292] (-) TimerEvent: {}
+[14.461757] (-) TimerEvent: {}
+[14.562564] (-) TimerEvent: {}
+[14.663092] (-) TimerEvent: {}
+[14.763543] (-) TimerEvent: {}
+[14.864039] (-) TimerEvent: {}
+[14.964579] (-) TimerEvent: {}
+[15.065126] (-) TimerEvent: {}
+[15.165695] (-) TimerEvent: {}
+[15.266231] (-) TimerEvent: {}
+[15.366625] (-) TimerEvent: {}
+[15.467041] (-) TimerEvent: {}
+[15.567453] (-) TimerEvent: {}
+[15.667805] (-) TimerEvent: {}
+[15.768176] (-) TimerEvent: {}
+[15.868525] (-) TimerEvent: {}
+[15.968889] (-) TimerEvent: {}
+[16.069243] (-) TimerEvent: {}
+[16.169667] (-) TimerEvent: {}
+[16.270045] (-) TimerEvent: {}
+[16.370507] (-) TimerEvent: {}
+[16.471002] (-) TimerEvent: {}
+[16.571521] (-) TimerEvent: {}
+[16.672201] (-) TimerEvent: {}
+[16.772606] (-) TimerEvent: {}
+[16.872958] (-) TimerEvent: {}
+[16.973382] (-) TimerEvent: {}
+[17.074285] (-) TimerEvent: {}
+[17.174869] (-) TimerEvent: {}
+[17.275339] (-) TimerEvent: {}
+[17.375811] (-) TimerEvent: {}
+[17.476225] (-) TimerEvent: {}
+[17.576741] (-) TimerEvent: {}
+[17.677344] (-) TimerEvent: {}
+[17.777864] (-) TimerEvent: {}
+[17.878274] (-) TimerEvent: {}
+[17.978846] (-) TimerEvent: {}
+[18.079431] (-) TimerEvent: {}
+[18.179859] (-) TimerEvent: {}
+[18.280609] (-) TimerEvent: {}
+[18.381219] (-) TimerEvent: {}
+[18.481699] (-) TimerEvent: {}
+[18.582183] (-) TimerEvent: {}
+[18.682612] (-) TimerEvent: {}
+[18.783101] (-) TimerEvent: {}
+[18.883729] (-) TimerEvent: {}
+[18.984182] (-) TimerEvent: {}
+[19.084610] (-) TimerEvent: {}
+[19.185028] (-) TimerEvent: {}
+[19.285493] (-) TimerEvent: {}
+[19.385858] (-) TimerEvent: {}
+[19.486247] (-) TimerEvent: {}
+[19.586678] (-) TimerEvent: {}
+[19.687092] (-) TimerEvent: {}
+[19.787429] (-) TimerEvent: {}
+[19.887795] (-) TimerEvent: {}
+[19.988158] (-) TimerEvent: {}
+[20.088583] (-) TimerEvent: {}
+[20.188981] (-) TimerEvent: {}
+[20.289400] (-) TimerEvent: {}
+[20.389861] (-) TimerEvent: {}
+[20.490375] (-) TimerEvent: {}
+[20.590976] (-) TimerEvent: {}
+[20.691488] (-) TimerEvent: {}
+[20.791852] (-) TimerEvent: {}
+[20.892335] (-) TimerEvent: {}
+[20.992864] (-) TimerEvent: {}
+[21.093376] (-) TimerEvent: {}
+[21.193843] (-) TimerEvent: {}
+[21.294294] (-) TimerEvent: {}
+[21.394649] (-) TimerEvent: {}
+[21.495380] (-) TimerEvent: {}
+[21.596089] (-) TimerEvent: {}
+[21.696667] (-) TimerEvent: {}
+[21.797220] (-) TimerEvent: {}
+[21.897547] (-) TimerEvent: {}
+[21.997900] (-) TimerEvent: {}
+[22.098535] (-) TimerEvent: {}
+[22.199089] (-) TimerEvent: {}
+[22.299601] (-) TimerEvent: {}
+[22.400140] (-) TimerEvent: {}
+[22.500646] (-) TimerEvent: {}
+[22.601022] (-) TimerEvent: {}
+[22.701405] (-) TimerEvent: {}
+[22.802058] (-) TimerEvent: {}
+[22.902500] (-) TimerEvent: {}
+[23.002929] (-) TimerEvent: {}
+[23.103371] (-) TimerEvent: {}
+[23.203767] (-) TimerEvent: {}
+[23.304219] (-) TimerEvent: {}
+[23.404689] (-) TimerEvent: {}
+[23.505109] (-) TimerEvent: {}
+[23.605434] (-) TimerEvent: {}
+[23.705828] (-) TimerEvent: {}
+[23.806174] (-) TimerEvent: {}
+[23.906575] (-) TimerEvent: {}
+[24.007095] (-) TimerEvent: {}
+[24.107559] (-) TimerEvent: {}
+[24.208102] (-) TimerEvent: {}
+[24.308664] (-) TimerEvent: {}
+[24.409142] (-) TimerEvent: {}
+[24.509475] (-) TimerEvent: {}
+[24.609861] (-) TimerEvent: {}
+[24.710419] (-) TimerEvent: {}
+[24.810878] (-) TimerEvent: {}
+[24.911429] (-) TimerEvent: {}
+[25.011955] (-) TimerEvent: {}
+[25.112370] (-) TimerEvent: {}
+[25.212911] (-) TimerEvent: {}
+[25.313316] (-) TimerEvent: {}
+[25.413743] (-) TimerEvent: {}
+[25.514152] (-) TimerEvent: {}
+[25.614527] (-) TimerEvent: {}
+[25.715032] (-) TimerEvent: {}
+[25.815450] (-) TimerEvent: {}
+[25.916076] (-) TimerEvent: {}
+[26.016650] (-) TimerEvent: {}
+[26.117346] (-) TimerEvent: {}
+[26.217919] (-) TimerEvent: {}
+[26.318812] (-) TimerEvent: {}
+[26.419244] (-) TimerEvent: {}
+[26.519783] (-) TimerEvent: {}
+[26.620124] (-) TimerEvent: {}
+[26.720454] (-) TimerEvent: {}
+[26.820818] (-) TimerEvent: {}
+[26.921156] (-) TimerEvent: {}
+[27.021527] (-) TimerEvent: {}
+[27.121940] (-) TimerEvent: {}
+[27.222365] (-) TimerEvent: {}
+[27.322825] (-) TimerEvent: {}
+[27.423241] (-) TimerEvent: {}
+[27.523653] (-) TimerEvent: {}
+[27.624098] (-) TimerEvent: {}
+[27.724567] (-) TimerEvent: {}
+[27.825030] (-) TimerEvent: {}
+[27.925566] (-) TimerEvent: {}
+[28.026089] (-) TimerEvent: {}
+[28.126600] (-) TimerEvent: {}
+[28.227090] (-) TimerEvent: {}
+[28.327619] (-) TimerEvent: {}
+[28.428116] (-) TimerEvent: {}
+[28.528526] (-) TimerEvent: {}
+[28.629035] (-) TimerEvent: {}
+[28.729515] (-) TimerEvent: {}
+[28.830114] (-) TimerEvent: {}
+[28.930643] (-) TimerEvent: {}
+[29.031123] (-) TimerEvent: {}
+[29.131543] (-) TimerEvent: {}
+[29.231979] (-) TimerEvent: {}
+[29.332536] (-) TimerEvent: {}
+[29.433125] (-) TimerEvent: {}
+[29.533731] (-) TimerEvent: {}
+[29.634247] (-) TimerEvent: {}
+[29.734659] (-) TimerEvent: {}
+[29.764977] (camera_bridge) StdoutLine: {'line': b'test/test_camera_bridge.py \x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m.\x1b[0m\x1b[32m        [100%]\x1b[0m\n'}
+[29.765335] (camera_bridge) StdoutLine: {'line': b'\n'}
+[29.765560] (camera_bridge) StdoutLine: {'line': b'- generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/pytest.xml -\n'}
+[29.765759] (camera_bridge) StdoutLine: {'line': b'\x1b[32m============================= \x1b[32m\x1b[1m38 passed\x1b[0m\x1b[32m in 21.32s\x1b[0m\x1b[32m ==============================\x1b[0m\n'}
+[29.834946] (-) TimerEvent: {}
+[29.935372] (-) TimerEvent: {}
+[29.936787] (camera_bridge) CommandEnded: {'returncode': 0}
+[29.938572] (camera_bridge) JobEnded: {'identifier': 'camera_bridge', 'rc': 0}
+[29.939248] (attendance_bringup) JobStarted: {'identifier': 'attendance_bringup'}
+[29.975066] (attendance_bringup) JobEnded: {'identifier': 'attendance_bringup', 'rc': 0}
+[29.976034] (-) EventReactorShutdown: {}

@@ -1,0 +1,53 @@
+[0.054s] Invoking command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces': CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process
+[0.070s] UpdateCTestConfiguration  from :/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/CTestConfiguration.ini
+[0.070s] Parse Config file:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/CTestConfiguration.ini
+[0.071s]    Site: rahul-IdeaPad-Slim-3-15AMN8
+[0.071s]    Build name: (empty)
+[0.071s]  Add coverage exclude regular expressions.
+[0.071s] Create new tag: 20261004-1846 - Experimental
+[0.072s] UpdateCTestConfiguration  from :/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/CTestConfiguration.ini
+[0.072s] Parse Config file:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/CTestConfiguration.ini
+[0.072s] Test project /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces
+[0.072s] Constructing a list of tests
+[0.072s] Done constructing a list of tests
+[0.072s] Updating test list for fixtures
+[0.073s] Added 0 tests to meet fixture requirements
+[0.073s] Checking test dependency graph...
+[0.073s] Checking test dependency graph end
+[0.073s] test 1
+[0.073s]     Start 1: lint_cmake
+[0.073s] 
+[0.073s] 1: Test command: /usr/bin/python3 "-u" "/opt/ros/jazzy/share/ament_cmake_test/cmake/run_test.py" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml" "--package-name" "attendance_interfaces" "--output-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/ament_lint_cmake/lint_cmake.txt" "--command" "/opt/ros/jazzy/bin/ament_lint_cmake" "--xunit-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml"
+[0.073s] 1: Working Directory: /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces
+[0.074s] 1: Test timeout computed to be: 60
+[0.196s] 1: -- run_test.py: invoking following command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces':
+[0.196s] 1:  - /opt/ros/jazzy/bin/ament_lint_cmake --xunit-file /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml
+[0.338s] 1: 
+[0.338s] 1: No problems found
+[0.374s] 1: -- run_test.py: return code 0
+[0.375s] 1: -- run_test.py: verify result file '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/lint_cmake.xunit.xml'
+[0.407s] 1/2 Test #1: lint_cmake .......................   Passed    0.34 sec
+[0.408s] test 2
+[0.408s]     Start 2: xmllint
+[0.408s] 
+[0.408s] 2: Test command: /usr/bin/python3 "-u" "/opt/ros/jazzy/share/ament_cmake_test/cmake/run_test.py" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml" "--package-name" "attendance_interfaces" "--output-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/ament_xmllint/xmllint.txt" "--command" "/opt/ros/jazzy/bin/ament_xmllint" "--xunit-file" "/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml"
+[0.408s] 2: Working Directory: /home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces
+[0.408s] 2: Test timeout computed to be: 60
+[0.516s] 2: -- run_test.py: invoking following command in '/home/rahul/Documents/DL_PROJECT/ros_ws/src/attendance_interfaces':
+[0.516s] 2:  - /opt/ros/jazzy/bin/ament_xmllint --xunit-file /home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml
+[1.226s] 2: File 'package.xml' is valid
+[1.226s] 2: 
+[1.226s] 2: No problems found
+[1.279s] 2: -- run_test.py: return code 0
+[1.279s] 2: -- run_test.py: verify result file '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces/test_results/attendance_interfaces/xmllint.xunit.xml'
+[1.309s] 2/2 Test #2: xmllint ..........................   Passed    0.90 sec
+[1.312s] 
+[1.312s] [0;32m100% tests passed[0;0m, 0 tests failed[0;0m out of 2
+[1.312s] 
+[1.312s] Label Time Summary:
+[1.312s] lint_cmake    =   0.34 sec*proc (1 test)
+[1.313s] linter        =   1.24 sec*proc (2 tests)
+[1.313s] xmllint       =   0.90 sec*proc (1 test)
+[1.313s] 
+[1.313s] Total Test time (real) =   1.24 sec
+[1.318s] Invoked command in '/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_interfaces' returned '0': CMAKE_PREFIX_PATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_bringup:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor CONDA_PROMPT_MODIFIER=(base) DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_interfaces/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/servo_controller:/home/rahul/Documents/DL_PROJECT/ros_ws/install/servo_controller/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/scan_planner:/home/rahul/Documents/DL_PROJECT/ros_ws/install/scan_planner/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge:/home/rahul/Documents/DL_PROJECT/ros_ws/install/camera_bridge/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/edge_uploader:/home/rahul/Documents/DL_PROJECT/ros_ws/install/edge_uploader/lib/python3.12/site-packages:/home/rahul/Documents/DL_PROJECT/ros_ws/build/attendance_robot:/home/rahul/Documents/DL_PROJECT/ros_ws/install/attendance_robot/lib/python3.12/site-packages:/opt/ros/jazzy/opt/gz_math_vendor/lib/python:/opt/ros/jazzy/lib/python3.12/site-packages /usr/bin/ctest -C Release -D ExperimentalTest --no-compress-output -V --force-new-ctest-process

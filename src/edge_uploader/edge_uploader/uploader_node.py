@@ -28,11 +28,13 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+from pathlib import Path
 
 import rclpy
 from rclpy.node import Node
 
-from edge_uploader.outbox import EdgeOutbox, QueuedCapture, make_idempotency_key
+from edge_uploader.outbox import EdgeOutbox, QueuedCapture
+from edge_uploader.transport import build_frame_request, read_device_secret
 
 SECONDS_PER_HOUR = 3600.0
 
@@ -44,6 +46,8 @@ class EdgeUploaderNode(Node):
         super().__init__("edge_uploader")
         self.declare_parameter("data_root", "/var/lib/attendance")
         self.declare_parameter("base_url", "https://attendance.example.com")
+        self.declare_parameter("cloud_session_id", 0)
+        self.declare_parameter("device_secret_file", "/etc/attendance/device-secret")
         self.declare_parameter("tenant_id", "00000000-0000-0000-0000-000000000000")
         self.declare_parameter("device_id", "unprovisioned")
         self.declare_parameter("batch_size", 10)
@@ -58,6 +62,13 @@ class EdgeUploaderNode(Node):
         self._request_timeout = float(self.get_parameter("request_timeout_s").value)
         self._max_attempts = int(self.get_parameter("max_attempts").value)
         self._batch = int(self.get_parameter("batch_size").value)
+        try:
+            self._device_secret = read_device_secret(
+                Path(str(self.get_parameter("device_secret_file").value))
+            )
+        except (OSError, ValueError) as exc:
+            self._device_secret = ""
+            self.get_logger().error(f"device uploads disabled: {exc}")
 
         self._outbox = EdgeOutbox(
             root=str(self.get_parameter("data_root").value),
@@ -107,41 +118,38 @@ class EdgeUploaderNode(Node):
 
     def _drain(self) -> None:
         """Upload one batch."""
+        session_id = int(self.get_parameter("cloud_session_id").value)
+        if not self._device_secret:
+            self._last_error = "device secret is not provisioned"
+            return
+        if session_id <= 0:
+            self._last_error = "cloud_session_id is not set to an open cloud session"
+            return
         batch = self._outbox.next_batch(self._batch)
         if not batch:
             return
         self.get_logger().info(f"uploading {len(batch)} capture(s)")
         for capture in batch:
-            self._upload_one(capture)
+            self._upload_one(capture, session_id)
 
-    def _upload_one(self, capture: QueuedCapture) -> None:
+    def _upload_one(self, capture: QueuedCapture, session_id: int) -> None:
         """Upload a single capture, recording the outcome either way."""
-        payload = {
-            "capture_id": capture.capture_id,
-            "session_id": capture.session_id,
-            "tenant_id": capture.tenant_id,
-            "device_id": capture.device_id,
-            "captured_at": capture.captured_at,
-            "sha256": capture.sha256,
-            "size_bytes": capture.size_bytes,
-            "face_count": capture.face_count,
-            "quality_score": capture.quality_score,
-            "image": self._image_body(capture),
-        }
-        request = urllib.request.Request(
-            f"{self._base_url}/api/v1/frames",
-            data=json.dumps(payload).encode(),
-            method="POST",
-            headers={
-                "Content-Type": "application/json",
-                # The idempotency key, so a retry after an ambiguous timeout
-                # does not create a second attendance row for one frame.
-                "Idempotency-Key": make_idempotency_key(capture),
-                "X-Device-Id": capture.device_id,
-                "X-Correlation-Id": uuid.uuid4().hex,
-            },
-        )
         try:
+            image = capture.image_path.read_bytes()
+            if not image:
+                raise OSError("queued capture is empty")
+            request = build_frame_request(
+                base_url=self._base_url,
+                session_id=session_id,
+                device_id=capture.device_id,
+                device_secret=self._device_secret,
+                frame_id=capture.capture_id,
+                device_timestamp=capture.captured_at,
+                correlation_id=uuid.uuid4().hex,
+                camera_angle_deg=capture.camera_angle_deg,
+                zoom=capture.zoom,
+                image=image,
+            )
             with urllib.request.urlopen(request, timeout=self._request_timeout) as response:
                 body = json.loads(response.read().decode() or "{}")
         except urllib.error.HTTPError as exc:
@@ -159,27 +167,10 @@ class EdgeUploaderNode(Node):
             )
             return
 
-        self._outbox.mark_uploaded(capture.capture_id, body.get("object_key", ""))
+        self._outbox.mark_uploaded(capture.capture_id, body.get("frame_id", capture.capture_id))
         self._uploaded_total += 1
         self._last_error = ""
         self.get_logger().info(f"uploaded {capture.capture_id[:8]} ({capture.size_bytes / 1000:.0f} kB)")
-
-    def _image_body(self, capture: QueuedCapture) -> str:
-        """Base64 the image for the JSON body.
-
-        Acknowledged as a compromise: base64 in JSON is 33% larger than the
-        binary, and a large classroom sweep can exceed a default request size
-        limit. The presigned-URL path in ADR 0003 replaces this. It is used
-        here so the node is complete and testable without object storage.
-        """
-        import base64
-
-        try:
-            with capture.image_path.open("rb") as handle:
-                return base64.b64encode(handle.read()).decode()
-        except OSError as exc:
-            self.get_logger().error(f"could not read a queued image: {exc}")
-            return ""
 
     # -- status ---------------------------------------------------------
     def stats(self) -> dict:

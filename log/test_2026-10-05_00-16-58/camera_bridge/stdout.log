@@ -1,0 +1,12 @@
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/rahul/Documents/DL_PROJECT/ros_ws
+configfile: pytest.ini
+plugins: ament-lint-0.17.5, launch-testing-3.4.11, launch-testing-ros-0.26.12, ament-copyright-0.17.5, ament-pep257-0.17.5, ament-flake8-0.17.5, ament-xmllint-0.17.5, cov-4.1.0, colcon-core-0.21.3
+[1mcollecting ... [0m[1m
+collected 38 items                                                             [0m
+
+test/test_camera_bridge.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m        [100%][0m
+
+- generated xml file: /home/rahul/Documents/DL_PROJECT/ros_ws/build/camera_bridge/pytest.xml -
+[32m============================= [32m[1m38 passed[0m[32m in 21.43s[0m[32m ==============================[0m

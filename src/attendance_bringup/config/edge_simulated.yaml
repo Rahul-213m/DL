@@ -71,6 +71,8 @@ edge_uploader:
     # that matters for correctness of the demo.
     data_root: "/tmp/attendance-simulated"
     base_url: "https://attendance.example.com"
+    cloud_session_id: 0
+    device_secret_file: "/etc/attendance/device-secret"
     # Unprovisioned on purpose: the server rejects it, which is much better
     # than filing a demo's frames under a real tenant.
     tenant_id: "00000000-0000-0000-0000-000000000000"

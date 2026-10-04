@@ -1,2 +1,3 @@
 [console_scripts]
+edge_requeue_failed = edge_uploader.requeue_failed:main
 edge_uploader = edge_uploader.uploader_node:main

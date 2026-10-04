@@ -3,6 +3,8 @@ setup.cfg
 setup.py
 edge_uploader/__init__.py
 edge_uploader/outbox.py
+edge_uploader/requeue_failed.py
+edge_uploader/transport.py
 edge_uploader/uploader_node.py
 edge_uploader.egg-info/PKG-INFO
 edge_uploader.egg-info/SOURCES.txt

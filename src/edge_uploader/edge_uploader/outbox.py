@@ -34,15 +34,18 @@ unconditionally, so a large room produced a queue the uplink could not drain.
 
 from __future__ import annotations
 
+import fcntl
 import hashlib
 import json
 import logging
 import os
 import time
 import uuid
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from enum import StrEnum
 from pathlib import Path
+from typing import Iterator
 
 log = logging.getLogger(__name__)
 
@@ -87,6 +90,8 @@ class QueuedCapture:
     object_key: str = ""
     face_count: int = 0
     quality_score: float = 0.0
+    camera_angle_deg: float | None = None
+    zoom: float | None = None
 
     def to_record(self) -> dict:
         """Serialise for the journal."""
@@ -105,6 +110,8 @@ class QueuedCapture:
             "object_key": self.object_key,
             "face_count": self.face_count,
             "quality_score": self.quality_score,
+            "camera_angle_deg": self.camera_angle_deg,
+            "zoom": self.zoom,
         }
 
     @classmethod
@@ -125,6 +132,8 @@ class QueuedCapture:
             object_key=record.get("object_key", ""),
             face_count=record.get("face_count", 0),
             quality_score=record.get("quality_score", 0.0),
+            camera_angle_deg=record.get("camera_angle_deg"),
+            zoom=record.get("zoom"),
         )
 
 
@@ -180,17 +189,33 @@ class OutboxJournal:
     #: operator can see it happened.
     truncated_records: int = 0
 
+    @contextmanager
+    def _locked(self) -> Iterator[None]:
+        """Serialize journal access across the camera and uploader processes."""
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        lock_path = self.path.with_suffix(self.path.suffix + ".lock")
+        with open(lock_path, "a", encoding="utf-8") as lock_file:
+            fcntl.flock(lock_file.fileno(), fcntl.LOCK_EX)
+            try:
+                yield
+            finally:
+                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+
     def append(self, record: dict) -> None:
         """Append one record and fsync it."""
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        line = json.dumps(record, separators=(",", ":")) + "\n"
-        with open(self.path, "a", encoding="utf-8") as handle:
-            handle.write(line)
-            handle.flush()
-            os.fsync(handle.fileno())
+        with self._locked():
+            line = json.dumps(record, separators=(",", ":")) + "\n"
+            with open(self.path, "a", encoding="utf-8") as handle:
+                handle.write(line)
+                handle.flush()
+                os.fsync(handle.fileno())
 
     def replay(self) -> list[dict]:
         """Read every record, dropping an incomplete final line."""
+        with self._locked():
+            return self._replay_unlocked()
+
+    def _replay_unlocked(self) -> list[dict]:
         if not self.path.exists():
             return []
         records: list[dict] = []
@@ -215,13 +240,37 @@ class OutboxJournal:
         Compacted atomically. A journal grows without bound otherwise, and a
         multi-megabyte journal is slow to replay on every boot.
         """
+        with self._locked():
+            self._write_unlocked(keep.values())
+
+    def compact_active(self) -> None:
+        """Compact from the latest on-disk state while holding the journal lock."""
+        with self._locked():
+            latest: dict[str, dict] = {}
+            for record in self._replay_unlocked():
+                capture_id = record.get("capture_id")
+                if capture_id:
+                    latest[capture_id] = record
+            self._write_unlocked(
+                record
+                for record in latest.values()
+                if record.get("state") != UploadState.UPLOADED.value
+            )
+
+    def _write_unlocked(self, records: object) -> None:
+        """Atomically replace the journal while its lock is held."""
         temp = self.path.with_suffix(".tmp")
         with open(temp, "w", encoding="utf-8") as handle:
-            for record in keep.values():
+            for record in records:
                 handle.write(json.dumps(record, separators=(",", ":")) + "\n")
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temp, self.path)
+        directory = os.open(self.path.parent, os.O_RDONLY)
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
 
 
 class QueueFull(RuntimeError):
@@ -255,7 +304,7 @@ class EdgeOutbox:
         self._load()
 
     # -- durability -----------------------------------------------------
-    def _load(self) -> None:
+    def _load(self, *, adopt_orphans: bool = True) -> None:
         """Rebuild queue state from the journal and the image directory.
 
         Two sources of truth, because either alone is insufficient: the
@@ -264,6 +313,8 @@ class EdgeOutbox:
         discarded; an image with no journal entry is adopted, because losing
         the journal is survivable and losing the data is not.
         """
+        self.captures.clear()
+        self._dirty = False
         by_id: dict[str, dict] = {}
         for record in self.journal.replay():
             capture_id = record.get("capture_id")
@@ -287,29 +338,27 @@ class EdgeOutbox:
                 capture.state = UploadState.PENDING
             self.captures[capture_id] = capture
 
-        for image in self.images_dir.glob("*.jpg"):
-            capture_id = image.stem
-            if capture_id in self.captures:
-                continue
-            log.warning(
-                "adopting an image with no journal record; the journal was lost or truncated",
-                extra={"capture_id": capture_id},
-            )
-            size = image.stat().st_size
-            self.captures[capture_id] = QueuedCapture(
-                capture_id=capture_id,
-                image_path=image,
-                sha256=sha256_file(image),
-                size_bytes=size,
-                tenant_id=self.tenant_id,
-                device_id=self.device_id,
-                session_id="",
-                captured_at="",
-            )
-            self._dirty = True
-
-        if self._dirty:
-            self.journal.compact({c: self.captures[c].to_record() for c in self.captures})
+        if adopt_orphans:
+            for image in self.images_dir.glob("*.jpg"):
+                capture_id = image.stem
+                if capture_id in self.captures:
+                    continue
+                log.warning(
+                    "adopting an image with no journal record; the journal was lost or truncated",
+                    extra={"capture_id": capture_id},
+                )
+                size = image.stat().st_size
+                self.captures[capture_id] = QueuedCapture(
+                    capture_id=capture_id,
+                    image_path=image,
+                    sha256=sha256_file(image),
+                    size_bytes=size,
+                    tenant_id=self.tenant_id,
+                    device_id=self.device_id,
+                    session_id="",
+                    captured_at="",
+                )
+                self.journal.append(self.captures[capture_id].to_record())
 
     # -- capacity -------------------------------------------------------
     def queue_bytes(self) -> int:
@@ -365,6 +414,8 @@ class EdgeOutbox:
         captured_at: str | None = None,
         face_count: int = 0,
         quality_score: float = 0.0,
+        camera_angle_deg: float | None = None,
+        zoom: float | None = None,
     ) -> QueuedCapture:
         """Durably record a capture. Never touches the network.
 
@@ -374,6 +425,7 @@ class EdgeOutbox:
         Raises:
             QueueFull: If the capture could not be stored even after eviction.
         """
+        self._load(adopt_orphans=False)
         if face_count < self.min_faces_to_upload:
             log.debug("capture had no faces; not queued", extra={"face_count": face_count})
 
@@ -393,6 +445,8 @@ class EdgeOutbox:
             captured_at=captured_at or time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             face_count=face_count,
             quality_score=quality_score,
+            camera_angle_deg=camera_angle_deg,
+            zoom=zoom,
         )
         self.captures[capture_id] = capture
         self.journal.append(capture.to_record())
@@ -422,6 +476,7 @@ class EdgeOutbox:
         """Oldest pending captures, for one upload attempt."""
         if limit < 1:
             raise ValueError(f"limit must be >= 1, got {limit}")
+        self._load(adopt_orphans=False)
         pending = [c for c in self.captures.values() if c.state is UploadState.PENDING]
         pending.sort(key=lambda c: c.captured_at)
         return pending[:limit]
@@ -439,8 +494,7 @@ class EdgeOutbox:
             capture.image_path.unlink(missing_ok=True)
         except OSError as exc:  # pragma: no cover
             log.warning("uploaded but the local image could not be deleted", extra={"error": str(exc)})
-        self._dirty = True
-        self.journal.compact({c: self.captures[c].to_record() for c in self.captures})
+        self.journal.compact_active()
 
     def mark_failed(self, capture_id: str, error: str, *, max_attempts: int = 5) -> None:
         """Record a failure and decide whether to retry.
@@ -463,19 +517,18 @@ class EdgeOutbox:
         else:
             capture.state = UploadState.PENDING
         self.journal.append(capture.to_record())
-        self._dirty = True
 
     def requeue_failed(self) -> int:
         """Return FAILED captures to PENDING, for an operator-triggered retry."""
-        count = 0
+        requeued: list[QueuedCapture] = []
         for capture in self.captures.values():
             if capture.state is UploadState.FAILED:
                 capture.state = UploadState.PENDING
                 capture.attempts = 0
-                count += 1
-        if count:
-            self.journal.compact({c: self.captures[c].to_record() for c in self.captures})
-        return count
+                requeued.append(capture)
+        for capture in requeued:
+            self.journal.append(capture.to_record())
+        return len(requeued)
 
     def stats(self) -> dict[str, int]:
         """Counts by state, for the operator console."""
